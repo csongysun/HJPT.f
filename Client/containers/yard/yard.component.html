@@ -1,0 +1,20 @@
+<md-sidenav-layout class="yard-root">
+  <md-sidenav #sidenav class="sidenav .z-depth-2" mode="{{isWide ? 'side' : 'over'}}" opened="{{ isWide }}">
+    <app-user-info>
+    </app-user-info>
+    <md-nav-list>
+      <a [class.waves-effect]="true" md-list-item [routerLink]="naviItem.url" *ngFor="let naviItem of naviList">{{naviItem.Name}}</a>
+    </md-nav-list>
+    <br>
+  </md-sidenav>
+  <md-toolbar class="appbar z-depth-1" color="primary">
+    <button class="app-icon-button" [class.hidden]="isWide" [style.display]="isWide ? 'none' : 'block'" (click)="sidenav.toggle()">
+      <i class="material-icons app-toolbar-menu">menu</i>
+    </button> {{app.currentPage}}
+    <span class="app-toolbar-filler"></span>
+    <!--<button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>-->
+  </md-toolbar>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-layout>

@@ -1,0 +1,51 @@
+$sidenav-font-size: 14px !default;
+$sidenav-font-color: rgba(0, 0, 0, .87) !default;
+$sidenav-bg-color: #ffa500 !default;
+$sidenav-padding: 16px !default;
+$sidenav-item-height: 48px !default;
+.userView {
+  position: relative;
+  padding: ($sidenav-padding * 2) ($sidenav-padding * 2) 0;
+  margin-bottom: $sidenav-padding / 2;
+  background-color: orange;
+  &>a {
+    &:hover {
+      background-color: transparent;
+    }
+    height: auto;
+    padding: 0;
+  }
+  .background {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+  }
+  .circle,
+  .name,
+  .email {
+    display: block;
+  }
+  .circle {
+    height: 64px;
+    width: 64px;
+  }
+  .name,
+  .email {
+    font-size: $sidenav-font-size;
+    line-height: 24px;
+  }
+  .name {
+    margin-top: 16px;
+    font-weight: 500;
+    font-family: "Roboto Medium", STXiHei, "Microsoft YaHei";
+  }
+  .email {
+    padding-bottom: 16px;
+    font-weight: 350;
+    font-family: "Roboto Regular", STXiHei, "Microsoft YaHei";
+  }
+}

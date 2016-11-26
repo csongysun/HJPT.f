@@ -1,0 +1,78 @@
+<div class="filter-panel card-panel">
+  <div class="filter">
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">电影</md-checkbox>
+      <!--<input type="checkbox" id="f1" />
+      <label for="f1">电影</label>-->
+    </div>
+    <div class="filter-item">
+      <i class="large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">电视剧</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">动漫</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">综艺</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">体育</md-checkbox>
+    </div>
+  </div>
+</div>
+<div class="pagin-container">
+  <ul class="pagination">
+    <li [class]="currentPageIndex > 1 ? 'waves-effect icon' : 'disabled icon'"><a (click)="setPage(1)"><i class="material-icons">&#xE5DC;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex > 1"><a (click)="setPage(currentPageIndex-1)"><i class="material-icons">&#xE5CB;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex > 4 && pageCount > 7"><a (click)="setPage(currentPageIndex-4)"><i class="material-icons">&#xE5D3;</i></a></li>
+    <li [class]="page == currentPageIndex? 'active' : 'waves-effect' " *ngFor="let page of getPages()"><a (click)="setPage(page)">{{page}}</a></li>
+    <li class="waves-effect icon" *ngIf="pageCount - currentPageIndex > 3 && pageCount > 7"><a (click)="setPage(currentPageIndex+4)"><i class="material-icons">&#xE5D3;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex < pageCount"><a (click)="setPage(currentPageIndex+1)"><i class="material-icons">&#xE5CC;</i></a></li>
+    <li [class]="currentPageIndex < pageCount ? 'waves-effect icon' : 'disabled icon'"><a (click)="setPage(pageCount)"><i class="material-icons">&#xE5DD;</i></a></li>
+  </ul>
+</div>
+<div class="torrents-container">
+  <div class="grid">
+    <a [routerLink]="['../detail', topic.Id]" *ngFor="let topic of topics">
+    <div class="topic-panel card-panel" >
+      <img [src]="'assets/topic/art/'+topic.Id+'.png'">
+      <div class="content">
+        <div class="topic">
+          <div class="title">{{topic.Title}}</div>
+          <div class="subtitle">{{topic.SubTitle}}</div>
+          <div class="tag">
+            <div class="chip" *ngFor="let tag of topic.tags">{{tag.name}}</div>
+          </div>
+        </div>
+        <div class="bar">
+          <div class="torrent">
+            ↑{{topic.Torrent.Seeder}}↓{{topic.Torrent.Leecher}} Э{{topic.Torrent.Saver}}
+          </div>
+          <div class="action">
+            <span> A </span>
+            <span> B </span>
+            <span> C </span>
+            <span> D </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+</div>
+
+<div class="pagin-container">
+  <ul class="pagination">
+    <li [class]="currentPageIndex > 1 ? 'waves-effect icon' : 'disabled icon'"><a (click)="setPage(1)"><i class="material-icons">&#xE5DC;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex > 1"><a (click)="setPage(currentPageIndex-1)"><i class="material-icons">&#xE5CB;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex > 4 && pageCount > 7"><a (click)="setPage(currentPageIndex-4)"><i class="material-icons">&#xE5D3;</i></a></li>
+    <li [class]="page == currentPageIndex? 'active' : 'waves-effect' " *ngFor="let page of getPages()"><a (click)="setPage(page)">{{page}}</a></li>
+    <li class="waves-effect icon" *ngIf="pageCount - currentPageIndex > 3 && pageCount > 7"><a (click)="setPage(currentPageIndex+4)"><i class="material-icons">&#xE5D3;</i></a></li>
+    <li class="waves-effect icon" *ngIf="currentPageIndex < pageCount"><a (click)="setPage(currentPageIndex+1)"><i class="material-icons">&#xE5CC;</i></a></li>
+    <li [class]="currentPageIndex < pageCount ? 'waves-effect icon' : 'disabled icon'"><a (click)="setPage(pageCount)"><i class="material-icons">&#xE5DD;</i></a></li>
+  </ul>
+</div>

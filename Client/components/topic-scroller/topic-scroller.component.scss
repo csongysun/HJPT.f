@@ -1,0 +1,15 @@
+.container-wrap {
+    width: 100%;
+    display: inline-block;
+    overflow: auto;
+    /*overflow-x: scroll;*/
+    white-space: nowrap;
+    -ms-overflow-style: none;
+}
+.container-wrap::-webkit-scrollbar {
+    display: none;
+}
+.container-wrap img {
+    display: inline-block;
+    padding: 14px;
+}

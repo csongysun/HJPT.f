@@ -1,0 +1,50 @@
+<p>
+  auth works!
+  <br>
+  <button (click)="toggle()">Toggle</button>
+</p>
+<div class="sign-content">
+  <md-card [@routeAnimations]="astate">
+    <md-toolbar color="primary">登录</md-toolbar>
+    <md-card-content>
+      <form (ngSubmit)="login()" #loginForm="ngForm" class="form1">
+        <p>
+          <md-input [(ngModel)]="UserKey" #userkey="ngModel" name="lUserKey" placeholder="账号" floatingPlaceholder="false"></md-input>
+          <md-input [(ngModel)]="Password" #password="ngModel" name="lPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
+        </p>
+        <p>
+          <md-checkbox>15分钟后自动登出</md-checkbox>
+          <br>
+          <md-checkbox>限制只能使用本IP登陆</md-checkbox>
+        </p>
+        <p>
+          <button md-raised-button type="submit">登录</button>
+          <a (click)="toggle()">注册</a>
+        </p>
+        <p>你还有 20 次尝试机会</p>
+        <p> 忘记密码？</p>
+      </form>
+    </md-card-content>
+  </md-card>
+  <md-card [@routeAnimations]="bstate">
+    <md-toolbar color="primary">注册</md-toolbar>
+    <md-card-content>
+      <form (ngSubmit)="register()" #regForm="ngForm" class="form1">
+        <p>
+          <md-input [(ngModel)]="UserKey" #userkey="ngModel" name="rUserKey" placeholder="用户名" floatingPlaceholder="false"></md-input>
+          <md-input [(ngModel)]="Password" #password="ngModel" name="rPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
+          <md-input [(ngModel)]="Email" #email="ngModel" name="rEmail" placeholder="邮箱" floatingPlaceholder="false" type="email"></md-input>
+        </p>
+        <p>
+          <md-checkbox>Rule1</md-checkbox>
+          <br>
+          <md-checkbox>Rule2</md-checkbox>
+        </p>
+        <p>
+          <button md-raised-button type="submit">注册</button>
+          <a (click)="toggle()">已有账号</a>
+        </p>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>

@@ -1,0 +1,81 @@
+<form #publishForm >
+  <div class="section">
+    <h5>基本信息</h5>
+    <div>
+      <div class="section">
+        <h6>标题</h6>
+        <input type="text" class="validate" [(ngModel)]="topic.title" name="title">
+      </div>
+      <div class="section">
+        <h6>副标题</h6>
+        <input type="text" class="validate" [(ngModel)]="topic.subtitle" name="subtitle">
+      </div>
+      <div class="section">
+        <h6>类型</h6>
+        <div style="dipslay: flex">
+          <select [(ngModel)]="selectedParentCategory" name="parentCategory" >
+            <option [value]="category.id" *ngFor="let category of parentCategories" >{{category.name}}</option>
+          </select>
+          <select [(ngModel)]="topic.category" name="childCategory">
+            <option [value]="category.id" *ngFor="let category of selectedChildCategories">{{category.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="section">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>种子文件</span>
+            <input #torrentFile type="file"  >
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>NFO文件</span>
+            <input type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h5>简介</h5>
+    <div class="section">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>封面</span>
+          <input type="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+    </div>
+    <h6>简介</h6>
+    <textarea id="textarea1" class="materialize-textarea"></textarea>
+    <div class="section">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>截图</span>
+          <input placeholder="可上传多个文件" type="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <button class="btn waves-effect waves-light" type="submit" name="action">保存
+      <i class="material-icons right">send</i>
+    </button>
+    <button class="btn waves-effect waves-light" type="submit" name="action">发布
+      <i class="material-icons right">send</i>
+    </button>
+  </div>
+</form>
