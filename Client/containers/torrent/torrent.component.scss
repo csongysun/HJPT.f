@@ -1,0 +1,146 @@
+$checkbox-size: 18px !default;
+//$checkbox-margin-right: 8px;
+.filter-panel {
+  margin: auto;
+  width: 90%;
+  position: relative;
+  .filter {
+    display: inline-flex;
+    margin: 0 0 0 10%;
+    .filter-item {
+      width: 7rem;
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      //margin: 4px;
+      i {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      md-checkbox {
+        /*margin-left: 0;
+        margin-right: 0;*/
+        padding-left: 0;
+        /*display: block;
+        position: relative;*/
+      }
+    }
+  }
+}
+
+.filter-item .md-checkbox-inner-container {
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
+}
+
+
+.pagin-container {
+  text-align: center;
+  margin-top: 20px;
+  .pagination {
+    display: inline-flex;
+    li.icon {
+      a {
+        padding: 0px;
+      }
+    }
+  }
+}
+
+.torrents-container {
+  padding: auto;
+}
+
+.grid {
+  margin: auto;
+  padding: auto;
+  left: 0 !important;
+  right: 0 !important;
+  float: none;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.topic-panel:hover {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.topic-panel {
+  display: inline-flex;
+  height: 100px;
+  width: 256px;
+  left: 0;
+  right: 0;
+  margin: 4px;
+  padding: 0;
+  overflow: hidden;
+  float: left;
+  img {
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 25%;
+    height: 100%;
+  }
+  .content {
+    position: relative;
+    width: 75%;
+    .topic {
+      padding: 4px;
+      .title {
+        font-size: 14px;
+        line-height: 15px;
+        word-wrap: break-word;
+      }
+      .subtitle {
+        font-size: 10px;
+        line-height: 12px;
+        word-wrap: break-word;
+      }
+      .tag {
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        .chip {
+          height: 12px;
+          line-height: 12px;
+          border-radius: 6px;
+          padding: 0 6px;
+          font-size: 10px;
+          margin: 0 1px;
+        }
+      }
+    }
+    .bar {
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      height: 20%;
+      width: 100%;
+      padding: 4px;
+      .torrent {
+        width: 60%;
+        height: 100%;
+        margin: auto auto 0 2px;
+        font-size: 12px;
+      }
+      .action {
+        display: flex;
+        margin: auto 2px 0 auto;
+        height: 100%;
+        width: 40%;
+        font-size: 12px;
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}

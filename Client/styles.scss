@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: "Roboto Regular", "Noto Sans CJK SC", "Source Han Sans CN", "Microsoft YaHei", STXiHei;
+  font-weight: normal;
+  //font-family: "Roboto Regular";
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+md-checkbox {
+  margin: 8px;
+  cursor: pointer;
+  padding-left: 18px;
+  padding-right: 0;
+  line-height: 26px;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+md-checkbox label {
+  color: inherit;
+  font-size: inherit;
+}
+
+.md-sidenav-content {
+  transform: none !important;
+}
+
+.section h5 {
+  font-size: 1.6rem;
+}
+
+.section h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.section {
+  padding: 0.8rem 0;
+}
