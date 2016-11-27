@@ -15,28 +15,16 @@ export class TopicService {
 
   }
 
-  GetRecentTopics(self: Action): Observable<Array<Topic>> {
-    return this.api.getCache(self, '/api/topic/recent')
-      .map(data => {
-        let topics = data as Array<Topic>;
-        return topics;
-      });
+  GetRecentTopics(): Observable<Array<Topic>> {
+    return this.api.getCache('/api/topic/recent');
   }
 
-  GetTopics(self: Action, filter: TopicFilter): Observable<Array<Topic>> {
-    return this.api.get(self, '/api/topic/recent', filter)
-      .map(data => {
-        let topics = data as Array<Topic>;
-        return topics;
-      });
+  GetTopics(filter: TopicFilter): Observable<Array<Topic>> {
+    return this.api.get('/api/topic/recent', filter);
   }
 
-  GetTopic(self: Action, id: string): Observable<Topic> {
-    return this.api.getCache(self, '/api/topic/' + id)
-      .map(data => {
-        let topic = data as Topic;
-        return topic;
-      });
+  GetTopic(id: string): Observable<Topic> {
+    return this.api.getCache('/api/topic/' + id);
   }
 
 }
