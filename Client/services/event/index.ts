@@ -1,3 +1,6 @@
 export * from './event-aggregater.service';
-export * from './event-base';
+import { PubSubEvent } from './PubSubEvent';
+import { User } from 'app-models';
 
+
+export type loginEvent = PubSubEvent<User>; 

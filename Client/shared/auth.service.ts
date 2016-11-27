@@ -1,75 +1,59 @@
 import { Injectable } from '@angular/core';
 import { RequestMethod } from '@angular/http';
+import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-import { Guard, Router, Route, TraversalCandidate } from '@ngrx/router';
-import { go } from '@ngrx/router-store';
 
 import { SignUpReq, User, LoginReq } from 'app-models';
 import { AppClientService, ApiGatewayService } from 'app-shared';
-import { AppState, LOGIN_USER, LOGOUT_USER } from 'app';
-import { appAction } from 'app-actions';
+import { EventAggregater } from 'app-services';
 
 @Injectable()
-export class AuthService implements Guard {
+export class AuthService implements CanActivate {
 
   constructor(
     private api: ApiGatewayService,
-    private store: Store<AppState>,
-    private router: Router
+    private app: AppClientService,
+    private router: Router,
+    private event: EventAggregater
   ) {
+
   }
-
-
 
   _login(req: LoginReq): Observable<User> {
-    return this.api.post('/api/auth/login', req)
-      .map(user => {
-        sessionStorage.setItem('accessToken', user.token);
-        localStorage.setItem('refreshToken', user.refreshToken);
-        return user;
-      });
+    return this.api.post<User>('/api/auth/login', req)
+      .do(user => this.event.GetEvent<User>('LOAD_USER').publish(user))
+      ;
   }
   _logout(): Observable<void> {
-    localStorage.removeItem('refresh_token');
-    sessionStorage.removeItem('token');
-    this.store.dispatch({ type: LOGOUT_USER });
-    return this.api.get('/api/auth/logout');
+    return this.api.get<void>('/api/auth/logout');
   }
   _refresh(): Observable<User> {
-    let rtoken = localStorage.getItem('refresh_token');
+    let rtoken = localStorage.getItem('refreshToken');
     if (!rtoken) {
       return Observable.throw('rtoken wrong or null');
     }
-    return this.api.get('/api/auth/refresh/' + rtoken)
-      .map(data => {
-        let user = data as User;
-        if (!user) throw ('Data Deserialize Failed');
-        sessionStorage.setItem('accessToken', user.token);
-        // localStorage.setItem('refreshToken', user.refreshToken);
-        return user;
-      });
+    return this.api.get<User>('/api/auth/refresh/' + rtoken)
+      .do(user => this.event.GetEvent<User>(typeof user).publish(user))
+      .catch(err => { this.logoutInternal(); return err; });
   }
   _register(req: SignUpReq) {
     // 加密 password
-    return this.api.post('/api/auth/register', req)
-      .map(data => {
-        let user = data as User;
-        if (!user) throw ('Data Deserialize Failed');
-        this.store.dispatch({ type: LOGIN_USER, payload: user });
-        sessionStorage.setItem('accessToken', user.token);
-        localStorage.setItem('refreshToken', user.refreshToken);
-      });
+    return this.api.post('/api/auth/register', req);
   }
 
-  protectRoute(candidate: TraversalCandidate) {
+  logoutInternal() {
+    this.router.navigate(['/auth']);
+  }
 
-    if (this.store.select<User>('loggedInUser')) {
+  canActivate(): Observable<boolean> {
+    if (this.app.currentUser)
       return Observable.of(true);
+    if (!localStorage.getItem('refreshToken')) {
+      this.router.navigate(['/auth']);
+      return Observable.of(false);
     }
-    // `route` is the current route being evaluated
-    const route: Route = candidate.route;
-    this.store.dispatch(new appAction.refreshAction())
-    return Observable.of(false);
+    return this._refresh()
+      .map(user => true)
+      .catch(err => Observable.of(false));
   }
 }
