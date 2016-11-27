@@ -3,17 +3,17 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/takeLast';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, Response, RequestOptions, RequestMethod, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Store } from '@ngrx/store';
-
+import { Store, Action } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
 import { CacheService, AuthService } from 'app-shared';
-import * as fromRoot from 'app-states';
-import { appAction } from 'app-actions';
 
 export class ApiGatewayOptions {
     method: RequestMethod;
@@ -33,11 +33,13 @@ export class ApiGatewayService {
     // Provide the *public* Observable that clients can subscribe to
     private pendingCommands$: Observable<number>;
 
+    private refreshTimes: number = 0;
+
     constructor(
         private http: Http,
-        private router: Router,
         private cache: CacheService,
-        private store: Store<fromRoot.State>
+        private auth: AuthService,
+        private actions$: Actions
     ) {
         this.pendingCommands$ = this.pendingCommandsSubject.asObservable();
     }
@@ -45,7 +47,7 @@ export class ApiGatewayService {
     // Http overrides 
     // -------------------
 
-    getCache(url: string, params?: any, autoClear: boolean = true): Observable<any> {
+    getCache<T>(url: string, params?: any, autoClear: boolean = true): Observable<T> {
         let key = url;
         if (this.cache.has(key)) {
             const cachedResponse = this.cache.get(key);
@@ -58,19 +60,19 @@ export class ApiGatewayService {
             return Observable.of(cachedResponse);
         }
         // note: you probably shouldn't .share() and you should write the correct logic
-        return this.get(url)
-            .do(json => { this.cache.set(key, json); })
+        return this.get<T>(url)
+            .do(data => { this.cache.set(key, data); })
             .share();
     }
 
-    get(url: string, params?: any): Observable<any> {
+    get<T>(url: string, params?: any): Observable<T> {
         let options = new ApiGatewayOptions();
         options.url = url;
         options.params = params;
-        return this.request(options);
+        return this.request<T>(options);
     }
 
-    post(url: string, data?: any, params?: any): Observable<any> {
+    post<T>(url: string, data?: any, params?: any): Observable<T> {
         if (!data) {
             data = params;
             params = {};
@@ -80,11 +82,11 @@ export class ApiGatewayService {
         options.url = url;
         options.params = params;
         options.data = data;
-        return this.request(options);
+        return this.request<T>(options);
     }
     // postForm(url: string, )
 
-    put(url: string, data?: any, params?: any): Observable<any> {
+    put<T>(url: string, data?: any, params?: any): Observable<T> {
         if (!data) {
             data = params;
             params = {};
@@ -94,15 +96,15 @@ export class ApiGatewayService {
         options.url = url;
         options.params = params;
         options.data = data;
-        return this.request(options);
+        return this.request<T>(options);
     }
 
-    delete(url: string, params?: any): Observable<any> {
+    delete<T>(url: string, params?: any): Observable<T> {
         let options = new ApiGatewayOptions();
         options.method = RequestMethod.Delete;
         options.url = url;
         options.params = params;
-        return this.request(options);
+        return this.request<T>(options);
     }
 
 
@@ -136,20 +138,12 @@ export class ApiGatewayService {
 
         let stream = this.http.request(options.url, requestOptions)
             .map(value => value.json() as T)
-            .finally(() => {
-                if (isCommand) {
-                    this.pendingCommandsSubject.next(--this.pendingCommandCount);
-                }
-            });
-
-        return this.fuck(stream);
-    }
-
-    private fuck<T>(source: Observable<T>, first: boolean = true): Observable<T> {
-        return source
             .catch((error, source) => {
-                if (error.status === 401 && first) {
-                    this.store.dispatch(new appAction.refreshAction(this.fuck(source, false)));
+                if (error.status === 401) {
+                    if (this.refreshTimes < 1) {
+                        this.refreshTimes++;
+                        return this.auth._refresh().switchMap(u => source);
+                    } else { this.refreshTimes = 0; }
                     return error;
                 }
                 if (error.status === 400)
@@ -158,7 +152,14 @@ export class ApiGatewayService {
                     code: -1,
                     message: 'An unexpected error occurred.'
                 });
+            })
+            .finally(() => {
+                if (isCommand) {
+                    this.pendingCommandsSubject.next(--this.pendingCommandCount);
+                }
             });
+
+        return stream;
     }
 
 
@@ -237,4 +238,3 @@ export class ApiGatewayService {
     }
 
 }
-
