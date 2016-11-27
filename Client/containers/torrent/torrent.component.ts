@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppClientService } from 'app-shared';
 import { TopicService } from 'app-services';
 
-import { Topic } from 'app-models';
+import { Topic, TopicFilter } from 'app-models';
 @Component({
   selector: 'app-torrent',
   templateUrl: './torrent.component.html',
@@ -11,7 +11,9 @@ import { Topic } from 'app-models';
 })
 export class TorrentComponent implements OnInit {
 
-  topics: Topic[];
+  topics: Array<Topic>;
+  filter: TopicFilter;
+
   currentPageIndex: number = 1;
   pageCount: number = 10;
 
@@ -46,12 +48,12 @@ export class TorrentComponent implements OnInit {
     private app: AppClientService,
     private topic: TopicService,
   ) {
-
+    
   }
 
   ngOnInit() {
     this.app.currentPage = '种子';
-    this.topic.GetRecentTopics().subscribe(topics => {
+    this.topic.GetTopics(this.filter).subscribe(topics => {
       this.topics = topics;
       this.setPage(1);
     });

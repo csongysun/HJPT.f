@@ -9,11 +9,11 @@ import { Component, ViewEncapsulation, Inject } from '@angular/core';
 })
 
 export class AppComponent {
-
-  // constructor( @Inject('req') req: any, @Inject('res') res: any) {
-  //   console.log('req', req);
-  //   console.log('res', res);
-  // }
-
+  /**
+   *
+   */
+  constructor() {
+    
+  }
 }
 

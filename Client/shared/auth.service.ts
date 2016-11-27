@@ -14,18 +14,18 @@ export class AuthService implements CanActivate {
     private api: ApiGatewayService,
     private app: AppClientService,
     private router: Router,
-    private event: EventAggregater
+    private event$: EventAggregater
   ) {
 
   }
 
   _login(req: LoginReq): Observable<User> {
     return this.api.post<User>('/api/auth/login', req)
-      .do(user => this.event.GetEvent<User>('LOAD_USER').publish(user))
-      ;
+      .do(user => this.event$.get<User>('LOGIN').publish(user));
   }
   _logout(): Observable<void> {
-    return this.api.get<void>('/api/auth/logout');
+    return this.api.get<void>('/api/auth/logout')
+      .do(user => this.logoutInternal());
   }
   _refresh(): Observable<User> {
     let rtoken = localStorage.getItem('refreshToken');
@@ -33,7 +33,7 @@ export class AuthService implements CanActivate {
       return Observable.throw('rtoken wrong or null');
     }
     return this.api.get<User>('/api/auth/refresh/' + rtoken)
-      .do(user => this.event.GetEvent<User>(typeof user).publish(user))
+      .do(user => this.event$.get<User>('LOGIN').publish(user))
       .catch(err => { this.logoutInternal(); return err; });
   }
   _register(req: SignUpReq) {
@@ -41,7 +41,8 @@ export class AuthService implements CanActivate {
     return this.api.post('/api/auth/register', req);
   }
 
-  logoutInternal() {
+  private logoutInternal() {
+    this.event$.get('LOGOUT').publish();
     this.router.navigate(['/auth']);
   }
 

@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 
-import { YardComponent } from './yard.component';
-import { YardRoutingModule } from './yard-routes';
-
+import { ROUTES } from './yard-routes';
 import { LayoutService } from 'app-shared';
 import { TopicService } from 'app-services';
-import { DetailComponent, PublishComponent, TorrentComponent, IndexComponent } from 'app-containers';
+import { YardComponent, DetailComponent, PublishComponent, TorrentComponent, IndexComponent } from 'app-containers';
 
 @NgModule({
   imports: [
-    YardRoutingModule,
+    RouterModule.forChild(ROUTES),
     MaterialModule.forRoot()
   ],
   declarations: [

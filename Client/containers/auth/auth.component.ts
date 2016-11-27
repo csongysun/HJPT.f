@@ -1,8 +1,8 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
-import { SignUpReq } from 'app-models';
+import { LoginReq, SignUpReq } from 'app-models';
 import { AuthService } from 'app-shared';
 
 @Component({
@@ -21,17 +21,14 @@ import { AuthService } from 'app-shared';
     )
   ]
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
 
-  public UserKey: string;
-  public Password: string;
-  public Email: string;
-  public StuId: string;
   public astate: string;
   public bstate: string;
-
-  private InviteToken: string;
   private isLog: boolean;
+
+  public loginReq: LoginReq;
+  public signUpReq: SignUpReq;
 
   constructor(
     private auth: AuthService,
@@ -53,11 +50,8 @@ export class AuthComponent implements OnInit {
     this.isLog = !this.isLog;
   }
 
-  ngOnInit() {
-  }
-
   login() {
-    this.auth._login(this.UserKey, this.Password)
+    this.auth._login(this.loginReq).take(1)
       .subscribe(() => {
         this.router.navigate(['/']);
       }, err => {
@@ -66,18 +60,17 @@ export class AuthComponent implements OnInit {
   }
 
   register() {
-    let requestModel: SignUpReq = {
-      UserName: this.UserKey,
-      Password: this.Password,
-      Email: this.Email,
-      StuID: this.StuId,
-      InviteToken: this.InviteToken
-    };
-    this.auth._register(requestModel).subscribe(data => {
-      this.router.navigate(['/']);
-    }, err => {
-      this.snackBar.open(err, 'OK');
-    });
+    this.auth._register(this.signUpReq).take(1)
+      .subscribe(data => {
+        this.router.navigate(['/']);
+      }, err => {
+        this.snackBar.open(err, 'OK');
+      });
+  }
+
+  ngOnInit() {
+  }
+  ngOnDestroy() {
   }
 
 }
