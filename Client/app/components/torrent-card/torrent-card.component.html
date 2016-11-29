@@ -1,0 +1,25 @@
+<a [routerLink]="'../detail' + topic.id">
+  <div class="topic-panel card-panel">
+    <img [src]="'assets/topic/art/'+topic.id+'.png'">
+    <div class="content">
+      <div class="topic">
+        <div class="title">{{topic.title}}</div>
+        <div class="subtitle">{{topic.subTitle}}</div>
+        <div class="tag">
+          <div class="chip" *ngFor="let tag of topic.tags">{{tag.name}}</div>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="torrent">
+          ↑{{topic.torrent.seeder}}↓{{topic.torrent.leecher}} Э{{topic.torrent.saver}}
+        </div>
+        <div class="action">
+          <span> A </span>
+          <span> B </span>
+          <span> C </span>
+          <span> D </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

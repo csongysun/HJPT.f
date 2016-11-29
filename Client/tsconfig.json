@@ -17,17 +17,16 @@
     ],
     "paths": {
       "app" : ["./app" ],
-      "app-shared": [ "./shared" ],
-      "app-containers": [ "./containers" ],
-      "app-components": [ "./components" ],
-      "app-services": ["./services"],
-      "app-models": ["./models"],
-      "app-utils": ["./utils"],
+      "app-containers": [ "./app/containers" ],
+      "app-components": [ "./app/components" ],
+      "app-services": ["./app/services"],
+      "app-models": ["./app/models"],
+      "app-utils": ["./app/utils"],
       //redux
-      "app-actions": ["./redux/actions"],
-      "app-effects": ["./redux/effects"],
-      "app-reducers": ["./redux/reducers"],
-      "app-states": ["./redux/states"]
+      "app-actions": ["./app/redux/actions"],
+      "app-effects": ["./app/redux/effects"],
+      "app-reducers": ["./app/redux/reducers"],
+      "app-states": ["./app/redux/states"]
     }
   }
 }

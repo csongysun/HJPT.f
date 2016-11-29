@@ -1,0 +1,28 @@
+<div class="filter-panel card-panel">
+  <div class="filter">
+    <div class="filter-item" *ngFor="let cate of categories">
+      <i class=" large material-icons">{{cate.icon}}</i>
+      <md-checkbox disableRipple="true" [checked]="isIn(cate.id)" (change)="cateChange( cate.id,$event)" >{{cate.name}}</md-checkbox>
+    </div>
+    <!--<div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">电影</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class="large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">电视剧</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">动漫</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">综艺</md-checkbox>
+    </div>
+    <div class="filter-item">
+      <i class=" large material-icons">&#xE54D;</i>
+      <md-checkbox disableRipple="true">体育</md-checkbox>
+    </div>-->
+  </div>
+</div>
