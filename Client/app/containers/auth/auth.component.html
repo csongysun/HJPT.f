@@ -1,0 +1,7 @@
+<div class="sign-content">
+  <div class="toast" #toastContainer ></div>
+  <login-form [@routeAnimations]="astate" [form]="loginReq" [isBusy]="isLogging | async" (submit)="login()" (toggle)="toggle()">
+  </login-form>
+  <reg-form [@routeAnimations]="bstate" [form]="signUpReq" [isBusy]="isLogging | async" (submit)="reg()" (toggle)="toggle()">
+  </reg-form>
+</div>
