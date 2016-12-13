@@ -1,22 +1,24 @@
 <md-card>
   <md-toolbar color="primary">登录</md-toolbar>
   <md-card-content>
-    <form (ngSubmit)="login()" #loginForm="ngForm" class="form1">
-      <p>
+    <form (ngSubmit)="submit.emit()" #loginForm="ngForm" class="form1">
+      <div class="section">
         <md-input [(ngModel)]="UserKey" #userkey="ngModel" name="lUserKey" placeholder="账号" floatingPlaceholder="false"></md-input>
         <md-input [(ngModel)]="Password" #password="ngModel" name="lPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
-      </p>
-      <p>
+      </div>
+      <div class="section">
         <md-checkbox>15分钟后自动登出</md-checkbox>
         <br>
         <md-checkbox>限制只能使用本IP登陆</md-checkbox>
-      </p>
-      <p>
+      </div>
+      <div class="section">
         <button md-raised-button [disabled]="isBusy" type="submit">登录</button>
-        <a (click)="toggle()">注册</a>
-      </p>
-      <p>你还有 20 次尝试机会</p>
-      <p> 忘记密码？</p>
+        <span (click)="toSignUp()">注册</span>
+      </div>
+      <div class="section">
+        <span>你还有 20 次尝试机会</span><br>
+        <span>忘记密码</span>
+      </div>
     </form>
   </md-card-content>
 </md-card>

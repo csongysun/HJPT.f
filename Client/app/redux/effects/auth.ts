@@ -35,8 +35,23 @@ export class AuthEffects {
                 new appAction.FetchUserAction(user),
                 new authAction.loginSuccessAction(user),
                 replace('/')]))
-            .catch(error => Observable.of(new appAction.MassageAction({ key: 'auth', massage: error.body })))
+            .catch(error => {
+                return Observable.from([
+                    new authAction.loginFailedAction(),
+                    appAction.msg(error._body),
+                ])
+            })
         );
+    // @Effect()
+    // loginSuccess$: Observable<Action> = this.actions$
+    //     .ofType(authAction.ActionTypes.LOGIN_SUCCESS)
+    //     .mergeMap(action => this._auth._login(action.payload)
+    //         .switchMap(user => Observable.from([
+    //             new appAction.FetchUserAction(user),
+    //             new authAction.loginSuccessAction(user),
+    //             replace('/')]))
+    //         .catch(error => Observable.of(new appAction.MassageAction({ key: 'auth', massage: error.body })))
+    //     );
 
     // register => login_success
     //          => login_failed
@@ -46,10 +61,13 @@ export class AuthEffects {
         .debounceTime(1000)
         .map((action: authAction.registerAction) => action.payload)
         .mergeMap(payload => this._auth._register(payload)
-            .switchMap(user => Observable.from([
-                new authAction.loginSuccessAction(user)]))
+            .switchMap(() => Observable.from([
+                new authAction.registerSuccessAction(),
+                new appAction.MassageAction('注册成功'),
+                replace('auth/login')
+            ]))
             .catch(error => Observable.from([
-                new authAction.loginFailedAction]))
+                new authAction.loginFailedAction, new appAction.MassageAction(error._body)]))
         );
     // logout => fetch_user(null) AND go('/auth')
     @Effect()
@@ -71,7 +89,7 @@ export class AuthEffects {
             .map(user => [new authAction.refreshSuccessAction(user), new appAction.FetchUserAction(user), action.payload])
             .catch(error => Observable.from([
                 new authAction.logoutAction,
-                new appAction.MassageAction({ key: 'auth', massage: 'auth failed' })
+                new appAction.MassageAction('auth failed')
             ]))
         );
 }

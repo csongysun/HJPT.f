@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LoginReq, SignUpReq, Toast } from 'app-models';
@@ -11,9 +11,9 @@ import { authAction, appAction } from 'app-actions';
   styleUrls: ['./auth.component.scss'],
   animations: [
     trigger('routeAnimations', [
-      state('in', style({ right: 0, left: 0, opacity: 1 })),
-      state('bout', style({ right: 0, left: '30%', opacity: 0 })),
-      state('aout', style({ right: '30%', left: 0, opacity: 0 })),
+      state('in', style({ right: 0, left: 0, opacity: 1, display: 'block' })),
+      state('bout', style({ right: 0, left: '30%', opacity: 0, display: 'none' })),
+      state('aout', style({ right: '30%', left: 0, opacity: 0, display: 'none' })),
       transition('aout <=> in', animate('200ms ease')),
       transition('bout <=> in', animate('200ms ease')),
       transition('void => in', animate(0))
@@ -23,16 +23,16 @@ import { authAction, appAction } from 'app-actions';
 })
 export class AuthComponent implements OnInit, OnDestroy {
 
-  @ViewChild('toastContainer', { read: ViewContainerRef })
-  toastContainer: ViewContainerRef;
-  toast$: Observable<Toast>;
+  // @ViewChild('toastContainer', { read: ViewContainerRef })
+  // toastContainer: ViewContainerRef;
+  // toast$: Observable<Toast>;
 
   public astate: string;
   public bstate: string;
   private isLog: boolean;
 
-  public loginReq: LoginReq;
-  public signUpReq: SignUpReq;
+  public loginReq = new LoginReq();
+  public signUpReq = new SignUpReq();
 
   get isLogging(): Observable<boolean> {
     return this.store.let(fromRoot.getIsLogging);
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private snackBar: MdSnackBar,
+    private route: ActivatedRoute,
   ) {
     this.isLog = true;
     this.astate = 'in';
@@ -66,9 +66,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let config = new MdSnackBarConfig();
-    config.viewContainerRef = this.toastContainer;
-    this.store.dispatch(new appAction.AddToastConfigAction({ key: 'auth', config: config }));
+    this.route.params.subscribe((params: Params) => {
+      if ((params['key'] === 'login') !== this.isLog) this.toggle();
+    })
   }
   ngOnDestroy() {
   }

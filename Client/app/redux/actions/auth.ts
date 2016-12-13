@@ -11,6 +11,8 @@ export const ActionTypes = {
   LOGIN_FAILED: type('[Auth] Login Failed'),
   
   REG_USER: type('[Auth] Register'),
+  REG_SUCCESS: type('[Auth] Register Success'),
+  REG_FAILED: type('[Auth] Register Failed'),
 
   REFRESH_USER: type('[Auth] Refresh User'),
   REFRESH_SUCCESS: type('[Auth] Refresh User Success'),
@@ -38,6 +40,14 @@ export class registerAction implements Action {
   type = ActionTypes.REG_USER;
   constructor(public payload: SignUpReq) { }
 }
+export class registerSuccessAction implements Action {
+  type = ActionTypes.REG_SUCCESS;
+  constructor() { }
+}export class registerFailedAction implements Action {
+  type = ActionTypes.REG_FAILED;
+  constructor() { }
+}
+
 
 export class refreshAction implements Action {
   type = ActionTypes.REFRESH_USER;
@@ -64,6 +74,8 @@ export type Actions
   | loginSuccessAction
   | loginFailedAction
   | registerAction
+  | registerSuccessAction
+  | registerFailedAction
   | refreshAction
   | refreshSuccessAction
   | refreshFailedAction

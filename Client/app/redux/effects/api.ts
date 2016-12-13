@@ -32,7 +32,7 @@ export class ApiEffects {
         .switchMap((action) => {
             return this._app.getCategories()
                 .map(categories => [success(), new yardAction.CategoriesFulfilAction(categories)])
-                .catch(handleError(action, new appAction.MassageAction({ key: 'app', massage: 'get categories failed' })))
+                .catch(handleError(action, new appAction.MassageAction('get categories failed')))
         });
 
     @Effect()
@@ -45,14 +45,14 @@ export class ApiEffects {
                         return [success(), new topicAction.CollectionFulfilAction(rep.data)];
                     return [success(), new topicAction.SetPageCountAction(rep.meta), new topicAction.CollectionFulfilAction(rep.data)]
                 })
-                .catch(handleError(action, new appAction.MassageAction({ key: 'app', massage: 'get topics failed' })))
+                .catch(handleError(action, new appAction.MassageAction('get topics failed')))
         });
     @Effect()
     getRecentTopics$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.GET_RECENT_TOPICS)
         .switchMap(action => this._topic.GetRecentTopics()
             .map(topics => [success(), new topicAction.RecentTopicsFulfilAction(topics)])
-            .catch(handleError(action, new appAction.MassageAction({ key: 'app', massage: 'get topics failed' })))
+            .catch(handleError(action, new appAction.MassageAction('get topics failed')))
         );
 
     @Effect()
