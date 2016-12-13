@@ -17,25 +17,15 @@ import { Toast } from 'app-models';
 
 export class AppComponent implements OnInit {
 
-  // @ViewChild('toastContainer', { read: ViewContainerRef })
-  // toastContainer: ViewContainerRef;
-  // toast$: Observable<Toast>;
 
   constructor(
-    private snackBar: MdSnackBar,
     private store: Store<fromRoot.State>
   ) {
-    // this.toast$ = this.store.let(fromRoot.getToast);
-    // this.toast$.filter(toast => toast.massage !== '')
-    //   .subscribe((toast) => {
-    //     this.snackBar.open(toast.massage, null, toast.config);
-    //   })
+
   }
 
   ngOnInit() {
-    // let config = new MdSnackBarConfig();
-    // config.viewContainerRef = this.toastContainer;
-    // this.store.dispatch(new appAction.AddToastConfigAction({ key: 'app', config: config }));
+
   }
 }
 

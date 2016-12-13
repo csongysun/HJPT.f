@@ -11,7 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { BaseSharedModule, AppComponent, ROUTES } from 'app';
 import { reducer } from 'app-reducers';
-import { AuthEffects } from 'app-effects'
+import { AuthEffects, AppEffects } from 'app-effects'
 import {
   LoginFormComponent,
   RegFormComponent,
@@ -37,7 +37,10 @@ const MODULES = [
   BaseSharedModule,
   StoreModule.provideStore(reducer),
   RouterModule.forRoot(ROUTES),
+  
+  EffectsModule.run(AppEffects),
   EffectsModule.run(AuthEffects),
+
   RouterStoreModule.connectRouter(),
   StoreDevtoolsModule.instrumentOnlyWithExtension(),
 ];

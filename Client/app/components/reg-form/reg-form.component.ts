@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { SignUpReq } from 'app-models';
 @Component({
   selector: 'reg-form',
@@ -12,8 +14,12 @@ export class RegFormComponent implements OnInit {
   @Output() submit = new EventEmitter();
   @Output() toggle = new EventEmitter();
 
-  constructor() { }
-
+  constructor(
+    private router: Router,
+  ) { }
+  toLogin() {
+    this.router.navigate(['auth/login']);
+  }
   ngOnInit() {
 
   }

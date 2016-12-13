@@ -1,13 +1,13 @@
 
 export class LoginReq {
-    public Email: string;
-    public Password: string;
+    public email: string;
+    public password: string;
 }
 
 export class SignUpReq {
-    public UserName: string;
-    public Password: string;
-    public Email: string;
-    public StuID: string;
-    public InviteToken: string;
+    public nickname: string;
+    public password: string;
+    public email: string;
+    public stuId: string;
+    public inviteToken: string;
 }

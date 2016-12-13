@@ -61,7 +61,6 @@ export function getTopicState(state$: Observable<State>) {
 
 //App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
-export const getToast = compose(fromApp.getToast, getAppState);
 export const getSettingFilter = compose(fromApp.getSettingFilter, getAppState);
 
 //Auth selector

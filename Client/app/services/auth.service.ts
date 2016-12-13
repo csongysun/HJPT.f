@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { replace } from '@ngrx/router-store'
+import { replace, go } from '@ngrx/router-store'
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -36,10 +36,16 @@ export class AuthService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const url: string = state.url;
+    console.log('check canActivate');
     return this.store.let(fromRoot.getIsLogged).do(v => {
-      if (!v && localStorage.getItem('refreshToken'))
+      if (!v && localStorage.getItem('refreshToken')) {
+        console.log('success');
         this.store.dispatch(new authAction.refreshAction(replace(url)));
-      else replace('/auth');
+      }
+      else {
+        console.log('failed');
+        this.store.dispatch(go('/auth'));
+      }
     });
   }
 }

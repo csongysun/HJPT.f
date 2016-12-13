@@ -3,6 +3,10 @@ import { AuthComponent } from 'app-containers';
 
 export const ROUTES: Route[] = [
   { path: '', loadChildren: './containers/yard/yard.module#YardModule' },
-  { path: 'auth', component: AuthComponent },
+  { path: 'auth', redirectTo: 'auth/login', pathMatch: 'full'},
+  {
+    path: 'auth/:key',
+    component: AuthComponent
+  },
 ];
 

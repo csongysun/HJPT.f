@@ -4,9 +4,10 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/ignoreElements';
 
 import { Injectable } from '@angular/core';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +19,19 @@ import { appAction } from 'app-actions';
 export class AppEffects {
     constructor(
         private actions$: Actions,
+        private toast: MdSnackBar
     ) {
     }
+
+    @Effect()
+    massage$: Observable<Action> = this.actions$
+        .ofType(appAction.ActionTypes.MASSAGE)
+        .do(action => {
+            let ref = this.toast.open(action.payload);
+            setTimeout(function() {
+                ref.dismiss();
+            }, 2000);
+        })
+        .ignoreElements();
 
 }

@@ -12,29 +12,19 @@ export const ActionTypes = {
 };
 export class MassageAction implements Action {
   type = ActionTypes.MASSAGE;
-  constructor(public payload: { key: string, massage: string }) { }
-}
-export class SetToastConfigAction implements Action {
-  type = ActionTypes.SET_TOAST_CONFIG;
-  constructor(public payload?: string) { }
-}
-export class AddToastConfigAction implements Action {
-  type = ActionTypes.ADD_TOAST_CONFIG;
-  constructor(public payload: { key: string, config: MdSnackBarConfig }) { }
+  constructor(public payload: string) { }
 }
 export class FetchUserAction implements Action {
   type = ActionTypes.FETCH_USER;
   constructor(public payload: User) { }
 }
 
-export function msg(key: string, massage: string) {
-  return new MassageAction({ key: key, massage: massage });
+export function msg(massage: string) {
+  return new MassageAction(massage);
 }
 
 export type Actions
   = MassageAction
-  | SetToastConfigAction
-  | AddToastConfigAction
   | FetchUserAction
 
 
