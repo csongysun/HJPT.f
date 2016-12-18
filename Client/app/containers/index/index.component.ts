@@ -24,7 +24,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.store.dispatch(new yardAction.SetTitleAction('主页'));
     this.timer = setInterval(() => {
       this.store.dispatch(new apiAction.GetRecentTopicsAction());
-    }, 5000)
+    }, 60000)
   }
   ngOnDestroy() {
     clearInterval(this.timer);

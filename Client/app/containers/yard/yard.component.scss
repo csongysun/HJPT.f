@@ -55,6 +55,11 @@ a[md-list-item] {
     font-family: inherit !important;
   }
 }
+md-nav-list .active{
+  cursor: none;
+  pointer-events: none;
+  background: orange;
+}
 
 
 

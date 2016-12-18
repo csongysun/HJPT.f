@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+
 import { LoginReq, SignUpReq, Toast } from 'app-models';
 import * as fromRoot from 'app-reducers';
 import { authAction, appAction } from 'app-actions';
@@ -58,11 +59,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.store.dispatch(new authAction.loginAction(this.loginReq));
+    this.store.dispatch(new authAction.LoginAction(this.loginReq));
   }
 
   register() {
-    this.store.dispatch(new authAction.registerAction(this.signUpReq));
+    this.store.dispatch(new authAction.RegisterAction(this.signUpReq));
   }
 
   ngOnInit() {

@@ -1,11 +1,11 @@
 <md-card>
   <md-toolbar color="primary">注册</md-toolbar>
   <md-card-content>
-    <form (ngSubmit)="submit.emit()" #regForm="ngForm" class="form1">
+    <form (ngSubmit)="submit.emit()" #regForm="ngForm">
       <p>
-        <md-input [(ngModel)]="form.nickname" #email="ngModel" name="rEmail" type="email" placeholder="邮箱" floatingPlaceholder="false"></md-input>
-        <md-input [(ngModel)]="form.password" #password="ngModel" name="rPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
-        <md-input [(ngModel)]="form.nickname" #userkey="ngModel" name="rUserKey" placeholder="用户名" floatingPlaceholder="false"></md-input>
+        <md-input [(ngModel)]="form.email" name="rEmail" type="email" placeholder="邮箱" floatingPlaceholder="false"></md-input>
+        <md-input [(ngModel)]="form.password" name="rPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
+        <md-input [(ngModel)]="form.nickname" name="rUserKey" placeholder="昵称" floatingPlaceholder="false"></md-input>
       </p>
       <p>
         <md-checkbox>Rule1</md-checkbox>

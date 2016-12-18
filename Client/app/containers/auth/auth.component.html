@@ -2,6 +2,6 @@
 <div class="container">
   <login-form [@routeAnimations]="astate" [form]="loginReq" [isBusy]="isLogging | async" (submit)="login()">
   </login-form>
-  <reg-form [@routeAnimations]="bstate" [form]="signUpReq" [isBusy]="isLogging | async" (submit)="reg()">
+  <reg-form [@routeAnimations]="bstate" [form]="signUpReq" [isBusy]="isLogging | async" (submit)="register()">
   </reg-form>
 </div>

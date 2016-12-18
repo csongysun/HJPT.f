@@ -1,3 +1,4 @@
+import { Topic } from './topic'
 
 export class LoginReq {
     public email: string;
@@ -8,6 +9,9 @@ export class SignUpReq {
     public nickname: string;
     public password: string;
     public email: string;
-    public stuId: string;
-    public inviteToken: string;
+}
+
+export class TopicsRep {
+    meta: number;
+    data: Array<Topic>;
 }
