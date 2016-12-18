@@ -61,7 +61,9 @@ export function getTopicState(state$: Observable<State>) {
 
 //App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
+export const getCurrentRoles = compose(fromApp.getCurrentRoles, getAppState);
 export const getSettingFilter = compose(fromApp.getSettingFilter, getAppState);
+
 
 //Auth selector
 export const getIsLogging = compose(fromAuth.getIsLogging, getAuthState);

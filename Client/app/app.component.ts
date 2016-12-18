@@ -5,8 +5,6 @@ import { Store } from '@ngrx/store';
 
 import * as fromRoot from 'app-reducers';
 import { appAction } from 'app-actions';
-import { Toast } from 'app-models';
-// import { isBrowser, isNode } from 'angular2-universal';
 
 @Component({
   selector: 'app',
@@ -21,7 +19,6 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store<fromRoot.State>
   ) {
-
   }
 
   ngOnInit() {

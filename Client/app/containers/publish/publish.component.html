@@ -12,7 +12,7 @@
       </div>
       <div class="section">
         <h6>类型</h6>
-        <div style="dipslay: flex">
+        <div style="display: flex">
           <select [(ngModel)]="selectedParentCategory" name="parentCategory" >
             <option [value]="category.id" *ngFor="let category of parentCategories" >{{category.name}}</option>
           </select>

@@ -7,7 +7,6 @@ import * as fromRoot from 'app-reducers';
 import { yardAction } from 'app-actions';
 import { TopicFilter, Category } from 'app-models';
 
-import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'topic-filter',

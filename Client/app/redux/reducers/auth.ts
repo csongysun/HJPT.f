@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { ActionReducer, Action } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 import { authAction } from 'app-actions';
 
 export interface State {
@@ -17,14 +17,16 @@ export const reducer: ActionReducer<State> = (state = initialState, action: auth
         case authAction.ActionTypes.LOGIN_USER:
         case authAction.ActionTypes.REG_USER:
             return Object.assign({}, state, { isLogging: true });
-        case authAction.ActionTypes.LOGIN_FAILED:
-        case authAction.ActionTypes.LOGOUT_USER: {
+        case authAction.ActionTypes.LOGOUT_SUCCESS: {
             localStorage.removeItem('refreshToken');
             sessionStorage.removeItem('accessToken');
             return { isLogging: false, loggedIn: false };
         }
-        case authAction.ActionTypes.LOGIN_SUCCESS:
-        case authAction.ActionTypes.REFRESH_SUCCESS: {
+        case authAction.ActionTypes.LOGIN_FAILED:
+        case authAction.ActionTypes.REG_FAILED: {
+            return Object.assign({}, state, { isLogging: false });
+        }
+        case authAction.ActionTypes.LOGIN_SUCCESS: {
             const user = action.payload;
             localStorage.setItem('refreshToken', user.refreshToken);
             sessionStorage.setItem('accessToken', user.token);

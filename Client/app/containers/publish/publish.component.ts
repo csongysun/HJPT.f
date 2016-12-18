@@ -9,6 +9,8 @@ import { yardAction } from 'app-actions';
 import { AppClientService } from 'app-services';
 import { Topic, Category } from 'app-models';
 
+import 'app-rxjs';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
@@ -17,7 +19,7 @@ import { Topic, Category } from 'app-models';
 })
 export class PublishComponent implements OnInit, OnDestroy {
 
-  topic: Topic;
+  topic: Topic = new Topic();
   selectedParentCategory: Category = new Category();
   parentCategories: Array<Category>;
   childCategories: Array<Category>;
@@ -38,7 +40,7 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   private cates$$: Subscription;
   ngOnInit() {
-    this.store.dispatch(new yardAction.SetTitleAction('种子'));
+    this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
     this.cates$$ = this.store.let(fromRoot.getCategories).takeLast(1)
       .subscribe(v => {
         this.parentCategories = v.filter(x => x.id % 100 === 0);

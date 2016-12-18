@@ -1,10 +1,3 @@
-// ** HttpGateway **
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/takeLast';
 
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, RequestMethod, URLSearchParams } from '@angular/http';
@@ -26,8 +19,7 @@ export class ApiGatewayService {
     constructor(
         private http: Http,
         private cache: CacheService,
-    ) {
-    }
+    ) { }
 
     // Http overrides 
     // -------------------
@@ -91,10 +83,13 @@ export class ApiGatewayService {
         options.params = (options.params || {});
         options.data = (options.data || {});
 
-        this.interpolateUrl(options);
-        this.addXsrfToken(options);
-        this.addContentType(options);
-        this.addBearerToken(options);
+        //this.interpolateUrl(options);
+        //this.addXsrfToken(options);
+        if (options.method !== RequestMethod.Get) {
+            this.addContentType(options);
+        }
+                this.addBearerToken(options);
+        this.addCors(options);
 
         let requestOptions = new RequestOptions();
         requestOptions.method = options.method;

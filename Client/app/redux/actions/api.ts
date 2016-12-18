@@ -38,7 +38,6 @@ export class GetCategoriesAction implements Action {
     type = ActionTypes.GET_CATEGORIES;
     constructor() { }
 }
-
 export class GetTopicsAction implements Action {
     type = ActionTypes.GET_TOPICS;
     constructor(public payload?: TopicFilter) { }

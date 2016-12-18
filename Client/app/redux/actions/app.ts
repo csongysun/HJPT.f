@@ -5,10 +5,10 @@ import { User, LoginReq } from 'app-models';
 import { Observable } from 'rxjs/Observable';
 
 export const ActionTypes = {
-  MASSAGE: type('[App] Error'),
-  SET_TOAST_CONFIG: type('[App] Set SnackBar'),
-  ADD_TOAST_CONFIG: type('[App] Add Toast Config'),
+  MASSAGE: type('[App] Massage'),
   FETCH_USER: type('[App] Fetch User'),
+  FETCH_ROLES: type('[App] Fetch Roles'),
+  //FETCH_CLAIMS: type('[App] Fetch Claims'),
 };
 export class MassageAction implements Action {
   type = ActionTypes.MASSAGE;
@@ -18,6 +18,14 @@ export class FetchUserAction implements Action {
   type = ActionTypes.FETCH_USER;
   constructor(public payload: User) { }
 }
+export class FetchRolesAction implements Action {
+  type = ActionTypes.FETCH_ROLES;
+  constructor(public payload: Array<string>) { }
+}
+// export class FetchClaimsAction implements Action {
+//   type = ActionTypes.FETCH_CLAIMS;
+//   constructor(public payload: Array<string>) { }
+// }
 
 export function msg(massage: string) {
   return new MassageAction(massage);
@@ -26,6 +34,7 @@ export function msg(massage: string) {
 export type Actions
   = MassageAction
   | FetchUserAction
+  | FetchRolesAction
 
 
 

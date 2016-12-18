@@ -6,8 +6,6 @@ import * as fromRoot from 'app-reducers';
 import { yardAction, topicAction } from 'app-actions';
 import { Topic, TopicFilter, Category } from 'app-models';
 
-import 'rxjs/add/operator/distinctUntilChanged';
-
 @Component({
   selector: 'app-torrent',
   templateUrl: './torrent.component.html',

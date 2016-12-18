@@ -3,8 +3,8 @@
   <md-card-content>
     <form (ngSubmit)="submit.emit()" #loginForm="ngForm" class="form1">
       <div class="section">
-        <md-input [(ngModel)]="UserKey" #userkey="ngModel" name="lUserKey" placeholder="账号" floatingPlaceholder="false"></md-input>
-        <md-input [(ngModel)]="Password" #password="ngModel" name="lPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
+        <md-input [(ngModel)]="form.email" name="lUserKey" placeholder="账号" floatingPlaceholder="false"></md-input>
+        <md-input [(ngModel)]="form.password" name="lPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
       </div>
       <div class="section">
         <md-checkbox>15分钟后自动登出</md-checkbox>

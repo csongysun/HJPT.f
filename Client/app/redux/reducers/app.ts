@@ -7,6 +7,7 @@ import { appAction } from 'app-actions';
 
 export interface State {
     user: User;
+    roles: Array<string>;
     setting: {
         filter: {
             pageTake: number,
@@ -14,17 +15,11 @@ export interface State {
         }
     };
 }
-export interface AppStateRecord extends TypedRecord<AppStateRecord>, State { }
-export const appStateFactory = makeTypedFactory<State, AppStateRecord>({
+const initialState: State = {
     user: null,
+    roles: [],
     setting: defaultSetting()
-});
-function makeInitialState() {
-    return appStateFactory({
-        user: null,
-        setting: defaultSetting()
-    });
-}
+};
 function defaultSetting() {
     return {
         filter: {
@@ -34,19 +29,28 @@ function defaultSetting() {
     };
 }
 
-export const reducer: ActionReducer<AppStateRecord> = (state = makeInitialState(), action: appAction.Actions) => {
+export const reducer: ActionReducer<State> = (state = initialState, action: appAction.Actions) => {
     switch (action.type) {
-        case appAction.ActionTypes.FETCH_USER:
-            return state.merge({ user: User });
+        case appAction.ActionTypes.FETCH_USER: {
+            return Object.assign({}, state, { user: action.payload });
+        }
+        case appAction.ActionTypes.FETCH_ROLES: {
+            return Object.assign({}, state, { roles: action.payload });
+        }
         default:
             return state;
     }
 };
 
-export function getCurrentUser(state$: Observable<AppStateRecord>) {
+
+export function getCurrentUser(state$: Observable<State>) {
     return state$.select(state => state.user);
 }
 
-export function getSettingFilter(state$: Observable<AppStateRecord>) {
+export function getCurrentRoles(state$: Observable<State>) {
+    return state$.select(state => state.roles);
+}
+
+export function getSettingFilter(state$: Observable<State>) {
     return state$.select(state => state.setting.filter);
 }

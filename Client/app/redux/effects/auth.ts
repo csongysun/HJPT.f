@@ -1,10 +1,3 @@
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/let';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/from';
 
 import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
@@ -15,6 +8,7 @@ import { go, back, replace } from '@ngrx/router-store';
 import { authAction, appAction } from 'app-actions';
 import { AuthService } from 'app-services';
 
+import 'app-rxjs';
 @Injectable()
 export class AuthEffects {
     constructor(
@@ -29,67 +23,74 @@ export class AuthEffects {
     login$: Observable<Action> = this.actions$
         .ofType(authAction.ActionTypes.LOGIN_USER)
         .debounceTime(1000)
-        .map((action: authAction.loginAction) => action.payload)
+        .map((action: authAction.LoginAction) => action.payload)
         .mergeMap(payload => this._auth._login(payload)
             .switchMap(user => Observable.from([
-                new appAction.FetchUserAction(user),
-                new authAction.loginSuccessAction(user),
+                new authAction.LoginSuccessAction(user),
+                new appAction.MassageAction('Login Success'),
                 replace('/')]))
             .catch(error => {
                 return Observable.from([
-                    new authAction.loginFailedAction(),
+                    new authAction.LoginFailedAction(),
                     appAction.msg(error._body),
                 ])
             })
         );
-    // @Effect()
-    // loginSuccess$: Observable<Action> = this.actions$
-    //     .ofType(authAction.ActionTypes.LOGIN_SUCCESS)
-    //     .mergeMap(action => this._auth._login(action.payload)
-    //         .switchMap(user => Observable.from([
-    //             new appAction.FetchUserAction(user),
-    //             new authAction.loginSuccessAction(user),
-    //             replace('/')]))
-    //         .catch(error => Observable.of(new appAction.MassageAction({ key: 'auth', massage: error.body })))
-    //     );
+    @Effect()
+    loginSuccess$: Observable<Action> = this.actions$
+        .ofType(authAction.ActionTypes.LOGIN_SUCCESS)
+        .map((action: authAction.LoginSuccessAction) => action.payload)
+        .mergeMap(user => Observable.from([
+            new appAction.FetchUserAction(user),
+        ]));
 
-    // register => login_success
-    //          => login_failed
     @Effect()
     register$: Observable<Action> = this.actions$
         .ofType(authAction.ActionTypes.REG_USER)
         .debounceTime(1000)
-        .map((action: authAction.registerAction) => action.payload)
+        .map((action: authAction.RegisterAction) => action.payload)
         .mergeMap(payload => this._auth._register(payload)
             .switchMap(() => Observable.from([
-                new authAction.registerSuccessAction(),
                 new appAction.MassageAction('注册成功'),
-                replace('auth/login')
+                new authAction.LoginAction({ email: payload.email, password: payload.password })
             ]))
             .catch(error => Observable.from([
-                new authAction.loginFailedAction, new appAction.MassageAction(error._body)]))
+                new authAction.LoginFailedAction, new appAction.MassageAction(error._body)]))
         );
-    // logout => fetch_user(null) AND go('/auth')
     @Effect()
-    logout$: Observable<any> = this.actions$
+    logout$: Observable<Action> = this.actions$
         .ofType(authAction.ActionTypes.LOGOUT_USER)
-        .mergeMap(() => this._auth._logout()
-            .switchMap(user => Observable.from([
-                new appAction.FetchUserAction(null),
-                replace('/auth')
-            ]))
+        .switchMap(() =>
+            this._auth._logout()
+                .switchMap(() => Observable.from([
+                    new authAction.LogoutSuccessAction(),
+                    new appAction.FetchUserAction(null),
+                    new appAction.MassageAction('Logout success'),
+                    replace('/auth')
+                ]))
+                .catch(error => Observable.from([
+                    new appAction.MassageAction('logout error') as Action,
+                ]))
         );
     // refresh_user -> refresh_success 
     //              -> logout
     @Effect()
     refreshUser$: Observable<Action> = this.actions$
         .ofType(authAction.ActionTypes.REFRESH_USER)
-        .debounceTime(200)
-        .switchMap((action: authAction.refreshAction) => this._auth._refresh()
-            .map(user => [new authAction.refreshSuccessAction(user), new appAction.FetchUserAction(user), action.payload])
-            .catch(error => Observable.from([
-                new authAction.logoutAction,
-                new appAction.MassageAction('auth failed')
-            ]))
-        );
+        .switchMap(action => {
+            let rtoken = localStorage.getItem('refreshToken');
+            if (!rtoken) {
+                return Observable.of(new appAction.FetchUserAction(null) as Action);
+            }
+            return this._auth._refresh(rtoken)
+                .switchMap(user => {
+                    var actions: Action[] = [new authAction.LoginSuccessAction(user)];
+                    if (action.payload) actions.push(action.payload);
+                    return Observable.from(actions);
+                })
+                .catch(error => Observable.from([
+                    new authAction.LogoutAction as Action,
+                    new appAction.MassageAction('auth failed')
+                ]))
+        });
 }

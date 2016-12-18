@@ -1,10 +1,3 @@
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/let';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/from';
 
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -25,35 +18,6 @@ export class ApiEffects {
         private store: Store<fromRoot.State>,
 
     ) { }
-
-    @Effect()
-    getCategories$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.GET_CATEGORIES)
-        .switchMap((action) => {
-            return this._app.getCategories()
-                .map(categories => [success(), new yardAction.CategoriesFulfilAction(categories)])
-                .catch(handleError(action, new appAction.MassageAction('get categories failed')))
-        });
-
-    @Effect()
-    getTopics$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.GET_TOPICS)
-        .switchMap((action: apiAction.GetTopicsAction) => {
-            return this._topic.GetTopics(action.payload.toQuery())
-                .map(rep => {
-                    if (rep.meta)
-                        return [success(), new topicAction.CollectionFulfilAction(rep.data)];
-                    return [success(), new topicAction.SetPageCountAction(rep.meta), new topicAction.CollectionFulfilAction(rep.data)]
-                })
-                .catch(handleError(action, new appAction.MassageAction('get topics failed')))
-        });
-    @Effect()
-    getRecentTopics$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.GET_RECENT_TOPICS)
-        .switchMap(action => this._topic.GetRecentTopics()
-            .map(topics => [success(), new topicAction.RecentTopicsFulfilAction(topics)])
-            .catch(handleError(action, new appAction.MassageAction('get topics failed')))
-        );
 
     @Effect()
     retryActions$: Observable<Action> = this.actions$
@@ -92,5 +56,5 @@ function handleError(currentAction: Action, errorSenderAction: Action) {
     }
 }
 function retry() {
-    return new authAction.refreshAction(new apiAction.RetryAction());
+    return new authAction.RefreshAction(new apiAction.RetryAction());
 }

@@ -22,6 +22,7 @@
       "app-services": ["./app/services"],
       "app-models": ["./app/models"],
       "app-utils": ["./app/utils"],
+      "app-rxjs": ["./app/utils/rxjs"],
       //redux
       "app-actions": ["./app/redux/actions"],
       "app-effects": ["./app/redux/effects"],
