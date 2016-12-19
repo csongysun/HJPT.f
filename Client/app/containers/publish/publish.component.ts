@@ -20,6 +20,10 @@ import 'app-rxjs';
 export class PublishComponent implements OnInit, OnDestroy {
 
   topic: Topic = new Topic();
+
+
+
+
   selectedParentCategory: Category = new Category();
   parentCategories: Array<Category>;
   childCategories: Array<Category>;
@@ -31,9 +35,9 @@ export class PublishComponent implements OnInit, OnDestroy {
   $publishForm: FormData;
 
   constructor(
-    private store: Store<fromRoot.State>
-  ) {
-  }
+    private store: Store<fromRoot.State>,
+    private app: AppClientService
+  ) { }
   publish() {
     this.$publishForm = new FormData(this.publishForm.nativeElement);
   }

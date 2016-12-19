@@ -1,0 +1,52 @@
+.app-yard {
+  height: 100%;
+}
+
+.yard-root {
+  height: 100%;
+}
+
+.yard-content {
+  padding: 20px;
+}
+
+md-sidenav-layout {
+  transform: none;
+}
+
+md-sidenav-layout.md-sidenav-content {
+  transform: none !important;
+}
+
+md-sidenav {
+  height: 100%;
+  top: 0;
+  width: 240px;
+  max-width: 400px;
+  z-index: 999;
+  overflow: auto;
+  -ms-overflow-style: none;
+}
+
+.sidenav::-webkit-scrollbar {
+  display: none;
+}
+
+a[md-list-item] {
+  display: block;
+  div.md-list-item {
+    font-family: inherit !important;
+  }
+}
+md-nav-list .active{
+  cursor: none;
+  pointer-events: none;
+  background: orange;
+}
+
+
+
+.appbar {
+  z-index: 997;
+  position: relative;
+}

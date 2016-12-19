@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from 'app-reducers';
 import { yardAction, apiAction } from 'app-actions';
 import { Topic } from 'app-models';
+import { PublishService } from 'app-services';
 @Component({
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
@@ -14,7 +15,8 @@ export class IndexComponent implements OnInit, OnDestroy {
   recentTopics$: Observable<Array<Topic>>;
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private publish: PublishService,
   ) {
     this.recentTopics$ = store.let(fromRoot.getRecentTopics);
   }

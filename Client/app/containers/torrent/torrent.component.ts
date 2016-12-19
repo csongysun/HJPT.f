@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from 'app-reducers';
 import { yardAction, topicAction } from 'app-actions';
 import { Topic, TopicFilter, Category } from 'app-models';
+import { AppClientService } from 'app-services';
 
 @Component({
   selector: 'app-torrent',
@@ -32,10 +33,11 @@ export class TorrentComponent implements OnInit {
   }
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private app: AppClientService
   ) {
-    this.topics$ = this.store.let(fromRoot.getTopicCollection).distinctUntilChanged();
-    this.categories$ = store.let(fromRoot.getCategories).takeLast(1);
+    this.topics$ = store.let(fromRoot.getTopicCollection).distinctUntilChanged();
+    this.categories$ = app.Categories$;
     this.pageCount$ = store.let(fromRoot.getPageCount).takeLast(1);
   }
 

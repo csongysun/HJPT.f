@@ -15,7 +15,6 @@ const roleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/r
 @Injectable()
 export class AppEffects {
 
-
     constructor(
         private actions$: Actions,
         private toast: MdSnackBar

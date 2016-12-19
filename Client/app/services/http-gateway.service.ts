@@ -85,10 +85,9 @@ export class ApiGatewayService {
 
         //this.interpolateUrl(options);
         //this.addXsrfToken(options);
-        if (options.method !== RequestMethod.Get) {
-            this.addContentType(options);
-        }
-                this.addBearerToken(options);
+        this.addContentType(options);
+
+        this.addBearerToken(options);
         this.addCors(options);
 
         let requestOptions = new RequestOptions();
@@ -98,6 +97,8 @@ export class ApiGatewayService {
         requestOptions.search = this.buildUrlSearchParams(options.params);
         requestOptions.body = JSON.stringify(options.data);
 
+        //console.log(requestOptions);
+        
         return this.http.request(options.url, requestOptions)
             .map(value => value.json() as T);
     }

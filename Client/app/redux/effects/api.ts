@@ -20,6 +20,13 @@ export class ApiEffects {
     ) { }
 
     @Effect()
+    getCategories$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.GET_CATEGORIES)
+        .first()
+        .do(() => console.log('cates'));
+
+
+    @Effect()
     retryActions$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.RETRY)
         .mergeMap(action => this.store.let(fromRoot.getFailedActions)
