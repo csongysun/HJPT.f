@@ -12,11 +12,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
+import {
+    UserInfoComponent
+} from 'app-components';
+import {
+} from 'app-services';
+
 @NgModule({
     imports: [
         CommonModule,
-        HttpModule,
-        MaterialModule.forRoot()
+    ],
+    declarations: [
+        UserInfoComponent,
+    ],
+    providers:[
     ],
     exports: [
         CommonModule,
@@ -24,6 +33,8 @@ import { MaterialModule } from '@angular/material';
         ReactiveFormsModule,
         HttpModule,
         MaterialModule,
+
+        UserInfoComponent,
     ]
 })
 export class BaseSharedModule {

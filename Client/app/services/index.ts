@@ -5,4 +5,7 @@ export * from './topic.service';
 export * from './app-client.service';
 //export * from './torrent.service.ts';
 export * from './layout.service';
+export * from './publish.service';
+// admin
+export * from './guard/admin-guard';
 

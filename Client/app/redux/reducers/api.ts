@@ -28,6 +28,12 @@ export const reducer: ActionReducer<State> = (state = initialState, action: apiA
         case apiAction.ActionTypes.RETRY: {
             return Object.assign({}, state, { hasRetried: true });
         }
+
+        case apiAction.ActionTypes.GET_CATEGORIES: {
+            
+        }
+
+
         default:
             return state;
     }

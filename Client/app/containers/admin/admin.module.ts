@@ -6,46 +6,30 @@ import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
+import { AdminComponent } from './admin.component';
 import { BaseSharedModule } from 'app';
+
 import {
-  PagingComponent,
-  TopicFilterComponent,
-  TopicScrollerComponent,
-  TorrentCardComponent,
-  TorrentListComponent,
-  UserInfoComponent
 } from 'app-components';
 import {
-  DetailComponent,
-  IndexComponent,
-  PublishComponent,
-  TorrentComponent,
-  YardComponent
+  AdminIndexComponent
 } from 'app-containers';
 import {
-  PublishService
+  AdminGuard
 } from 'app-services';
 
-import { ROUTES } from './yard-routes';
+import { ROUTES } from './admin-routes';
 
 const MODULES = [
   BaseSharedModule,
   RouterModule.forChild(ROUTES),
 ];
 const COMPONENTS = [
-  PagingComponent,
-  TopicFilterComponent,
-  TopicScrollerComponent,
-  TorrentCardComponent,
-  TorrentListComponent,
-  DetailComponent,
-  IndexComponent,
-  PublishComponent,
-  TorrentComponent,
-  YardComponent
+  AdminComponent,
+  AdminIndexComponent,
 ];
-const SERVICES = [
-  PublishService
+const PROVIDERS = [
+  AdminGuard
 ];
 
 @NgModule({
@@ -56,7 +40,7 @@ const SERVICES = [
     ...COMPONENTS
   ],
   providers: [
-    ...SERVICES
-  ]
+    ...PROVIDERS
+  ],
 })
-export class YardModule { }
+export class AdminModule { }

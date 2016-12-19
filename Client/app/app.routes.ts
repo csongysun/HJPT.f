@@ -8,5 +8,7 @@ export const ROUTES: Route[] = [
     path: 'auth/:key',
     component: AuthComponent
   },
+  { path: '', loadChildren: './containers/admin/admin.module#AdminModule' },
+
 ];
 

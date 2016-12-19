@@ -8,11 +8,10 @@ import { LayoutService, Layout, AppClientService } from 'app-services';
 import { User, Category } from 'app-models';
 
 @Component({
-  selector: 'app-yard',
-  templateUrl: './yard.component.html',
-  styleUrls: ['./yard.component.scss', './_yard-theme.scss']
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
-export class YardComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
   get isWide(): boolean {
     return this.layout.currentLayout == Layout.Wide;
