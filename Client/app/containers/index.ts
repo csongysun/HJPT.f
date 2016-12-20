@@ -9,4 +9,4 @@ export * from './detail/detail.component';
 // admin
 export * from './admin/admin.component';
 export * from './admin-index/admin-index.component';
-
+export * from './admin-manage/admin-manage.component';

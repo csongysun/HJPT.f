@@ -9,15 +9,20 @@ export const auth = {
     register: baseUrl + 'auth/signup',
 }
 
-// topic
-export const topic = {
-    recent: baseUrl + 'topic/recent',
-    collection: baseUrl + 'topic'
+export const content = {
+    category: baseUrl + 'category',
+    topic: baseUrl + 'topic',
+    recentTopic: baseUrl + 'topic/recent',
 }
 
 // admin
 export const admin = {
     check: baseUrl + 'admin',
+    category: {
+        add: baseUrl + 'admin/category',
+        edit: baseUrl + 'admin/category',
+        delete: baseUrl + 'admin/category'
+    }
 }
 
 

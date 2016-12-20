@@ -1,7 +1,13 @@
 
 import { Action } from '@ngrx/store';
+
+
 import { type } from 'app-utils';
-import { Topic, TopicFilter } from 'app-models';
+import {
+    Topic,
+    TopicFilter,
+    Category,
+} from 'app-models';
 import { Observable } from 'rxjs/Observable';
 
 export const ActionTypes = {
@@ -15,6 +21,11 @@ export const ActionTypes = {
     GET_TOPICS: type('[Api] Get Topics'),
     GET_RECENT_TOPICS: type('[Api] Get Recent Topics'),
     // CLEAE_USER: type('[App] Clear User')
+
+    // admin
+    POST_CATEGORY: type('[Api] Post Category'),
+    PUT_CATEGORY: type('[Api] Put Category'),
+    DELETE_CATEGORY: type('[Api] Delete Category'),
 };
 
 export class RequestSuccessAction implements Action {
@@ -47,6 +58,19 @@ export class GetRecentTopicsAction implements Action {
     constructor() { }
 }
 
+export class PostCategoryAction implements Action {
+    type = ActionTypes.POST_CATEGORY;
+    constructor(public payload: Category) { }
+}
+export class PutCategoryAction implements Action {
+    type = ActionTypes.PUT_CATEGORY;
+    constructor(public payload: { oldId: number, category: Category }) { }
+}
+export class DeleteCategoryAction implements Action {
+    type = ActionTypes.DELETE_CATEGORY;
+    constructor(public payload: number) { }
+}
+
 
 export type Actions
     = RequestSuccessAction
@@ -55,3 +79,6 @@ export type Actions
     | RetryAction
     | GetCategoriesAction
     | GetTopicsAction
+    | PostCategoryAction
+    | PutCategoryAction
+    | DeleteCategoryAction

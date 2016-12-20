@@ -13,15 +13,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
 import { reducer } from 'app-reducers';
-import { AuthEffects, AppEffects } from 'app-effects'
+import { AuthEffects, AppEffects, ApiEffects } from 'app-effects'
 import { ROUTES } from '../app.routes';
 import {
     CacheService,
     LayoutService,
-    TopicService,
+    //TopicService,
     ApiGatewayService,
     AuthService,
     AppClientService,
+    ApiFactoryService,
 } from 'app-services';
 import {
     LoginFormComponent,
@@ -38,6 +39,7 @@ const MODULES = [
     StoreModule.provideStore(reducer),
     EffectsModule.run(AppEffects),
     EffectsModule.run(AuthEffects),
+    EffectsModule.run(ApiEffects),
     RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 ];
@@ -49,10 +51,10 @@ const COMPONENTS = [
 const SERVICES = [
     CacheService,
     LayoutService,
-    TopicService,
     ApiGatewayService,
     AuthService,
     AppClientService,
+    ApiFactoryService,
 ]
 @NgModule({
     imports: [
@@ -78,7 +80,7 @@ export class CoreModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: CoreModule,
-            providers: [ ]
+            providers: []
         };
     }
 }

@@ -21,19 +21,18 @@ import {
 @NgModule({
     imports: [
         CommonModule,
+        MaterialModule,
     ],
     declarations: [
         UserInfoComponent,
     ],
-    providers:[
-    ],
     exports: [
         CommonModule,
+        MaterialModule,
+        
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        MaterialModule,
-
         UserInfoComponent,
     ]
 })

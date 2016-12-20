@@ -10,9 +10,11 @@ import { AdminComponent } from './admin.component';
 import { BaseSharedModule } from 'app';
 
 import {
+  CategoryManageComponent
 } from 'app-components';
 import {
-  AdminIndexComponent
+  AdminIndexComponent,
+  AdminManageComponent,
 } from 'app-containers';
 import {
   AdminGuard
@@ -27,6 +29,9 @@ const MODULES = [
 const COMPONENTS = [
   AdminComponent,
   AdminIndexComponent,
+  AdminManageComponent,
+
+  CategoryManageComponent,
 ];
 const PROVIDERS = [
   AdminGuard
