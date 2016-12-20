@@ -1,0 +1,85 @@
+
+ul {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+
+li div {
+  display: flex;
+  width: 100%;
+  line-height: 2em;
+}
+
+li span,
+li input {
+  font-size: small;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 0;
+  outline: none;
+  line-height: inherit;
+  width: 100%;
+  padding: 0;
+  box-sizing: content-box;
+  transition: all 0.3s;
+}
+
+input:focus {
+  border-bottom: 1px solid #26a69a;
+  box-shadow: 0 1px 0 0 #26a69a;
+}
+
+li {
+  background-color: #EEE;
+  margin: .5em;
+  border-radius: 4px;
+  display: flex;
+}
+
+li span.left,
+li input.left {
+  color: white;
+  background-color: #607D8B;
+  position: relative;
+  left: -1px;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+  width: 2.4em;
+  text-align: center;
+}
+
+button {
+  background-color: #eee;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+  padding: 0;
+  min-width: auto;
+  line-height: inherit;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+button.right {
+  margin-left: .6em;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+button.delete {
+  margin-right: .8em;
+  background-color: gray !important;
+  color: white;
+}
+
+button.add {
+    left: 10px;
+}

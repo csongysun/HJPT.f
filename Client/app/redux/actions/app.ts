@@ -22,10 +22,6 @@ export class FetchRolesAction implements Action {
   type = ActionTypes.FETCH_ROLES;
   constructor(public payload: Array<string>) { }
 }
-// export class FetchClaimsAction implements Action {
-//   type = ActionTypes.FETCH_CLAIMS;
-//   constructor(public payload: Array<string>) { }
-// }
 
 export function msg(massage: string) {
   return new MassageAction(massage);

@@ -13,11 +13,11 @@
       <div class="section">
         <h6>类型</h6>
         <div style="display: flex">
-          <select [(ngModel)]="selectedParentCategory" name="parentCategory" >
-            <option [value]="category.id" *ngFor="let category of parentCategories" >{{category.name}}</option>
+          <select [(ngModel)]="selectedP" name="parentCategory" >
+            <option [value]="category.id" *ngFor="let category of pcates" >{{category.name}}</option>
           </select>
           <select [(ngModel)]="topic.category" name="childCategory">
-            <option [value]="category.id" *ngFor="let category of selectedChildCategories">{{category.name}}</option>
+            <option [value]="category.id" *ngFor="let category of selectedCates">{{category.name}}</option>
           </select>
         </div>
       </div>

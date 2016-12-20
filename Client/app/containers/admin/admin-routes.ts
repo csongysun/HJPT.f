@@ -1,6 +1,10 @@
 import { Route } from '@angular/router';
 import { AdminGuard } from 'app-services';
-import { AdminComponent, AdminIndexComponent } from 'app-containers';
+import {
+    AdminComponent,
+    AdminIndexComponent,
+    AdminManageComponent,
+} from 'app-containers';
 
 export const ROUTES: Route[] = [
     {
@@ -16,6 +20,10 @@ export const ROUTES: Route[] = [
             {
                 path: 'index',
                 component: AdminIndexComponent
+            },
+            {
+                path: 'content',
+                component: AdminManageComponent
             },
         ]
 

@@ -21,14 +21,11 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   topic: Topic = new Topic();
 
-
-
-
-  selectedParentCategory: Category = new Category();
-  parentCategories: Array<Category>;
-  childCategories: Array<Category>;
-  get selectedChildCategories(): Array<Category> {
-    return this.childCategories.filter(v => Math.floor(v.id / 100) === this.selectedParentCategory.id);
+  pcates = new Array<Category>();
+  ccates = new Array<Category>();
+  selectedP = new Category();
+  get selectedCates(): Array<Category> {
+    return this.ccates.filter(v => Math.floor(v.id / 100) === this.selectedP.id)
   }
 
   @ViewChild('publishForm') publishForm;
@@ -37,7 +34,8 @@ export class PublishComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromRoot.State>,
     private app: AppClientService
-  ) { }
+  ) {
+  }
   publish() {
     this.$publishForm = new FormData(this.publishForm.nativeElement);
   }
@@ -45,11 +43,10 @@ export class PublishComponent implements OnInit, OnDestroy {
   private cates$$: Subscription;
   ngOnInit() {
     this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
-    this.cates$$ = this.store.let(fromRoot.getCategories).takeLast(1)
-      .subscribe(v => {
-        this.parentCategories = v.filter(x => x.id % 100 === 0);
-        this.childCategories = v.filter(x => x.id % 100 !== 0);
-      });
+    this.cates$$ = this.app.categories$.subscribe(v => {
+      this.pcates = v.filter(x => x.id % 100 === 0);
+      this.ccates = v.filter(x => x.id % 100 !== 0);
+    })
   }
   ngOnDestroy() {
     this.cates$$.unsubscribe();

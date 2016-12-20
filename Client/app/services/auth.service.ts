@@ -8,7 +8,7 @@ import { SignUpReq, User, LoginReq } from 'app-models';
 import { ApiGatewayService } from './http-gateway.service';
 import * as fromRoot from 'app-reducers';
 import { authAction } from 'app-actions';
-import * as urls from './urls';
+import * as urls from './api/urls';
 @Injectable()
 export class AuthService implements CanActivate {
 

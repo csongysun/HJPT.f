@@ -13,6 +13,8 @@ import * as fromApi from './api';
 import * as fromYard from './yard';
 import * as fromTopic from './topic';
 
+import * as fromContent from './content';
+
 export interface State {
     app: fromApp.State,
     auth: fromAuth.State,
@@ -20,6 +22,7 @@ export interface State {
     yard: fromYard.State,
     topic: fromTopic.State,
     router: fromRouter.RouterState
+    category: fromContent.category.State,
 };
 
 const reducers = {
@@ -29,6 +32,7 @@ const reducers = {
     yard: fromYard.reducer,
     topic: fromTopic.reducer,
     router: fromRouter.routerReducer,
+    category: fromContent.category.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -59,6 +63,14 @@ export function getTopicState(state$: Observable<State>) {
     return state$.select(state => state.topic);
 }
 
+// export function getContent(state$: Observable<State>) {
+//     return state$.select(state => state.content)
+// }
+
+export function getCateState(state$: Observable<State>) {
+    return state$.select(state => state.category);
+}
+
 //App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
 export const getCurrentRoles = compose(fromApp.getCurrentRoles, getAppState);
@@ -72,10 +84,19 @@ export const getIsLogged = compose(fromAuth.getIsLoggedIn, getAuthState);
 //Api selector
 export const getFailedActions = compose(fromApi.getFailedActions, getApiState);
 export const getHasRetried = compose(fromApi.getHasRetried, getApiState);
+export const getRequestBusying = compose(fromApi.getIsBusy, getApiState);
 
 //Yard selector
 export const getToolbarTitle = compose(fromYard.getTitle, getYardState);
-export const getCategories = compose(fromYard.getCategories, getYardState);
+
+// content
+const getCategories = compose(fromContent.category.getCategories, getCateState);
+
+export const content = {
+    getCategories,
+
+}
+
 
 //topic selector
 export const getTopicCollection = compose(fromTopic.getCollection, getTopicState);

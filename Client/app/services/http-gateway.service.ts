@@ -97,7 +97,7 @@ export class ApiGatewayService {
         requestOptions.search = this.buildUrlSearchParams(options.params);
         requestOptions.body = JSON.stringify(options.data);
 
-        //console.log(requestOptions);
+        console.log(requestOptions);
         
         return this.http.request(options.url, requestOptions)
             .map(value => value.json() as T);

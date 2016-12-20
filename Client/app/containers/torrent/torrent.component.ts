@@ -37,7 +37,7 @@ export class TorrentComponent implements OnInit {
     private app: AppClientService
   ) {
     this.topics$ = store.let(fromRoot.getTopicCollection).distinctUntilChanged();
-    this.categories$ = app.Categories$;
+    this.categories$ = app.categories$;
     this.pageCount$ = store.let(fromRoot.getPageCount).takeLast(1);
   }
 

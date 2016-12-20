@@ -5,25 +5,77 @@ import { Store, Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import * as fromRoot from 'app-reducers';
-import { apiAction, authAction, appAction, topicAction, yardAction } from 'app-actions';
-import { TopicService, AppClientService } from 'app-services';
+import {
+    apiAction,
+    authAction,
+    appAction,
+    topicAction,
+    yardAction,
+    categoryAction
+} from 'app-actions';
+import {
+    ApiFactoryService,
+} from 'app-services';
 import { TopicFilter } from 'app-models';
 
 @Injectable()
 export class ApiEffects {
     constructor(
         private actions$: Actions,
-        private _topic: TopicService,
-        private _app: AppClientService,
         private store: Store<fromRoot.State>,
-
+        private _api: ApiFactoryService,
     ) { }
 
     @Effect()
     getCategories$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.GET_CATEGORIES)
-        .first()
-        .do(() => console.log('cates'));
+        .switchMap(action => this._api._getCategories()
+            .switchMap(collection => Observable.from([
+                new categoryAction.FulfilAction(collection),
+                success(),
+            ]))
+            .catch(handleError(action, appAction.msg('get categories failed')))
+        );
+
+
+    // admin
+    @Effect()
+    addCategory$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.POST_CATEGORY)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PostCategoryAction) =>
+            this._api._postCategory(action.payload)
+                .switchMap(() => Observable.from([
+                    new categoryAction.AddAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('add category failed')))
+        )
+    @Effect()
+    updateCategory$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.PUT_CATEGORY)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PutCategoryAction) =>
+            this._api._putCategory(action.payload.oldId, action.payload.category)
+                .switchMap(() => Observable.from([
+                    new categoryAction.UpdateAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('update category failed')))
+        )
+    @Effect()
+    deleteCategory$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.DELETE_CATEGORY)
+        .debounceTime(250)
+        .switchMap((action: apiAction.DeleteCategoryAction) =>
+            this._api._deleteCategory(action.payload)
+                .switchMap(() => Observable.from([
+                    new categoryAction.DropAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('delete category failed')))
+        )
+
 
 
     @Effect()
