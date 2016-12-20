@@ -11,6 +11,8 @@ export const auth = {
 
 export const content = {
     category: baseUrl + 'category',
+    promotion: baseUrl + 'promotion',
+
     topic: baseUrl + 'topic',
     recentTopic: baseUrl + 'topic/recent',
 }

@@ -27,12 +27,16 @@ export class Promotion {
     name: string;
     downFold: number;
     upFold: number;
+
+    hover: boolean;
 }
 
 export class Category {
     id: number;
     icon: string;
     name: string;
+
+    hover: boolean;
 }
 
 export class Tag {

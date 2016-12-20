@@ -10,7 +10,10 @@ import { AdminComponent } from './admin.component';
 import { BaseSharedModule } from 'app';
 
 import {
-  CategoryManageComponent
+  CategoryManageComponent,
+  CategoryItemComponent,
+  PromotionManageComponent,
+  PromotionItemComponent,
 } from 'app-components';
 import {
   AdminIndexComponent,
@@ -32,6 +35,9 @@ const COMPONENTS = [
   AdminManageComponent,
 
   CategoryManageComponent,
+  CategoryItemComponent,
+  PromotionManageComponent,
+  PromotionItemComponent,
 ];
 const PROVIDERS = [
   AdminGuard

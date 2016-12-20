@@ -16,6 +16,9 @@ import { reducer } from 'app-reducers';
 import { AuthEffects, AppEffects, ApiEffects } from 'app-effects'
 import { ROUTES } from '../app.routes';
 import {
+    IntegerDirective
+} from '../directives';
+import {
     CacheService,
     LayoutService,
     //TopicService,
@@ -61,10 +64,11 @@ const SERVICES = [
         ...MODULES
     ],
     declarations: [
-        ...COMPONENTS
+        ...COMPONENTS,
+    //    IntegerDirective,
     ],
     exports: [
-        ...COMPONENTS
+        ...COMPONENTS,
     ],
     providers: [
         ...SERVICES

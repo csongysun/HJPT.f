@@ -1,3 +1,10 @@
-admin-category-manage {
+md-tab-group {
+    width: 60%;
+}
+
+admin-category-manage,
+admin-promotion-manage {
+    position: relative;
+    display: block;
     margin-top: 32px;
 }

@@ -22,7 +22,9 @@ export interface State {
     yard: fromYard.State,
     topic: fromTopic.State,
     router: fromRouter.RouterState
+    // content
     category: fromContent.category.State,
+    promotion: fromContent.promotion.State
 };
 
 const reducers = {
@@ -32,7 +34,9 @@ const reducers = {
     yard: fromYard.reducer,
     topic: fromTopic.reducer,
     router: fromRouter.routerReducer,
+    // content
     category: fromContent.category.reducer,
+    promotion: fromContent.promotion.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -70,6 +74,9 @@ export function getTopicState(state$: Observable<State>) {
 export function getCateState(state$: Observable<State>) {
     return state$.select(state => state.category);
 }
+export function getPromState(state$: Observable<State>) {
+    return state$.select(state => state.promotion);
+}
 
 //App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
@@ -91,10 +98,10 @@ export const getToolbarTitle = compose(fromYard.getTitle, getYardState);
 
 // content
 const getCategories = compose(fromContent.category.getCategories, getCateState);
-
+const getPromotions = compose(fromContent.promotion.getPromotions, getPromState);
 export const content = {
     getCategories,
-
+    getPromotions,
 }
 
 

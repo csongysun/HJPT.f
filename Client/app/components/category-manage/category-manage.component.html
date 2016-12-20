@@ -1,27 +1,17 @@
 <div >
   <button md-button class="add" (click)="add()" [style.visibility]="state === 0 ? 'visible' : 'hidden' "><md-icon>add</md-icon></button>
   <ul>
-    <li *ngIf="state === 2">
-      <div >
-        <input class="left" [(ngModel)]="temp.id">
-        <input [(ngModel)]="temp.name">
+    <li *ngIf="state === 1">
+      <div>
+        <input class="left" [(ngModel)]="temp.id" appInteger placeholder="ID">
+        <input [(ngModel)]="temp.name" class="name" placeholder="名称">
       </div>
-      <button md-button class="submit" [disabled]="isBusy$ | async" (click)="submit(temp)" *ngIf="state === 2"><md-icon>check</md-icon></button>
-      <button md-button class="reset right" [disabled]="isBusy$ | async" (click)="reset()" *ngIf="state === 2"><md-icon>close</md-icon></button>
+      <button md-button class="submit" [disabled]="!(canSave$ || async) || !canSave || (isBusy$ | async)" (click)="submit()"><md-icon>check</md-icon></button>
+      <button md-button class="reset right" [disabled]="isBusy$ | async" (click)="reset()"><md-icon>close</md-icon></button>
     </li>
     <li *ngFor="let item of (items$ | async)">
-      <div *ngIf="state !== 1">
-        <span class="left">{{item.id}}</span>
-        <span>{{item.name}}</span>
-      </div>
-      <div *ngIf="state === 1">
-        <input class="left" [(ngModel)]="temp.id">
-        <input [(ngModel)]="temp.name">
-      </div>
-      <button md-button class="edit" [disabled]="isBusy$ | async" (click)="edit(item)" *ngIf="state === 0"><md-icon>mode_edit</md-icon></button>
-      <button md-button class="delete  right" [disabled]="isBusy$ | async" (click)="delete(item.id); $event.stopPropagation()" *ngIf="state === 0"><md-icon>delete_forever</md-icon></button>
-      <button md-button class="submit" [disabled]="isBusy$ | async" (click)="submit(item)" *ngIf="state === 1"><md-icon>check</md-icon></button>
-      <button md-button class="reset  right"  (click)="reset()" *ngIf="state === 1"><md-icon>close</md-icon></button>
+      <admin-category-item [item]="item">
+      </admin-category-item>
     </li>
   </ul>
 </div>

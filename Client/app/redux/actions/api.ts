@@ -7,6 +7,7 @@ import {
     Topic,
     TopicFilter,
     Category,
+    Promotion
 } from 'app-models';
 import { Observable } from 'rxjs/Observable';
 
@@ -17,6 +18,7 @@ export const ActionTypes = {
     RETRY: type('[Api] Retry'),
 
     GET_CATEGORIES: type('[Api] Get Categories'),
+    GET_PROMOTIONS: type('[Api] get Promotions'),
 
     GET_TOPICS: type('[Api] Get Topics'),
     GET_RECENT_TOPICS: type('[Api] Get Recent Topics'),
@@ -26,6 +28,10 @@ export const ActionTypes = {
     POST_CATEGORY: type('[Api] Post Category'),
     PUT_CATEGORY: type('[Api] Put Category'),
     DELETE_CATEGORY: type('[Api] Delete Category'),
+
+    POST_PROMOTIONS: type('[Api] Post Promotion'),
+    PUT_PROMOTIONS: type('[Api] Put Promotion'),
+    DELETE_PROMOTIONS: type('[Api] Delete Promotion'),
 };
 
 export class RequestSuccessAction implements Action {
@@ -49,6 +55,10 @@ export class GetCategoriesAction implements Action {
     type = ActionTypes.GET_CATEGORIES;
     constructor() { }
 }
+export class GetPromotionsAction implements Action {
+    type = ActionTypes.GET_PROMOTIONS;
+    constructor() { }
+}
 export class GetTopicsAction implements Action {
     type = ActionTypes.GET_TOPICS;
     constructor(public payload?: TopicFilter) { }
@@ -58,6 +68,7 @@ export class GetRecentTopicsAction implements Action {
     constructor() { }
 }
 
+// admin
 export class PostCategoryAction implements Action {
     type = ActionTypes.POST_CATEGORY;
     constructor(public payload: Category) { }
@@ -71,6 +82,18 @@ export class DeleteCategoryAction implements Action {
     constructor(public payload: number) { }
 }
 
+export class PostPromotionAction implements Action {
+    type = ActionTypes.POST_PROMOTIONS;
+    constructor(public payload: Promotion) { }
+}
+export class PutPromotionAction implements Action {
+    type = ActionTypes.PUT_PROMOTIONS;
+    constructor(public payload: { oldId: number, promotion: Promotion }) { }
+}
+export class DeletePromotionAction implements Action {
+    type = ActionTypes.DELETE_PROMOTIONS;
+    constructor(public payload: number) { }
+}
 
 export type Actions
     = RequestSuccessAction
@@ -78,7 +101,11 @@ export type Actions
     | PushToRetryAction
     | RetryAction
     | GetCategoriesAction
+    | GetPromotionsAction
     | GetTopicsAction
     | PostCategoryAction
     | PutCategoryAction
     | DeleteCategoryAction
+    | PostPromotionAction
+    | PutPromotionAction
+    | DeletePromotionAction

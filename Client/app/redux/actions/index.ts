@@ -7,6 +7,7 @@ import * as topicAction from './topic';
 
 // content
 import * as categoryAction from './content/category';
+import * as promotionActon from './content/promotion';
 
 export {
     appAction,
@@ -17,6 +18,7 @@ export {
 };
 
 export {
-    categoryAction
+    categoryAction,
+    promotionActon
 }
 

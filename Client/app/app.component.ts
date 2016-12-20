@@ -15,7 +15,6 @@ import { appAction } from 'app-actions';
 
 export class AppComponent implements OnInit {
 
-
   constructor(
     private store: Store<fromRoot.State>
   ) {

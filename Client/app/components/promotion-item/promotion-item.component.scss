@@ -1,32 +1,42 @@
-ul {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
+div {
+  display: flex;
 }
 
-li div {
-  display: flex;
+.root {
+  width: auto;
+}
+
+.content {
   width: 16em;
   line-height: 2em;
   background-color: #EEE;
-  margin-right: 8px;
 }
 
-li div.popup {
-  display: flex;
+.content .normal,
+.content .edit {
+  width: 100%;
+}
+
+.name {
+  width: 100%;
+}
+.download,
+.upload {
+  width: 40px;
+}
+
+.actions {
   margin-left: 8px;
+  width: auto;
 }
 
-.name{
-  width: 70%;
-}
-
-li input {
+span,
+input {
   font-size: small;
   text-align: center;
 }
 
-li md-icon.label {
+md-icon.label {
   font-size: small;
   line-height: 2em;
 }
@@ -49,13 +59,8 @@ input:focus {
   box-shadow: 0 1px 0 0 #26a69a;
 }
 
-li {
-  margin: .5em;
-  border-radius: 4px;
-  display: flex;
-}
-
-li input.left {
+span.left,
+input.left {
   color: white;
   background-color: #607D8B;
   position: relative;

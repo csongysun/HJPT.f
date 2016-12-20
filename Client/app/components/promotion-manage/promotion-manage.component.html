@@ -1,0 +1,19 @@
+<div >
+  <button md-button class="add" (click)="add()" [style.visibility]="state === 0 ? 'visible' : 'hidden' "><md-icon>add</md-icon></button>
+  <ul>
+    <li *ngIf="state === 1">
+      <div>
+        <input class="left" [(ngModel)]="temp.id" appInteger placeholder="ID">
+        <input [(ngModel)]="temp.name" placeholder="名称">
+        <input class="download" [(ngModel)]="temp.downFold" appNumber placeholder="下载">
+        <input class="upload" [(ngModel)]="temp.upFold" appNumber placeholder="上传">
+      </div>
+      <button md-button class="submit" [disabled]="!(canSave$ || async) || !canSave || (isBusy$ | async)" (click)="submit()" ><md-icon>check</md-icon></button>
+      <button md-button class="reset right" (click)="reset()" ><md-icon>close</md-icon></button>
+    </li>
+    <li *ngFor="let item of (items$ | async)">
+      <app-promotion-item [item]="item">
+      </app-promotion-item>
+    </li>
+  </ul>
+</div>

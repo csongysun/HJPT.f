@@ -11,7 +11,8 @@ import {
     appAction,
     topicAction,
     yardAction,
-    categoryAction
+    categoryAction,
+    promotionActon,
 } from 'app-actions';
 import {
     ApiFactoryService,
@@ -26,6 +27,8 @@ export class ApiEffects {
         private _api: ApiFactoryService,
     ) { }
 
+    /// category
+    //
     @Effect()
     getCategories$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.GET_CATEGORIES)
@@ -75,9 +78,62 @@ export class ApiEffects {
                 ]))
                 .catch(handleError(action, appAction.msg('delete category failed')))
         )
+    /// promotion
+    //
+    @Effect()
+    getPromotions$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.GET_PROMOTIONS)
+        .switchMap(action => this._api._getPromotions()
+            .switchMap(collection => Observable.from([
+                new promotionActon.FulfilAction(collection),
+                success(),
+            ]))
+            .catch(handleError(action, appAction.msg('get promotions failed')))
+        );
 
-
-
+    // admin
+    @Effect()
+    addPromotion$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.POST_PROMOTIONS)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PostPromotionAction) =>
+            this._api._postPromotion(action.payload)
+                .switchMap(() => Observable.from([
+                    new promotionActon.AddAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('add promotion failed')))
+        )
+    @Effect()
+    updatePromotion$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.PUT_PROMOTIONS)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PutPromotionAction) =>
+            this._api._putPromotion(action.payload.oldId, action.payload.promotion)
+                .switchMap(() => Observable.from([
+                    new promotionActon.UpdateAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('update promotion failed')))
+        )
+    @Effect()
+    deletePromotion$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.DELETE_PROMOTIONS)
+        .debounceTime(250)
+        .switchMap((action: apiAction.DeletePromotionAction) =>
+            this._api._deletePromotion(action.payload)
+                .switchMap(() => Observable.from([
+                    new promotionActon.DropAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('delete promotion failed')))
+        )
+    //end api
+   
+   
+   
+   
+   // retry
     @Effect()
     retryActions$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.RETRY)

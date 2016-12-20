@@ -16,6 +16,10 @@ import {
     UserInfoComponent
 } from 'app-components';
 import {
+    IntegerDirective,
+    NumberDirective
+} from '../directives';
+import {
 } from 'app-services';
 
 @NgModule({
@@ -25,6 +29,8 @@ import {
     ],
     declarations: [
         UserInfoComponent,
+        IntegerDirective,
+        NumberDirective
     ],
     exports: [
         CommonModule,
@@ -34,6 +40,8 @@ import {
         ReactiveFormsModule,
         HttpModule,
         UserInfoComponent,
+        IntegerDirective,
+        NumberDirective
     ]
 })
 export class BaseSharedModule {
