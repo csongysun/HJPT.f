@@ -4,7 +4,10 @@ import { Store } from '@ngrx/store';
 
 import * as fromRoot from 'app-reducers';
 import { apiAction } from 'app-actions';
-import { User, Category } from 'app-models';
+import {
+  Category,
+  Promotion
+} from 'app-models';
 
 @Injectable()
 export class AppClientService {
@@ -13,13 +16,22 @@ export class AppClientService {
     private store: Store<fromRoot.State>,
   ) { }
 
+  
+
   get categories$(): Observable<Array<Category>> {
     return this.store.let(fromRoot.content.getCategories)
       .do(v => {
-        if (v.length === 0)
+        if (!v)
           this.store.dispatch(new apiAction.GetCategoriesAction());
-      })
-      .distinctUntilChanged();
+      }).share();
+  }
+
+  get promotions$(): Observable<Array<Promotion>> {
+    return this.store.let(fromRoot.content.getPromotions)
+      .do(v => {
+        if (!v)
+          this.store.dispatch(new apiAction.GetPromotionsAction());
+      }).share();
   }
 
 }

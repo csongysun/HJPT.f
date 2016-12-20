@@ -16,9 +16,10 @@
       "../node_modules/@types"
     ],
     "paths": {
-      "app" : ["./app" ],
-      "app-containers": [ "./app/containers" ],
-      "app-components": [ "./app/components" ],
+      "app": ["./app"],
+      "app-containers": ["./app/containers"],
+      "app-components": ["./app/components"],
+      "app-directives": ["./app/directives"],
       "app-services": ["./app/services"],
       "app-models": ["./app/models"],
       "app-utils": ["./app/utils"],

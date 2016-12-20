@@ -11,4 +11,6 @@ export * from './torrent-list/torrent-list.component';
 export * from './user-info/user-info.component';
 
 export * from './category-manage/category-manage.component';
-
+export * from './promotion-manage/promotion-manage.component';
+export * from './promotion-item/promotion-item.component';
+export * from './category-item/category-item.component';

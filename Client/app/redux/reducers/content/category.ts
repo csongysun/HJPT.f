@@ -7,7 +7,7 @@ export interface State {
     categories: Array<Category>;
 }
 const initialState: State = {
-    categories: []
+    categories: null
 };
 
 export const reducer: ActionReducer<State> = (state = initialState, action: categoryAction.Actions) => {

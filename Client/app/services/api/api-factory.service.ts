@@ -5,7 +5,8 @@ import {
     Topic,
     TopicFilter,
     TopicsRep,
-    Category
+    Category,
+    Promotion,
 } from 'app-models';
 import { ApiGatewayService } from '../http-gateway.service';
 
@@ -19,7 +20,7 @@ export class ApiFactoryService {
     ) { }
 
     _getCategories(): Observable<Array<Category>> {
-        return this.api.getCache<Array<Category>>(urls.content.category, undefined, false);
+        return this.api.getCache<Array<Category>>(urls.content.category, undefined, true);
     }
     _postCategory(category: Category): Observable<void> {
         return this.api.post<void>(urls.content.category, category);
@@ -29,6 +30,19 @@ export class ApiFactoryService {
     }
     _deleteCategory(id: number): Observable<void> {
         return this.api.delete<void>(urls.content.category + '/' + id);
+    }
+
+    _getPromotions(): Observable<Array<Promotion>> {
+        return this.api.getCache<Array<Promotion>>(urls.content.promotion, null, true);
+    }
+    _postPromotion(promotion: Promotion): Observable<void> {
+        return this.api.post<void>(urls.content.promotion, promotion);
+    }
+    _putPromotion(oldId: number, promotion: Promotion) {
+        return this.api.put<void>(urls.content.promotion + '/' + oldId, promotion);
+    }
+    _deletePromotion(id: number): Observable<void> {
+        return this.api.delete<void>(urls.content.promotion + '/' + id);
     }
 
     _getRecentTopics(): Observable<Array<Topic>> {
