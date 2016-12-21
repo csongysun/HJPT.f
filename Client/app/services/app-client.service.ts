@@ -3,10 +3,11 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from 'app-reducers';
-import { apiAction } from 'app-actions';
+import { apiAction, yardAction } from 'app-actions';
 import {
   Category,
-  Promotion
+  Promotion,
+  Role,
 } from 'app-models';
 
 @Injectable()
@@ -16,7 +17,9 @@ export class AppClientService {
     private store: Store<fromRoot.State>,
   ) { }
 
-  
+  setTitle(title: string) {
+    this.store.dispatch(new yardAction.SetTitleAction(title));
+  }
 
   get categories$(): Observable<Array<Category>> {
     return this.store.let(fromRoot.content.getCategories)
@@ -25,7 +28,6 @@ export class AppClientService {
           this.store.dispatch(new apiAction.GetCategoriesAction());
       }).share();
   }
-
   get promotions$(): Observable<Array<Promotion>> {
     return this.store.let(fromRoot.content.getPromotions)
       .do(v => {
@@ -33,5 +35,15 @@ export class AppClientService {
           this.store.dispatch(new apiAction.GetPromotionsAction());
       }).share();
   }
+  get roles$(): Observable<Array<Role>> {
+    return this.store.let(fromRoot.user.getRoles)
+      .do(v => {
+        if (!v)
+          this.store.dispatch(new apiAction.GetRolesAction());
+      }).share();
+  }
+  get isRequesting$(): Observable<boolean> {
+    return this.store.let(fromRoot.getRequestBusying).share();
+  }  
 
 }

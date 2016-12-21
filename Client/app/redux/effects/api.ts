@@ -13,6 +13,7 @@ import {
     yardAction,
     categoryAction,
     promotionActon,
+    roleAction,
 } from 'app-actions';
 import {
     ApiFactoryService,
@@ -59,7 +60,7 @@ export class ApiEffects {
         .ofType(apiAction.ActionTypes.PUT_CATEGORY)
         .debounceTime(250)
         .switchMap((action: apiAction.PutCategoryAction) =>
-            this._api._putCategory(action.payload.oldId, action.payload.category)
+            this._api._putCategory(action.payload.id, action.payload.category)
                 .switchMap(() => Observable.from([
                     new categoryAction.UpdateAction(action.payload),
                     success(),
@@ -94,7 +95,7 @@ export class ApiEffects {
     // admin
     @Effect()
     addPromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.POST_PROMOTIONS)
+        .ofType(apiAction.ActionTypes.POST_PROMOTION)
         .debounceTime(250)
         .switchMap((action: apiAction.PostPromotionAction) =>
             this._api._postPromotion(action.payload)
@@ -106,7 +107,7 @@ export class ApiEffects {
         )
     @Effect()
     updatePromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.PUT_PROMOTIONS)
+        .ofType(apiAction.ActionTypes.PUT_PROMOTION)
         .debounceTime(250)
         .switchMap((action: apiAction.PutPromotionAction) =>
             this._api._putPromotion(action.payload.oldId, action.payload.promotion)
@@ -118,7 +119,7 @@ export class ApiEffects {
         )
     @Effect()
     deletePromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.DELETE_PROMOTIONS)
+        .ofType(apiAction.ActionTypes.DELETE_PROMOTION)
         .debounceTime(250)
         .switchMap((action: apiAction.DeletePromotionAction) =>
             this._api._deletePromotion(action.payload)
@@ -128,12 +129,65 @@ export class ApiEffects {
                 ]))
                 .catch(handleError(action, appAction.msg('delete promotion failed')))
         )
+    /// Role
+    //
+    @Effect()
+    getRoles$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.GET_ROLES)
+        .debounceTime(250)
+        .switchMap(action => this._api._getRoles()
+            .switchMap(collection => Observable.from([
+                new roleAction.FulfilAction(collection),
+                success(),
+            ]))
+            .catch(handleError(action, appAction.msg('get roles failed')))
+        );
+
+    // admin
+    @Effect()
+    addRole$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.POST_ROLE)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PostRoleAction) =>
+            this._api._postRole(action.payload)
+                .switchMap(() => Observable.from([
+                    new roleAction.AddAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('add role failed')))
+        )
+    @Effect()
+    updateRole$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.PUT_ROLE)
+        .debounceTime(250)
+        .switchMap((action: apiAction.PutRoleAction) =>
+            this._api._putRole(action.payload.oldId, action.payload.role)
+                .switchMap(() => Observable.from([
+                    new roleAction.UpdateAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('update role failed')))
+        )
+    @Effect()
+    deleteRole$: Observable<Action> = this.actions$
+        .ofType(apiAction.ActionTypes.DELETE_ROLE)
+        .debounceTime(250)
+        .switchMap((action: apiAction.DeleteRoleAction) =>
+            this._api._deleteRole(action.payload)
+                .switchMap(() => Observable.from([
+                    new roleAction.DropAction(action.payload),
+                    success(),
+                ]))
+                .catch(handleError(action, appAction.msg('delete role failed')))
+        )
+
+
     //end api
-   
-   
-   
-   
-   // retry
+
+
+
+
+    // retry
     @Effect()
     retryActions$: Observable<Action> = this.actions$
         .ofType(apiAction.ActionTypes.RETRY)

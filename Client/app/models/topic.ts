@@ -33,9 +33,10 @@ export class Promotion {
 
 export class Category {
     id: number;
+    orderId: number;
     icon: string;
-    name: string;
 
+    name: string;
     hover: boolean;
 }
 

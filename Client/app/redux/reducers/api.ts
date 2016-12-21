@@ -32,13 +32,8 @@ export const reducer: ActionReducer<State> = (state = initialState, action: apiA
         case apiAction.ActionTypes.RETRY: {
             return Object.assign({}, state, { hasRetried: true });
         }
-
-        case apiAction.ActionTypes.GET_CATEGORIES: {
-            return Object.assign({}, state, { isBusy: true });
-        }
-
         default:
-            return state;
+            return Object.assign({}, state, { isBusy: true });
     }
 };
 export function getIsBusy(state$: Observable<State>) {

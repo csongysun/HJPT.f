@@ -7,7 +7,8 @@ import {
     Topic,
     TopicFilter,
     Category,
-    Promotion
+    Promotion,
+    Role,
 } from 'app-models';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,7 +19,8 @@ export const ActionTypes = {
     RETRY: type('[Api] Retry'),
 
     GET_CATEGORIES: type('[Api] Get Categories'),
-    GET_PROMOTIONS: type('[Api] get Promotions'),
+    GET_PROMOTIONS: type('[Api] Get Promotions'),
+    GET_ROLES: type('[Api] Get Roles'),
 
     GET_TOPICS: type('[Api] Get Topics'),
     GET_RECENT_TOPICS: type('[Api] Get Recent Topics'),
@@ -29,9 +31,13 @@ export const ActionTypes = {
     PUT_CATEGORY: type('[Api] Put Category'),
     DELETE_CATEGORY: type('[Api] Delete Category'),
 
-    POST_PROMOTIONS: type('[Api] Post Promotion'),
-    PUT_PROMOTIONS: type('[Api] Put Promotion'),
-    DELETE_PROMOTIONS: type('[Api] Delete Promotion'),
+    POST_PROMOTION: type('[Api] Post Promotion'),
+    PUT_PROMOTION: type('[Api] Put Promotion'),
+    DELETE_PROMOTION: type('[Api] Delete Promotion'),
+
+    POST_ROLE: type('[Api] Post Role'),
+    PUT_ROLE: type('[Api] Put Role'),
+    DELETE_ROLE: type('[Api] Delete Role'),
 };
 
 export class RequestSuccessAction implements Action {
@@ -59,6 +65,10 @@ export class GetPromotionsAction implements Action {
     type = ActionTypes.GET_PROMOTIONS;
     constructor() { }
 }
+export class GetRolesAction implements Action {
+    type = ActionTypes.GET_ROLES;
+    constructor() { }
+}
 export class GetTopicsAction implements Action {
     type = ActionTypes.GET_TOPICS;
     constructor(public payload?: TopicFilter) { }
@@ -71,11 +81,11 @@ export class GetRecentTopicsAction implements Action {
 // admin
 export class PostCategoryAction implements Action {
     type = ActionTypes.POST_CATEGORY;
-    constructor(public payload: Category) { }
+    constructor(public payload: { orderId: number, name: string }) { }
 }
 export class PutCategoryAction implements Action {
     type = ActionTypes.PUT_CATEGORY;
-    constructor(public payload: { oldId: number, category: Category }) { }
+    constructor(public payload: { id: number, category: { orderId: number, name: string } }) { }
 }
 export class DeleteCategoryAction implements Action {
     type = ActionTypes.DELETE_CATEGORY;
@@ -83,17 +93,31 @@ export class DeleteCategoryAction implements Action {
 }
 
 export class PostPromotionAction implements Action {
-    type = ActionTypes.POST_PROMOTIONS;
+    type = ActionTypes.POST_PROMOTION;
     constructor(public payload: Promotion) { }
 }
 export class PutPromotionAction implements Action {
-    type = ActionTypes.PUT_PROMOTIONS;
+    type = ActionTypes.PUT_PROMOTION;
     constructor(public payload: { oldId: number, promotion: Promotion }) { }
 }
 export class DeletePromotionAction implements Action {
-    type = ActionTypes.DELETE_PROMOTIONS;
+    type = ActionTypes.DELETE_PROMOTION;
     constructor(public payload: number) { }
 }
+
+export class PostRoleAction implements Action {
+    type = ActionTypes.PUT_ROLE;
+    constructor(public payload: {name: string}) { }
+}
+export class PutRoleAction implements Action {
+    type = ActionTypes.PUT_ROLE;
+    constructor(public payload: { oldId: number, name: string }) { }
+}
+export class DeleteRoleAction implements Action {
+    type = ActionTypes.DELETE_ROLE;
+    constructor(public payload: number) { }
+}
+
 
 export type Actions
     = RequestSuccessAction
@@ -102,6 +126,7 @@ export type Actions
     | RetryAction
     | GetCategoriesAction
     | GetPromotionsAction
+    | GetRolesAction
     | GetTopicsAction
     | PostCategoryAction
     | PutCategoryAction
@@ -109,3 +134,6 @@ export type Actions
     | PostPromotionAction
     | PutPromotionAction
     | DeletePromotionAction
+    | PostRoleAction
+    | PutRoleAction
+    | DeleteRoleAction

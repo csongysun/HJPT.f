@@ -9,6 +9,9 @@ import * as topicAction from './topic';
 import * as categoryAction from './content/category';
 import * as promotionActon from './content/promotion';
 
+// content
+import * as roleAction from './user/role';
+
 export {
     appAction,
     apiAction,
@@ -19,6 +22,7 @@ export {
 
 export {
     categoryAction,
-    promotionActon
+    promotionActon,
+    roleAction,
 }
 

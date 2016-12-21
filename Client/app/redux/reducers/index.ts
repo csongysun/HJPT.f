@@ -14,6 +14,7 @@ import * as fromYard from './yard';
 import * as fromTopic from './topic';
 
 import * as fromContent from './content';
+import * as fromUser from './user';
 
 export interface State {
     app: fromApp.State,
@@ -25,6 +26,8 @@ export interface State {
     // content
     category: fromContent.category.State,
     promotion: fromContent.promotion.State
+    // user
+    role: fromUser.role.State,
 };
 
 const reducers = {
@@ -37,6 +40,8 @@ const reducers = {
     // content
     category: fromContent.category.reducer,
     promotion: fromContent.promotion.reducer,
+    // user
+    role: fromUser.role.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -77,6 +82,10 @@ export function getCateState(state$: Observable<State>) {
 export function getPromState(state$: Observable<State>) {
     return state$.select(state => state.promotion);
 }
+// user
+export function getRoleState(state$: Observable<State>){
+    return state$.select(state => state.role);
+}
 
 //App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
@@ -102,6 +111,11 @@ const getPromotions = compose(fromContent.promotion.getPromotions, getPromState)
 export const content = {
     getCategories,
     getPromotions,
+}
+// user
+const getRoles = compose(fromUser.role.getRoles, getRoleState);
+export const user = {
+    getRoles,
 }
 
 
