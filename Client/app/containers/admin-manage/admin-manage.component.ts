@@ -10,10 +10,12 @@ import { AppClientService } from 'app-services';
 export class AdminManageComponent implements OnInit {
 
   constructor(
-  ) { 
+    private app: AppClientService
+  ) {
   }
 
   ngOnInit() {
+    this.app.setTitle('内容管理');
   }
 
 }

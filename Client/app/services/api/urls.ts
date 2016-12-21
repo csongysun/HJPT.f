@@ -17,6 +17,10 @@ export const content = {
     recentTopic: baseUrl + 'topic/recent',
 }
 
+export const user = {
+    role: baseUrl + 'role',
+}
+
 // admin
 export const admin = {
     check: baseUrl + 'admin',
