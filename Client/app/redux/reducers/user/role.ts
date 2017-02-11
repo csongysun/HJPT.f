@@ -22,10 +22,9 @@ export const reducer: ActionReducer<State> = (state = initialState, action: role
         }
         case roleAction.ActionTypes.UPDATE: {
             let payload = (action as roleAction.UpdateAction).payload;
-            let i = state.roles.findIndex(v => v.id === payload.oldId);
-            let cs = state.roles.map(v=>{
-                if(v.id === payload.oldId){
-                    v = payload.role;
+            let cs = state.roles.map(v => {
+                if (v.id === payload.id) {
+                    v = payload;
                 }
                 return v;
             })

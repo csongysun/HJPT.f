@@ -22,13 +22,12 @@ export const reducer: ActionReducer<State> = (state = initialState, action: cate
         }
         case categoryAction.ActionTypes.UPDATE: {
             let payload = (action as categoryAction.UpdateAction).payload;
-            let i = state.categories.findIndex(v => v.id === payload.oldId);
-            let cs = state.categories.map(v=>{
-                if(v.id === payload.oldId){
-                    v = payload.category;
+            let cs = state.categories.map(v => {
+                if (v.id === payload.id) {
+                    v = payload;
                 }
                 return v;
-            })
+            });
             return { categories: cs };
         }
         case categoryAction.ActionTypes.DROP: {

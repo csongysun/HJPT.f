@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { ActionReducer } from '@ngrx/store';
-import { authAction } from 'app-actions';
+import * as authAction from '../actions/auth';
 
 export interface State {
     isLogging: boolean;

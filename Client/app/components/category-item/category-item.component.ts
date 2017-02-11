@@ -16,7 +16,7 @@ export class CategoryItemComponent implements OnInit {
   state: number = 0;
   hover: boolean = false;
   // 0->normal 1->edit
-  temp: { orderId: number, name: string };
+  temp: Category;
 
   @Input()
   item: Category;
@@ -32,7 +32,7 @@ export class CategoryItemComponent implements OnInit {
     this.state = 0;
   }
   edit() {
-    this.temp = { orderId: this.item.orderId, name: this.item.name };
+    this.temp = Object.assign({}, this.item);
     this.state = 1;
   }
   delete(id: number) {
@@ -43,7 +43,7 @@ export class CategoryItemComponent implements OnInit {
     if ((this.temp.orderId === this.item.orderId && this.temp.name === this.item.name)) {
       return this.reset();
     } // 没有更改
-    this.store.dispatch(new apiAction.PutCategoryAction({ id: this.item.id, category: this.temp }));
+    this.store.dispatch(new apiAction.PutCategoryAction(this.temp));
     return this.reset();
   }
 

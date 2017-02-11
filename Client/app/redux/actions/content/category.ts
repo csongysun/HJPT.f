@@ -1,7 +1,6 @@
 
 import { Action } from '@ngrx/store';
 import { type } from 'app-utils';
-import { Observable } from 'rxjs/Observable';
 
 import { Category } from 'app-models';
 
@@ -22,7 +21,7 @@ export class AddAction implements Action {
 }
 export class UpdateAction implements Action {
     type = ActionTypes.UPDATE;
-    constructor(public payload: { oldId: number, category: Category }) { }
+    constructor(public payload: Category) { }
 }
 export class DropAction implements Action {
     type = ActionTypes.DROP;
@@ -33,5 +32,5 @@ export type Actions
     = FulfilAction
     | AddAction
     | UpdateAction
-    | DropAction
+    | DropAction;
 

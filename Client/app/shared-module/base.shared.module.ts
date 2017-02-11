@@ -13,7 +13,6 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import {
-    UserInfoComponent
 } from 'app-components';
 import {
     IntegerDirective,
@@ -26,20 +25,18 @@ import {
     imports: [
         CommonModule,
         MaterialModule,
+        FormsModule,
     ],
     declarations: [
-        UserInfoComponent,
         IntegerDirective,
         NumberDirective
     ],
     exports: [
         CommonModule,
         MaterialModule,
-        
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        UserInfoComponent,
         IntegerDirective,
         NumberDirective
     ]

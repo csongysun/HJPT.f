@@ -49,8 +49,8 @@ export class ApiEffects {
         .debounceTime(250)
         .switchMap((action: apiAction.PostCategoryAction) =>
             this._api._postCategory(action.payload)
-                .switchMap(() => Observable.from([
-                    new categoryAction.AddAction(action.payload),
+                .switchMap(cate => Observable.from([
+                    new categoryAction.AddAction(cate),
                     success(),
                 ]))
                 .catch(handleError(action, appAction.msg('add category failed')))
@@ -60,8 +60,8 @@ export class ApiEffects {
         .ofType(apiAction.ActionTypes.PUT_CATEGORY)
         .debounceTime(250)
         .switchMap((action: apiAction.PutCategoryAction) =>
-            this._api._putCategory(action.payload.id, action.payload.category)
-                .switchMap(() => Observable.from([
+            this._api._putCategory(action.payload)
+                .switchMap(cate => Observable.from([
                     new categoryAction.UpdateAction(action.payload),
                     success(),
                 ]))
@@ -110,7 +110,7 @@ export class ApiEffects {
         .ofType(apiAction.ActionTypes.PUT_PROMOTION)
         .debounceTime(250)
         .switchMap((action: apiAction.PutPromotionAction) =>
-            this._api._putPromotion(action.payload.oldId, action.payload.promotion)
+            this._api._putPromotion(action.payload)
                 .switchMap(() => Observable.from([
                     new promotionActon.UpdateAction(action.payload),
                     success(),
@@ -161,7 +161,7 @@ export class ApiEffects {
         .ofType(apiAction.ActionTypes.PUT_ROLE)
         .debounceTime(250)
         .switchMap((action: apiAction.PutRoleAction) =>
-            this._api._putRole(action.payload.oldId, action.payload.role)
+            this._api._putRole(action.payload)
                 .switchMap(() => Observable.from([
                     new roleAction.UpdateAction(action.payload),
                     success(),
@@ -207,14 +207,14 @@ function handleError(currentAction: Action, errorSenderAction: Action) {
     return (error): Observable<Action> => {
         let msg: string;
         if (error.status === 401) {
-            let x = this.store.let(fromRoot.getHasRetried)
+            this.store.let(fromRoot.getHasRetried)
                 .switchMap(hasRetried => {
                     if (hasRetried) {
                         errorSenderAction.payload = msg;
                         return Observable.from([failed(), errorSenderAction]);
                     }
-                    else return Observable.from([new apiAction.PushToRetryAction(currentAction) as Action, retry()]);
-                })
+                    return Observable.from([new apiAction.PushToRetryAction(currentAction) as Action, retry()]);
+                });
         }
         if (error.status === 400)
             msg = error.json();

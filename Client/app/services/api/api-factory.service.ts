@@ -26,8 +26,8 @@ export class ApiFactoryService {
     _postCategory(category: { orderId: number, name: string }): Observable<Category> {
         return this.api.post<Category>(urls.content.category, category);
     }
-    _putCategory(id: number, category: { orderId: number, name: string }): Observable<void> {
-        return this.api.put<void>(urls.content.category + '/' + id, category);
+    _putCategory(category: Category): Observable<void> {
+        return this.api.put<void>(urls.content.category + '/' + category.id, category);
     }
     _deleteCategory(id: number): Observable<void> {
         return this.api.delete<void>(urls.content.category + '/' + id);
@@ -36,11 +36,11 @@ export class ApiFactoryService {
     _getPromotions(): Observable<Array<Promotion>> {
         return this.api.getCache<Array<Promotion>>(urls.content.promotion, null, true);
     }
-    _postPromotion(promotion: { orderId: number, name: string, downFold: number, upFold: number }): Observable<Promotion> {
+    _postPromotion(promotion: Promotion): Observable<Promotion> {
         return this.api.post<Promotion>(urls.content.promotion, promotion);
     }
-    _putPromotion(id: number, promotion: { orderId: number, name: string, downFold: number, upFold: number }) {
-        return this.api.put<void>(urls.content.promotion + '/' + id, promotion);
+    _putPromotion(promotion: Promotion) {
+        return this.api.put<void>(urls.content.promotion + '/' + promotion.id, promotion);
     }
     _deletePromotion(id: number): Observable<void> {
         return this.api.delete<void>(urls.content.promotion + '/' + id);
@@ -59,11 +59,11 @@ export class ApiFactoryService {
     _getRoles(): Observable<Array<Role>> {
         return this.api.getCache<Array<Role>>(urls.user.role, null, true);
     }
-    _postRole(role: { orderId: number, name: string }): Observable<Role> {
+    _postRole(role: Role): Observable<Role> {
         return this.api.post<Role>(urls.user.role, role);
     }
-    _putRole(id: number, role: { orderId: number, name: string }) {
-        return this.api.put<void>(urls.user.role + '/' + id, role);
+    _putRole(role: Role) {
+        return this.api.put<void>(urls.user.role + '/' + role.id, role);
     }
     _deleteRole(id: number) {
         return this.api.delete<void>(urls.user.role + '/' + id);
