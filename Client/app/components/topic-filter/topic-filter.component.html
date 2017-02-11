@@ -2,7 +2,7 @@
   <div class="filter">
     <div class="filter-item" *ngFor="let cate of categories">
       <i class=" large material-icons">{{cate.icon}}</i>
-      <md-checkbox disableRipple="true" [checked]="isIn(cate.id)" (change)="cateChange( cate.id,$event)" >{{cate.name}}</md-checkbox>
+      <md-checkbox disableRipple [checked]="isIn(cate.id)" (change)="cateChange( cate.id,$event)" >{{cate.name}}</md-checkbox>
     </div>
     <!--<div class="filter-item">
       <i class=" large material-icons">&#xE54D;</i>

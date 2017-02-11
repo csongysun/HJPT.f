@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { SignUpReq } from 'app-models';
+
 @Component({
   selector: 'reg-form',
   templateUrl: './reg-form.component.html',
@@ -9,17 +11,13 @@ import { SignUpReq } from 'app-models';
 })
 export class RegFormComponent implements OnInit {
 
-  @Input() form: SignUpReq;
-  @Input() isBusy: boolean;
-  @Output() submit = new EventEmitter();
-  @Output() toggle = new EventEmitter();
+  form: SignUpReq = new SignUpReq();
+  isBusy$: Observable<boolean>;
 
   constructor(
     private router: Router,
   ) { }
-  toLogin() {
-    this.router.navigate(['auth/login']);
-  }
+
   ngOnInit() {
 
   }

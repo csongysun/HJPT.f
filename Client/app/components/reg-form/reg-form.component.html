@@ -1,21 +1,16 @@
-<md-card>
-  <md-toolbar color="primary">注册</md-toolbar>
-  <md-card-content>
-    <form (ngSubmit)="submit.emit()" #regForm="ngForm">
-      <p>
-        <md-input [(ngModel)]="form.email" name="rEmail" type="email" placeholder="邮箱" floatingPlaceholder="false"></md-input>
-        <md-input [(ngModel)]="form.password" name="rPassword" type="password" floatingPlaceholder="false" placeholder="密码"></md-input>
-        <md-input [(ngModel)]="form.nickname" name="rUserKey" placeholder="昵称" floatingPlaceholder="false"></md-input>
-      </p>
-      <p>
-        <md-checkbox>Rule1</md-checkbox>
-        <br>
-        <md-checkbox>Rule2</md-checkbox>
-      </p>
-      <p>
-        <button md-raised-button [disabled]="isBusy" type="submit">注册</button>
-        <a (click)="toLogin()">已有账号</a>
-      </p>
-    </form>
-  </md-card-content>
-</md-card>
+<form (ngSubmit)="submit" #regForm="ngForm">
+  <section>
+    <input [(ngModel)]="form.email" name="Email" type="email" placeholder="邮箱" >
+    <input [(ngModel)]="form.password" name="Password" type="password" placeholder="密码">
+    <input [(ngModel)]="form.nickname" name="UserKey" placeholder="昵称" >
+  </section>
+  <section>
+    <md-checkbox>Rule1</md-checkbox>
+    <br>
+    <md-checkbox>Rule2</md-checkbox>
+  </section>
+  <section>
+    <button md-raised-button [disabled]="isBusy$ | async" type="submit">注册</button>
+    <a [routerLink]="['/auth/login']">已有账号</a>
+  </section>
+</form>
