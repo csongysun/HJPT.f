@@ -1,8 +1,9 @@
+import { Action, ActionReducer } from '@ngrx/store';
+
 import { Observable } from 'rxjs/Observable';
-import { ActionReducer, Action } from '@ngrx/store';
+import { Promotion } from 'app-models';
 import { promotionActon } from 'app-actions';
 
-import { Promotion } from 'app-models';
 export interface State {
     promotions: Array<Promotion>;
 }
@@ -13,26 +14,7 @@ const initialState: State = {
 export const reducer: ActionReducer<State> = (state = initialState, action: promotionActon.Actions) => {
     switch (action.type) {
         case promotionActon.ActionTypes.FULFIL: {
-            let payload = (action as promotionActon.FulfilAction).payload;
-            return { promotions: payload };
-        }
-        case promotionActon.ActionTypes.ADD: {
-            let payload = (action as promotionActon.AddAction).payload;
-            return { promotions: [payload, ...state.promotions] }
-        }
-        case promotionActon.ActionTypes.UPDATE: {
-            let payload = (action as promotionActon.UpdateAction).payload;
-            let cs = state.promotions.map(v => {
-                if (v.id === payload.id) {
-                    v = payload;
-                }
-                return v;
-            });
-            return { promotions: cs };
-        }
-        case promotionActon.ActionTypes.DROP: {
-            let payload = (action as promotionActon.DropAction).payload;
-            return { promotions: state.promotions.filter(v => v.id !== payload) };
+            return { promotions: action.payload };
         }
         default:
             return state;

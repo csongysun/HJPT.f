@@ -1,23 +1,23 @@
-
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-
 import * as fromRoot from 'app-reducers';
+
+import { Action, Store } from '@ngrx/store';
+import { Actions, Effect } from '@ngrx/effects';
 import {
     apiAction,
-    authAction,
     appAction,
-    topicAction,
-    yardAction,
+    authAction,
     categoryAction,
     promotionActon,
     roleAction,
+    topicAction,
+    yardAction,
 } from 'app-actions';
+
 import {
     ApiFactoryService,
 } from 'app-services';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { TopicFilter } from 'app-models';
 
 @Injectable()
@@ -41,44 +41,6 @@ export class ApiEffects {
             .catch(handleError(action, appAction.msg('get categories failed')))
         );
 
-
-    // admin
-    @Effect()
-    addCategory$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.POST_CATEGORY)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PostCategoryAction) =>
-            this._api._postCategory(action.payload)
-                .switchMap(cate => Observable.from([
-                    new categoryAction.AddAction(cate),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('add category failed')))
-        )
-    @Effect()
-    updateCategory$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.PUT_CATEGORY)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PutCategoryAction) =>
-            this._api._putCategory(action.payload)
-                .switchMap(cate => Observable.from([
-                    new categoryAction.UpdateAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('update category failed')))
-        )
-    @Effect()
-    deleteCategory$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.DELETE_CATEGORY)
-        .debounceTime(250)
-        .switchMap((action: apiAction.DeleteCategoryAction) =>
-            this._api._deleteCategory(action.payload)
-                .switchMap(() => Observable.from([
-                    new categoryAction.DropAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('delete category failed')))
-        )
     /// promotion
     //
     @Effect()
@@ -91,44 +53,6 @@ export class ApiEffects {
             ]))
             .catch(handleError(action, appAction.msg('get promotions failed')))
         );
-
-    // admin
-    @Effect()
-    addPromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.POST_PROMOTION)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PostPromotionAction) =>
-            this._api._postPromotion(action.payload)
-                .switchMap(() => Observable.from([
-                    new promotionActon.AddAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('add promotion failed')))
-        )
-    @Effect()
-    updatePromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.PUT_PROMOTION)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PutPromotionAction) =>
-            this._api._putPromotion(action.payload)
-                .switchMap(() => Observable.from([
-                    new promotionActon.UpdateAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('update promotion failed')))
-        )
-    @Effect()
-    deletePromotion$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.DELETE_PROMOTION)
-        .debounceTime(250)
-        .switchMap((action: apiAction.DeletePromotionAction) =>
-            this._api._deletePromotion(action.payload)
-                .switchMap(() => Observable.from([
-                    new promotionActon.DropAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('delete promotion failed')))
-        )
     /// Role
     //
     @Effect()
@@ -143,46 +67,7 @@ export class ApiEffects {
             .catch(handleError(action, appAction.msg('get roles failed')))
         );
 
-    // admin
-    @Effect()
-    addRole$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.POST_ROLE)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PostRoleAction) =>
-            this._api._postRole(action.payload)
-                .switchMap(() => Observable.from([
-                    new roleAction.AddAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('add role failed')))
-        )
-    @Effect()
-    updateRole$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.PUT_ROLE)
-        .debounceTime(250)
-        .switchMap((action: apiAction.PutRoleAction) =>
-            this._api._putRole(action.payload)
-                .switchMap(() => Observable.from([
-                    new roleAction.UpdateAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('update role failed')))
-        )
-    @Effect()
-    deleteRole$: Observable<Action> = this.actions$
-        .ofType(apiAction.ActionTypes.DELETE_ROLE)
-        .debounceTime(250)
-        .switchMap((action: apiAction.DeleteRoleAction) =>
-            this._api._deleteRole(action.payload)
-                .switchMap(() => Observable.from([
-                    new roleAction.DropAction(action.payload),
-                    success(),
-                ]))
-                .catch(handleError(action, appAction.msg('delete role failed')))
-        )
-
-
-    //end api
+    // end api
 
 
 

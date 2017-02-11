@@ -1,33 +1,33 @@
-import { Observable } from 'rxjs/Observable';
-import { ActionReducer } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
-import { environment } from 'environments/environment';
 import '@ngrx/core/add/operator/select';
-import { compose } from '@ngrx/core/compose';
-import { storeFreeze } from 'ngrx-store-freeze';
-import { combineReducers } from '@ngrx/store';
 
+import * as fromApi from './api';
 import * as fromApp from './app';
 import * as fromAuth from './auth';
-import * as fromApi from './api';
-import * as fromYard from './yard';
-import * as fromTopic from './topic';
-
 import * as fromContent from './content';
+import * as fromRouter from '@ngrx/router-store';
+import * as fromTopic from './topic';
 import * as fromUser from './user';
+import * as fromYard from './yard';
+
+import { ActionReducer } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { combineReducers } from '@ngrx/store';
+import { compose } from '@ngrx/core/compose';
+import { environment } from 'environments/environment';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 export interface State {
-    app: fromApp.State,
-    auth: fromAuth.State,
-    api: fromApi.State,
-    yard: fromYard.State,
-    topic: fromTopic.State,
-    router: fromRouter.RouterState
+    app: fromApp.State;
+    auth: fromAuth.State;
+    api: fromApi.State;
+    yard: fromYard.State;
+    topic: fromTopic.State;
+    router: fromRouter.RouterState;
     // content
-    category: fromContent.category.State,
-    promotion: fromContent.promotion.State
+    category: fromContent.category.State;
+    promotion: fromContent.promotion.State;
     // user
-    role: fromUser.role.State,
+    role: fromUser.role.State;
 };
 
 const reducers = {
@@ -87,22 +87,22 @@ export function getRoleState(state$: Observable<State>){
     return state$.select(state => state.role);
 }
 
-//App selector
+// App selector
 export const getCurrentUser = compose(fromApp.getCurrentUser, getAppState);
 export const getCurrentRoles = compose(fromApp.getCurrentRoles, getAppState);
 export const getSettingFilter = compose(fromApp.getSettingFilter, getAppState);
 
 
-//Auth selector
+// Auth selector
 export const getIsLogging = compose(fromAuth.getIsLogging, getAuthState);
 export const getIsLogged = compose(fromAuth.getIsLoggedIn, getAuthState);
 
-//Api selector
+// Api selector
 export const getFailedActions = compose(fromApi.getFailedActions, getApiState);
 export const getHasRetried = compose(fromApi.getHasRetried, getApiState);
 export const getRequestBusying = compose(fromApi.getIsBusy, getApiState);
 
-//Yard selector
+// Yard selector
 export const getToolbarTitle = compose(fromYard.getTitle, getYardState);
 
 // content
@@ -111,15 +111,15 @@ const getPromotions = compose(fromContent.promotion.getPromotions, getPromState)
 export const content = {
     getCategories,
     getPromotions,
-}
+};
 // user
 const getRoles = compose(fromUser.role.getRoles, getRoleState);
 export const user = {
     getRoles,
-}
+};
 
 
-//topic selector
+// topic selector
 export const getTopicCollection = compose(fromTopic.getCollection, getTopicState);
 export const getRecentTopics = compose(fromTopic.getRecentTopics, getTopicState);
 export const getCurrentFilter = compose(fromTopic.getCurrentFilter, getTopicState);

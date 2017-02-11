@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs/Observable';
-import { ActionReducer, Action } from '@ngrx/store';
-import { categoryAction } from 'app-actions';
+import { Action, ActionReducer } from '@ngrx/store';
 
 import { Category } from 'app-models';
+import { Observable } from 'rxjs/Observable';
+import { categoryAction } from 'app-actions';
+
 export interface State {
     categories: Array<Category>;
 }
@@ -13,26 +14,7 @@ const initialState: State = {
 export const reducer: ActionReducer<State> = (state = initialState, action: categoryAction.Actions) => {
     switch (action.type) {
         case categoryAction.ActionTypes.FULFIL: {
-            let payload = (action as categoryAction.FulfilAction).payload;
-            return { categories: payload };
-        }
-        case categoryAction.ActionTypes.ADD: {
-            let payload = (action as categoryAction.AddAction).payload;
-            return { categories: [payload, ...state.categories] }
-        }
-        case categoryAction.ActionTypes.UPDATE: {
-            let payload = (action as categoryAction.UpdateAction).payload;
-            let cs = state.categories.map(v => {
-                if (v.id === payload.id) {
-                    v = payload;
-                }
-                return v;
-            });
-            return { categories: cs };
-        }
-        case categoryAction.ActionTypes.DROP: {
-            let payload = (action as categoryAction.DropAction).payload;
-            return { categories: state.categories.filter(v => v.id !== payload) };
+            return { categories: action.payload };
         }
         default:
             return state;
