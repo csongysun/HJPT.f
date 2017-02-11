@@ -1,16 +1,14 @@
-
-import { Action } from '@ngrx/store';
-
-
-import { type } from 'app-utils';
 import {
-    Topic,
-    TopicFilter,
     Category,
     Promotion,
     Role,
+    Topic,
+    TopicFilter,
 } from 'app-models';
+
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { type } from 'app-utils';
 
 export class ActionTypes {
     static readonly REQUEST_SUCCESS = type('[Api] Api Request Success');
@@ -25,19 +23,6 @@ export class ActionTypes {
     static readonly GET_TOPICS = type('[Api] Get Topics');
     static readonly GET_RECENT_TOPICS = type('[Api] Get Recent Topics');
     // CLEAE_USER= type('[App] Clear User')
-
-    // admin
-    static readonly POST_CATEGORY = type('[Api] Post Category');
-    static readonly PUT_CATEGORY = type('[Api] Put Category');
-    static readonly DELETE_CATEGORY = type('[Api] Delete Category');
-
-    static readonly POST_PROMOTION = type('[Api] Post Promotion');
-    static readonly PUT_PROMOTION = type('[Api] Put Promotion');
-    static readonly DELETE_PROMOTION = type('[Api] Delete Promotion');
-
-    static readonly POST_ROLE = type('[Api] Post Role');
-    static readonly PUT_ROLE = type('[Api] Put Role');
-    static readonly DELETE_ROLE = type('[Api] Delete Role');
 };
 
 export class RequestSuccessAction implements Action {
@@ -78,46 +63,6 @@ export class GetRecentTopicsAction implements Action {
     constructor() { }
 }
 
-// admin
-export class PostCategoryAction implements Action {
-    readonly type = ActionTypes.POST_CATEGORY;
-    constructor(public payload: { orderId: number, name: string }) { }
-}
-export class PutCategoryAction implements Action {
-    readonly type = ActionTypes.PUT_CATEGORY;
-    constructor(public payload: Category) { }
-}
-export class DeleteCategoryAction implements Action {
-    readonly type = ActionTypes.DELETE_CATEGORY;
-    constructor(public payload: number) { }
-}
-
-export class PostPromotionAction implements Action {
-    readonly type = ActionTypes.POST_PROMOTION;
-    constructor(public payload: Promotion) { }
-}
-export class PutPromotionAction implements Action {
-    readonly type = ActionTypes.PUT_PROMOTION;
-    constructor(public payload: Promotion) { }
-}
-export class DeletePromotionAction implements Action {
-    readonly type = ActionTypes.DELETE_PROMOTION;
-    constructor(public payload: number) { }
-}
-
-export class PostRoleAction implements Action {
-    readonly type = ActionTypes.PUT_ROLE;
-    constructor(public payload: Role) { }
-}
-export class PutRoleAction implements Action {
-    readonly type = ActionTypes.PUT_ROLE;
-    constructor(public payload: Role) { }
-}
-export class DeleteRoleAction implements Action {
-    readonly type = ActionTypes.DELETE_ROLE;
-    constructor(public payload: number) { }
-}
-
 
 export type Actions
     = RequestSuccessAction
@@ -127,13 +72,4 @@ export type Actions
     | GetCategoriesAction
     | GetPromotionsAction
     | GetRolesAction
-    | GetTopicsAction
-    | PostCategoryAction
-    | PutCategoryAction
-    | DeleteCategoryAction
-    | PostPromotionAction
-    | PutPromotionAction
-    | DeletePromotionAction
-    | PostRoleAction
-    | PutRoleAction
-    | DeleteRoleAction
+    | GetTopicsAction;

@@ -1,5 +1,5 @@
-import { Route } from '@angular/router';
 import { AuthComponent } from 'app-containers';
+import { Route } from '@angular/router';
 
 export const ROUTES: Route[] = [
   { path: '', loadChildren: './containers/yard/yard.module#YardModule' },
@@ -8,7 +8,5 @@ export const ROUTES: Route[] = [
     path: 'auth/:key',
     component: AuthComponent
   },
-  { path: '', loadChildren: './containers/admin/admin.module#AdminModule' },
-
 ];
 

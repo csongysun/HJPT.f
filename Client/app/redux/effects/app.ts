@@ -1,16 +1,15 @@
-
-import { Injectable } from '@angular/core';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { go, back, replace } from '@ngrx/router-store';
-
-import { appAction } from 'app-actions';
-
 import 'app-rxjs';
 
-const roleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { back, go, replace } from '@ngrx/router-store';
+
+import { Action } from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { appAction } from 'app-actions';
+
+const roleClaimType = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
 @Injectable()
 export class AppEffects {
@@ -33,11 +32,11 @@ export class AppEffects {
     fetchUser$: Observable<Action> = this.actions$
         .ofType(appAction.ActionTypes.FETCH_USER)
         .mergeMap((action: appAction.FetchUserAction) => {
-            let tokenPayload = action.payload.token.split('.')[1];
-            let roles = JSON.parse(atob(tokenPayload))[roleClaimType];
+            const tokenPayload = action.payload.token.split('.')[1];
+            const roles = JSON.parse(atob(tokenPayload))[roleClaimType];
             return Observable.from([
                 new appAction.FetchRolesAction(roles)
             ]);
-        })
+        });
 
 }
