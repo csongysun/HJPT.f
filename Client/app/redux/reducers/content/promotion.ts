@@ -22,13 +22,12 @@ export const reducer: ActionReducer<State> = (state = initialState, action: prom
         }
         case promotionActon.ActionTypes.UPDATE: {
             let payload = (action as promotionActon.UpdateAction).payload;
-            let i = state.promotions.findIndex(v => v.id === payload.oldId);
-            let cs = state.promotions.map(v=>{
-                if(v.id === payload.oldId){
-                    v = payload.promotion;
+            let cs = state.promotions.map(v => {
+                if (v.id === payload.id) {
+                    v = payload;
                 }
                 return v;
-            })
+            });
             return { promotions: cs };
         }
         case promotionActon.ActionTypes.DROP: {

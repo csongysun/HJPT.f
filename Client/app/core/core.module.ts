@@ -69,6 +69,7 @@ const SERVICES = [
     ],
     exports: [
         ...COMPONENTS,
+        MaterialModule
     ],
     providers: [
         ...SERVICES

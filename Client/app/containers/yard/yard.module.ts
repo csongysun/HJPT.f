@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
 
 import { BaseSharedModule } from 'app';
 import {
-  PagingComponent,
-  TopicFilterComponent,
+
   TopicScrollerComponent,
   TorrentCardComponent,
   TorrentListComponent,
-  UserInfoComponent
+  PagingComponent,
+  TopicFilterComponent,
+  UserInfoComponent,
+
 } from 'app-components';
 import {
   DetailComponent,
@@ -42,8 +39,12 @@ const COMPONENTS = [
   IndexComponent,
   PublishComponent,
   TorrentComponent,
+  UserInfoComponent,
   YardComponent
 ];
+
+COMPONENTS.forEach((value, index) => { if (!value) console.log(index); });
+
 const SERVICES = [
   PublishService
 ];

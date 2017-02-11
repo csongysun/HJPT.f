@@ -14,10 +14,13 @@ import {
   CategoryItemComponent,
   PromotionManageComponent,
   PromotionItemComponent,
+  RoleManageComponent,
+  RoleItemComponent,
 } from 'app-components';
 import {
   AdminIndexComponent,
   AdminManageComponent,
+  UserManageComponent,
 } from 'app-containers';
 import {
   AdminGuard
@@ -33,11 +36,15 @@ const COMPONENTS = [
   AdminComponent,
   AdminIndexComponent,
   AdminManageComponent,
+  UserManageComponent,
 
   CategoryManageComponent,
   CategoryItemComponent,
   PromotionManageComponent,
   PromotionItemComponent,
+  RoleManageComponent,
+  RoleItemComponent,
+
 ];
 const PROVIDERS = [
   AdminGuard

@@ -32,11 +32,7 @@ export class PromotionItemComponent implements OnInit {
     this.state = 0;
   }
   edit(c: Promotion) {
-    this.temp = new Promotion();
-    this.temp.id = c.id;
-    this.temp.name = c.name;
-    this.temp.upFold = c.upFold;
-    this.temp.downFold = c.downFold;
+    this.temp = Object.assign({}, this.item);
     this.state = 1;
   }
   delete(id: number) {
@@ -47,7 +43,7 @@ export class PromotionItemComponent implements OnInit {
     if ((this.temp.id === p.id && this.temp.name === p.name && this.temp.upFold === p.upFold && this.temp.downFold === p.downFold)) {
       return this.reset();
     } // 没有更改
-    this.store.dispatch(new apiAction.PutPromotionAction({ oldId: p.id, promotion: this.temp }));
+    this.store.dispatch(new apiAction.PutPromotionAction(this.temp));
     return this.reset();
   }
 

@@ -14,7 +14,7 @@ import { AppClientService } from 'app-services';
 })
 export class RoleManageComponent implements OnInit {
 
-  temp: string;
+  temp: Role;
   state: number = 0;
 
   items$: Observable<Array<Role>>;
@@ -33,25 +33,25 @@ export class RoleManageComponent implements OnInit {
     this.state = 0;
   }
   add() {
-    this.temp = '';
+    this.temp = new Role();
     this.state = 1;
   }
   submit(c: Role) {
     if (this.state === 1) { // add
-      this.store.dispatch(new apiAction.PostRoleAction({name: this.temp}));
+      this.store.dispatch(new apiAction.PostRoleAction(this.temp));
       return this.reset();
     }
   }
 
   get canSave(): boolean {
     if (!this.temp
-      || this.temp.length <= 2) {
+      || this.temp.name.length <= 2) {
       return false;
     }
     return true;
   }
   get canSave$(): Observable<boolean> {
-    return this.items$.map(v => v.filter(v => v.name === this.temp).length > 0)
+    return this.items$.map(v => v.filter(v => v.name === this.temp.name).length > 0);
   }
 
   ngOnInit() {

@@ -22,7 +22,7 @@ export class AddAction implements Action {
 }
 export class UpdateAction implements Action {
     type = ActionTypes.UPDATE;
-    constructor(public payload: { oldId: number, promotion: Promotion }) { }
+    constructor(public payload: Promotion) { }
 }
 export class DropAction implements Action {
     type = ActionTypes.DROP;

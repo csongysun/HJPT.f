@@ -10,3 +10,5 @@ export * from './detail/detail.component';
 export * from './admin/admin.component';
 export * from './admin-index/admin-index.component';
 export * from './admin-manage/admin-manage.component';
+export * from './user-manage/user-manage.component';
+

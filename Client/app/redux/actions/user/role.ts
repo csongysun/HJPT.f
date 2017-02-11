@@ -1,15 +1,14 @@
 
 import { Action } from '@ngrx/store';
 import { type } from 'app-utils';
-import { Observable } from 'rxjs/Observable';
 
 import { Role } from 'app-models';
 
 export const ActionTypes = {
-    FULFIL: type('[Cate] Fulfil'),
-    ADD: type('[Cate] Add'),
-    UPDATE: type('[Cate] Update'),
-    DROP: type('[Cate] DROP')
+    FULFIL: type('[Role] Fulfil'),
+    ADD: type('[Role] Add'),
+    UPDATE: type('[Role] Update'),
+    DROP: type('[Role] DROP')
 };
 
 export class FulfilAction implements Action {
@@ -22,7 +21,7 @@ export class AddAction implements Action {
 }
 export class UpdateAction implements Action {
     type = ActionTypes.UPDATE;
-    constructor(public payload: { oldId: number, role: Role }) { }
+    constructor(public payload: Role) { }
 }
 export class DropAction implements Action {
     type = ActionTypes.DROP;
@@ -33,5 +32,5 @@ export type Actions
     = FulfilAction
     | AddAction
     | UpdateAction
-    | DropAction
+    | DropAction;
 

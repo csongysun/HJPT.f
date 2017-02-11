@@ -4,6 +4,7 @@ import {
     AdminComponent,
     AdminIndexComponent,
     AdminManageComponent,
+    UserManageComponent
 } from 'app-containers';
 
 export const ROUTES: Route[] = [
@@ -25,6 +26,10 @@ export const ROUTES: Route[] = [
                 path: 'content',
                 component: AdminManageComponent
             },
+            {
+                path: 'user',
+                component: AdminManageComponent
+            }
         ]
 
     }
