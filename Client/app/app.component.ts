@@ -1,10 +1,8 @@
-import { Component, ViewEncapsulation, Inject, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-
 import * as fromRoot from 'app-reducers';
-import { appAction } from 'app-actions';
+
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app',

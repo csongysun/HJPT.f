@@ -1,43 +1,46 @@
+import { ApiEffects, AppEffects, AuthEffects } from 'app-effects'
 import {
-    ModuleWithProviders, NgModule,
-    Optional, SkipSelf
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from '@angular/material';
-import { Store, StoreModule } from '@ngrx/store';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-
-import { reducer } from 'app-reducers';
-import { AuthEffects, AppEffects, ApiEffects } from 'app-effects'
-import { ROUTES } from '../app.routes';
-import {
-    IntegerDirective
-} from '../directives';
-import {
+    ApiFactoryService,
+    ApiGatewayService,
+    AppClientService,
+    AuthService,
     CacheService,
     LayoutService,
-    //TopicService,
-    ApiGatewayService,
-    AuthService,
-    AppClientService,
-    ApiFactoryService,
 } from 'app-services';
 import {
     LoginFormComponent,
     RegFormComponent,
 } from 'app-components';
 import {
+    ModuleWithProviders,
+    NgModule,
+    Optional,
+    SkipSelf,
+} from '@angular/core';
+import { Store, StoreModule } from '@ngrx/store';
+
+import {
     AuthComponent,
 } from 'app-containers';
+import { CommonModule } from '@angular/common';
+import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import {
+    IntegerDirective,
+} from '../directives';
+import { MaterialModule } from '@angular/material';
+import { ROUTES } from '../app.routes';
+import { RouterModule } from '@angular/router';
+import { RouterStoreModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducer } from 'app-reducers';
+
 const MODULES = [
     CommonModule,
     HttpModule,
     FormsModule,
+    RouterModule,
     MaterialModule.forRoot(),
     StoreModule.provideStore(reducer),
     EffectsModule.run(AppEffects),
@@ -65,11 +68,11 @@ const SERVICES = [
     ],
     declarations: [
         ...COMPONENTS,
-    //    IntegerDirective,
+        //    IntegerDirective,
     ],
     exports: [
         ...COMPONENTS,
-        MaterialModule
+        FormsModule,
     ],
     providers: [
         ...SERVICES

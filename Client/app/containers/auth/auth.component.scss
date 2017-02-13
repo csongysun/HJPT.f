@@ -3,6 +3,12 @@
   position: relative;
 }
 
+.container .center {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .toast {
   position: absolute;
   left: 0;
@@ -12,11 +18,29 @@
   margin: auto;
 }
 
+.logo-word.large {
+  float: none;
+  pointer-events: none;
+  font-size: 3em;
+  text-align: center;
+  margin-top: 20%;
+}
+
+.logo-word {
+  overflow: hidden;
+  margin: auto;
+  width: auto;
+  height: auto;
+  padding: 0;
+}
 
 
-/*
-@media all and (min-width: 600px){
-  .sign-content md-card {
-    width: 360px;
-  }
-}*/
+.logo-word .logo_anchor {
+
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
