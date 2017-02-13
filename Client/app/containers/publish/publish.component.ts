@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Store } from '@ngrx/store';
+import 'app-rxjs';
 
 import * as fromRoot from 'app-reducers';
-import { yardAction } from 'app-actions';
-import { AppClientService } from 'app-services';
-import { Topic, Category } from 'app-models';
 
-import 'app-rxjs';
+import { Category, Topic } from 'app-models';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+
+import { AppClientService } from 'app-services';
+import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
+import { yardAction } from 'app-actions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -44,8 +45,10 @@ export class PublishComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
     this.cates$$ = this.app.categories$.subscribe(v => {
-      this.pcates = v.filter(x => x.id % 100 === 0);
-      this.ccates = v.filter(x => x.id % 100 !== 0);
+      if (v) {
+        this.pcates = v.filter(x => x.id % 100 === 0);
+        this.ccates = v.filter(x => x.id % 100 !== 0);
+      }
     })
   }
   ngOnDestroy() {

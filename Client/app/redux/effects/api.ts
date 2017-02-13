@@ -69,9 +69,6 @@ export class ApiEffects {
 
     // end api
 
-
-
-
     // retry
     @Effect()
     retryActions$: Observable<Action> = this.actions$
@@ -93,7 +90,7 @@ function handleError(currentAction: Action, errorSenderAction: Action) {
         let msg: string;
         if (error.status === 401) {
             this.store.let(fromRoot.getHasRetried)
-                .switchMap(hasRetried => {
+                .mergeMap(hasRetried => {
                     if (hasRetried) {
                         errorSenderAction.payload = msg;
                         return Observable.from([failed(), errorSenderAction]);
@@ -101,10 +98,14 @@ function handleError(currentAction: Action, errorSenderAction: Action) {
                     return Observable.from([new apiAction.PushToRetryAction(currentAction) as Action, retry()]);
                 });
         }
-        if (error.status === 400)
+        if (error.status === 400) {
             msg = error.json();
-        if (!error.status)
+        } else if (!error.status) {
             msg = 'An unexpected error occurred.';
+        } else {
+            console.log(error);
+            msg = error.status + '  ' + error.statusText;
+        }
         errorSenderAction.payload = msg;
         return Observable.from([failed(), errorSenderAction]);
     }

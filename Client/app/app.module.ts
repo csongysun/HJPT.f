@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
