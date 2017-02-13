@@ -1,8 +1,12 @@
+import * as fromRoot from 'app-reducers';
+
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { SignUpReq } from 'app-models';
+import { Store } from '@ngrx/store';
+import { authAction } from 'app-actions';
 
 @Component({
   selector: 'reg-form',
@@ -15,11 +19,16 @@ export class RegFormComponent implements OnInit {
   isBusy$: Observable<boolean>;
 
   constructor(
-    private router: Router,
-  ) { }
-
+    private store: Store<fromRoot.State>,
+    private router: Router
+  ) {
+    this.isBusy$ = store.let(fromRoot.getIsLogging);
+  }
   ngOnInit() {
+  }
 
+  onSubmit() {
+    this.store.dispatch(new authAction.RegisterAction(this.form));
   }
 
 }
