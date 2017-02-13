@@ -1,9 +1,7 @@
-
 import { Action } from '@ngrx/store';
-import { type } from 'app-utils';
-import { Observable } from 'rxjs/Observable';
-
 import { Category } from 'app-models';
+import { Observable } from 'rxjs/Observable';
+import { type } from 'app-utils';
 
 export const ActionTypes = {
   SET_TITLE: type('[Yard] Set Title'),
@@ -16,5 +14,5 @@ export class SetTitleAction implements Action {
 
 
 export type Actions
-  = SetTitleAction
+  = SetTitleAction;
 

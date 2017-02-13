@@ -1,7 +1,7 @@
 <div class="toast" #toastContainer></div>
 <div class="container">
-  <login-form [@routeAnimations]="astate" [form]="loginReq" [isBusy]="isLogging | async" (submit)="login()">
-  </login-form>
-  <reg-form [@routeAnimations]="bstate" [form]="signUpReq" [isBusy]="isLogging | async" (submit)="register()">
-  </reg-form>
+  <div class="center">
+    <div class="logo-word large" id="logo"><a class="logo_anchor" href="/" aria-label="花椒PT" tabindex="-1">花椒PT</a></div>
+    <router-outlet></router-outlet>
+  </div>
 </div>
