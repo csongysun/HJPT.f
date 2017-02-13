@@ -20,12 +20,16 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private router: Router,
+    private router: Router
   ) {
-
-   }
+    this.isBusy$ = store.let(fromRoot.getIsLogging);
+  }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    this.store.dispatch(new authAction.LoginAction(this.form));
   }
 
 }

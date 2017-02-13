@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit" #regForm="ngForm">
+<form (ngSubmit)="onSubmit()" #regForm="ngForm">
   <section>
     <input [(ngModel)]="form.email" name="Email" type="email" placeholder="邮箱" >
     <input [(ngModel)]="form.password" name="Password" type="password" placeholder="密码">
