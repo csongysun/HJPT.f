@@ -1,10 +1,10 @@
+import { Action, Dispatcher, Store } from '@ngrx/store';
+import { Headers, Http, RequestMethod, RequestOptions, Response, URLSearchParams } from '@angular/http';
 
-import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, RequestMethod, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Store, Action, Dispatcher } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { CacheService } from './universal-cache';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 export class ApiGatewayOptions {
     method: RequestMethod;
@@ -21,7 +21,7 @@ export class ApiGatewayService {
         private cache: CacheService,
     ) { }
 
-    // Http overrides 
+    // Http overrides
     // -------------------
 
     getCache<T>(url: string, params?: any, autoClear: boolean = true): Observable<T> {
@@ -75,6 +75,21 @@ export class ApiGatewayService {
         options.params = params;
         return this.request<T>(options);
     }
+
+    upload<T>(url: string, name: string, file: any): Observable<T> {
+        const formData = new FormData();
+        formData.append(name, file, file.name);
+        const headers = new Headers();
+        // headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        headers.append('Authorization', 'Bearer ' + sessionStorage.getItem('accessToken'));
+        headers.append('Access-Control-Allow-Origin', '*');
+        const options = new RequestOptions({ headers: headers });
+        return this.http.post(url, formData, options)
+            .map(value => value.json() as T)
+            .catch(error => Observable.throw(error));
+    }
+
     private request<T>(options: ApiGatewayOptions): Observable<T> {
 
         options.method = (options.method || RequestMethod.Get);
@@ -83,14 +98,14 @@ export class ApiGatewayService {
         options.params = (options.params || {});
         options.data = (options.data || {});
 
-        //this.interpolateUrl(options);
-        //this.addXsrfToken(options);
+        // this.interpolateUrl(options);
+        // this.addXsrfToken(options);
         this.addContentType(options);
 
         this.addBearerToken(options);
         this.addCors(options);
 
-        let requestOptions = new RequestOptions();
+        const requestOptions = new RequestOptions();
         requestOptions.method = options.method;
         requestOptions.url = options.url;
         requestOptions.headers = options.headers;
@@ -98,7 +113,7 @@ export class ApiGatewayService {
         requestOptions.body = JSON.stringify(options.data);
 
         console.log(requestOptions);
-        
+
         return this.http.request(options.url, requestOptions)
             .map(value => value.json() as T);
     }

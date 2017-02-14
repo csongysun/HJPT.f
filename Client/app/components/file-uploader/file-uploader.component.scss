@@ -1,0 +1,49 @@
+input[type="file"] {
+  position: absolute;
+  top: -9999999;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  outline: none;
+  cursor: inherit;
+}
+
+label {
+  position: relative;
+  height: 3rem;
+  line-height: 3rem;
+  text-decoration: none;
+  color: #fff;
+  background-color: #26a69a;
+  text-align: center;
+  letter-spacing: .5px;
+  transition: .2s ease-out;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0 2rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+ul{
+  padding-left: 0;
+    list-style-type: none;
+    margin: .5rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+li{
+  background-color: #fff;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+}

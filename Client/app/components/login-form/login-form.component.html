@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit" #loginForm="ngForm">
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
   <section>
       <input [(ngModel)]="form.email" name="email" type="email" placeholder="账号">
       <input [(ngModel)]="form.password" name="password" type="password"  placeholder="密码">

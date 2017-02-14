@@ -6,6 +6,7 @@ import { Category, Topic } from 'app-models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { AppClientService } from 'app-services';
+import { FileUploaderComponent } from 'app-components';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -29,18 +30,14 @@ export class PublishComponent implements OnInit, OnDestroy {
     return this.ccates.filter(v => Math.floor(v.id / 100) === this.selectedP.id)
   }
 
-  @ViewChild('publishForm') publishForm;
-  $publishForm: FormData;
+  @ViewChild('torrentFile')
+  torrentUploader: FileUploaderComponent;
 
   constructor(
     private store: Store<fromRoot.State>,
     private app: AppClientService
   ) {
   }
-  publish() {
-    this.$publishForm = new FormData(this.publishForm.nativeElement);
-  }
-
   private cates$$: Subscription;
   ngOnInit() {
     this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
@@ -49,10 +46,14 @@ export class PublishComponent implements OnInit, OnDestroy {
         this.pcates = v.filter(x => x.id % 100 === 0);
         this.ccates = v.filter(x => x.id % 100 !== 0);
       }
-    })
+    });
   }
   ngOnDestroy() {
     this.cates$$.unsubscribe();
+  }
+
+  onSubmit() {
+    console.log(this.torrentUploader.fileList);
   }
 
 }

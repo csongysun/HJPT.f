@@ -1,9 +1,12 @@
 <div>
-  <button>
-    上传
-  </button>
-  <input type="file" style="display: none">
+  <label>
+    <span>选择文件</span>
+    <input type="file" (change)="fileChange($event)">
+  </label>
+  <div>{{info}}</div>
   <ul>
-    <li *ngFor="let file of fileList"></li>
+    <li *ngFor="let file of fileList">
+      {{file.fileName}}
+    </li>
   </ul>
 </div>

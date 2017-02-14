@@ -5,6 +5,7 @@ import {
     AppClientService,
     AuthService,
     CacheService,
+    FileUploadService,
     LayoutService,
 } from 'app-services';
 import {
@@ -61,6 +62,7 @@ const SERVICES = [
     AuthService,
     AppClientService,
     ApiFactoryService,
+    FileUploadService
 ]
 @NgModule({
     imports: [

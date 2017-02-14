@@ -7,8 +7,6 @@
  */
 
 import {
-} from 'app-components';
-import {
 } from 'app-services';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +16,9 @@ import {
 } from '../directives';
 
 import { CommonModule } from '@angular/common';
+import {
+    FileUploaderComponent,
+} from 'app-components';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { NgModule } from '@angular/core';
@@ -30,7 +31,8 @@ import { NgModule } from '@angular/core';
     ],
     declarations: [
         IntegerDirective,
-        NumberDirective
+        NumberDirective,
+        FileUploaderComponent
     ],
     exports: [
         CommonModule,
@@ -39,7 +41,8 @@ import { NgModule } from '@angular/core';
         ReactiveFormsModule,
         HttpModule,
         IntegerDirective,
-        NumberDirective
+        NumberDirective,
+        FileUploaderComponent,
     ]
 })
 export class BaseSharedModule {

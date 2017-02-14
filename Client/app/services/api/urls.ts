@@ -15,6 +15,8 @@ export const content = {
 
     topic: baseUrl + 'topic',
     recentTopic: baseUrl + 'topic/recent',
+
+    upload: baseUrl + 'annex/upload',
 }
 
 export const user = {

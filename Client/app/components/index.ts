@@ -6,3 +6,4 @@ export * from './torrent-card/torrent-card.component';
 export * from './torrent-list/torrent-list.component';
 export * from './user-info/user-info.component';
 export * from './paging/paging.component';
+export * from './file-uploader/file-uploader.component';

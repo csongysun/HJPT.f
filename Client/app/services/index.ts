@@ -4,6 +4,7 @@ export * from './auth.service';
 export * from './app-client.service';
 export * from './layout.service';
 export * from './publish.service';
+export * from './file-upload.service';
 
 // api
 export * from './api/api-factory.service';

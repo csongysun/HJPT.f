@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-
 import * as fromRoot from 'app-reducers';
-import { apiAction, yardAction } from 'app-actions';
+
 import {
   Category,
   Promotion,
   Role,
 } from 'app-models';
+import { apiAction, yardAction } from 'app-actions';
+
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AppClientService {
@@ -44,6 +45,6 @@ export class AppClientService {
   }
   get isRequesting$(): Observable<boolean> {
     return this.store.let(fromRoot.getRequestBusying).share();
-  }  
+  }
 
 }
