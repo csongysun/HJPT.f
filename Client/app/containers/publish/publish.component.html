@@ -1,71 +1,45 @@
 <form (ngSubmit)="onSubmit()">
-  <div class="section">
-    <h5>基本信息</h5>
-    <div>
-      <div class="section">
-        <h6>标题</h6>
-        <input type="text" class="validate" [(ngModel)]="topic.title" name="title">
-      </div>
-      <div class="section">
-        <h6>副标题</h6>
-        <input type="text" class="validate" [(ngModel)]="topic.subtitle" name="subtitle">
-      </div>
-      <div class="section">
-        <h6>类型</h6>
-        <div style="display: flex">
-          <select [(ngModel)]="selectedP" name="parentCategory">
-            <option [value]="category.id" *ngFor="let category of pcates" >{{category.name}}</option>
-          </select>
-          <select [(ngModel)]="topic.category" name="childCategory">
-            <option [value]="category.id" *ngFor="let category of selectedCates">{{category.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="section">
-        <div class="file-field input-field">
-          <div class="btn">
-            <span>种子文件</span>
-            <app-file-uploader #torrentFile></app-file-uploader>
-          </div>
-        </div>
-        <div class="file-field input-field">
-          <div class="btn">
-            <span>NFO文件</span>
-            <input type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text">
-          </div>
-        </div>
-      </div>
+  <!--<fieldset>-->
+  <legend>基本信息</legend>
+  <section>
+    <md-input-container [dividerColor]="title.valid ? 'primary' : 'warn'">
+      <input md-input placeholder="标题" type="text" [(ngModel)]="topic.title" name="title" #title="ngModel" minlength="10" required>
+    </md-input-container>
+    <md-input-container>
+      <input md-input placeholder="副标题" type="text" [(ngModel)]="topic.subtitle" name="subtitle" #subTitle="ngModel" required>
+    </md-input-container>
+  </section>
+  <section>
+    <div style="display: flex">
+      <p>
+        <md-select placeholder="分类">
+          <md-option [value]="category.id" *ngFor="let category of pcates">{{category.name}}
+          </md-option>
+        </md-select>
+        <md-select placeholder="子分类">
+          <md-option [value]="category.id" *ngFor="let category of selectedCates">{{category.name}}
+          </md-option>
+        </md-select>
+      </p>
     </div>
+  </section>
+  <section>
+    <app-file-uploader label="选择种子文件" #torrentFile></app-file-uploader>
+  </section>
+  <section>
+    <app-file-uploader label="选择NFO文件" #nfoFile></app-file-uploader>
+  </section>
+  <legend>
+    简介
+  </legend>
+  <div class="btn">
+    <span>选择封面</span>
+    <app-file-uploader #torrentFile></app-file-uploader>
   </div>
-  <div class="section">
-    <h5>简介</h5>
-    <div class="section">
-      <div class="file-field input-field">
-        <div class="btn">
-          <span>封面</span>
-          <input type="file">
-        </div>
-        <div class="file-path-wrapper">
-          <input class="file-path validate" type="text">
-        </div>
-      </div>
-    </div>
-    <h6>简介</h6>
-    <textarea id="textarea1" class="materialize-textarea"></textarea>
-    <div class="section">
-      <div class="file-field input-field">
-        <div class="btn">
-          <span>截图</span>
-          <input placeholder="可上传多个文件" type="file">
-        </div>
-        <div class="file-path-wrapper">
-          <input class="file-path validate" type="text">
-        </div>
-      </div>
-    </div>
+  <textarea class="materialize-textarea" placeholder="简介"></textarea>
+  <div class="btn">
+    <span>选择封面</span>
+    <app-file-uploader #torrentFile></app-file-uploader>
   </div>
   <div class="section">
     <button class="btn waves-effect waves-light" type="submit" name="action">保存

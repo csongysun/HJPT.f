@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Annex } from 'app-models';
 import { FileUploadService } from 'app-services';
@@ -10,8 +10,13 @@ import { FileUploadService } from 'app-services';
 })
 export class FileUploaderComponent implements OnInit {
 
+  @Input()
+  label: string = '选择文件';
+  @Input()
+  multi: boolean = false;
+
   fileList: Array<Annex> = new Array<Annex>();
-  info: string;
+  info: string = 'info';
 
   constructor(
     private fus: FileUploadService
@@ -29,6 +34,7 @@ export class FileUploaderComponent implements OnInit {
         if (!value) {
           this.info = '上传失败：返回数据不合法';
         }
+        this.info = null;
         this.fileList.push(value);
       }, err => {
         this.info = JSON.stringify(err);

@@ -17,7 +17,7 @@ import { yardAction } from 'app-actions';
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
   templateUrl: './publish.component.html',
-  styleUrls: ['./publish.component.css']
+  styleUrls: ['./publish.component.scss']
 })
 export class PublishComponent implements OnInit, OnDestroy {
 

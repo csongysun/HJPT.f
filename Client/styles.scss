@@ -27,6 +27,7 @@ body {
   position: absolute;
 }
 
+// md-sidenav fix
 .md-sidenav-content {
   transform: none !important;
 }
@@ -44,31 +45,11 @@ body {
   padding: 0.8rem 0;
 }
 
-login-form,
-reg-form {
-  md-card {
-    margin: auto;
-    left: 0;
-    right: 0;
-    padding: 0;
-    width: 360px;
-    // position: fixed;
-  }
-  md-card form {
-    width: 336px;
-    display: inline-block;
-    margin: 0 8px 0 0;
-    vertical-align: middle;
-    /*background: orange;*/
-  }
-  md-card md-card-content {
-    padding: 16px;
-  }
-  md-card md-input {
-    width: 80%;
-    /*margin: 0 16px 0 0;*/
-    overflow: hidden;
-  }
-}
+// @import "styles/mixins";
+@import "styles/color";
+@import "styles/variables";
+@import "styles/global";
+@import "styles/sidenav";
+@import "styles/grid";
+@import "styles/form";
 
-@import "./styles/sidenav";

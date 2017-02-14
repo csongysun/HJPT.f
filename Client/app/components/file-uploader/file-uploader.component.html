@@ -1,12 +1,16 @@
 <div>
   <label>
-    <span>选择文件</span>
-    <input type="file" (change)="fileChange($event)">
+    <span>{{label}}</span>
+    <input type="file" (change)="fileChange($event)" [disabled]="!multi && fileList.length > 0">
   </label>
-  <div>{{info}}</div>
-  <ul>
-    <li *ngFor="let file of fileList">
-      {{file.fileName}}
-    </li>
-  </ul>
+  <span class="info">{{info}}</span>
 </div>
+
+<ul class="collection">
+  <li class="collection-item" *ngFor="let file of fileList">
+    <div>
+      {{file.fileName}}
+      <a href="#" class="secondary-content"><i class="material-icons">delete</i></a>
+    </div>
+  </li>
+</ul>
