@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import {
     FileUploaderComponent,
 } from 'app-components';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { NgModule } from '@angular/core';
@@ -27,6 +28,7 @@ import { NgModule } from '@angular/core';
     imports: [
         CommonModule,
         MaterialModule,
+        FlexLayoutModule,
         FormsModule,
     ],
     declarations: [
@@ -37,6 +39,7 @@ import { NgModule } from '@angular/core';
     exports: [
         CommonModule,
         MaterialModule,
+        FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,

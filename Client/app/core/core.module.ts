@@ -25,6 +25,7 @@ import {
 } from 'app-containers';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
@@ -43,6 +44,7 @@ const MODULES = [
     FormsModule,
     RouterModule,
     MaterialModule.forRoot(),
+    FlexLayoutModule.forRoot(),
     StoreModule.provideStore(reducer),
     EffectsModule.run(AppEffects),
     EffectsModule.run(AuthEffects),

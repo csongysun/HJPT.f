@@ -1,5 +1,6 @@
 <form (ngSubmit)="onSubmit()">
-  <!--<fieldset>-->
+
+  <section></section>
   <legend>基本信息</legend>
   <section>
     <md-input-container [dividerColor]="title.valid ? 'primary' : 'warn'">
@@ -12,11 +13,11 @@
   <section>
     <div style="display: flex">
       <p>
-        <md-select placeholder="分类">
+        <md-select placeholder="分类" >
           <md-option [value]="category.id" *ngFor="let category of pcates">{{category.name}}
           </md-option>
         </md-select>
-        <md-select placeholder="子分类">
+        <md-select placeholder="子分类" [(ngModel)]="topic.category" name="category">
           <md-option [value]="category.id" *ngFor="let category of selectedCates">{{category.name}}
           </md-option>
         </md-select>
@@ -29,24 +30,21 @@
   <section>
     <app-file-uploader label="选择NFO文件" #nfoFile></app-file-uploader>
   </section>
+
+  <section></section>
   <legend>
     简介
   </legend>
-  <div class="btn">
-    <span>选择封面</span>
-    <app-file-uploader #torrentFile></app-file-uploader>
-  </div>
-  <textarea class="materialize-textarea" placeholder="简介"></textarea>
-  <div class="btn">
-    <span>选择封面</span>
-    <app-file-uploader #torrentFile></app-file-uploader>
-  </div>
-  <div class="section">
-    <button class="btn waves-effect waves-light" type="submit" name="action">保存
-      <i class="material-icons right">send</i>
-    </button>
-    <button class="btn waves-effect waves-light" type="submit" name="action">发布
-      <i class="material-icons right">send</i>
-    </button>
-  </div>
+  <section>
+    <app-file-uploader label="选择封面" #coverFile></app-file-uploader>
+  </section>
+  <md-input-container>
+    <textarea md-input placeholder="种子介绍" [(ngModel)]="topic.description" name="description"></textarea>
+  </md-input-container>
+  <section>
+    <app-file-uploader label="选择插图" #screenFile></app-file-uploader>
+  </section>
+  <section fxLayoutAlign="center">
+    <button md-raised-button type="submit" color="primary">发布</button>
+  </section>
 </form>

@@ -2,7 +2,7 @@ import 'app-rxjs';
 
 import * as fromRoot from 'app-reducers';
 
-import { Category, Topic } from 'app-models';
+import { Category, TopicPublishReq } from 'app-models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { AppClientService } from 'app-services';
@@ -21,7 +21,7 @@ import { yardAction } from 'app-actions';
 })
 export class PublishComponent implements OnInit, OnDestroy {
 
-  topic: Topic = new Topic();
+  topic: TopicPublishReq = new TopicPublishReq();
 
   pcates = new Array<Category>();
   ccates = new Array<Category>();
@@ -31,7 +31,16 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
 
   @ViewChild('torrentFile')
-  torrentUploader: FileUploaderComponent;
+  torrenFile: FileUploaderComponent;
+
+  @ViewChild('nfoFile')
+  nfoFile: FileUploaderComponent;
+
+  @ViewChild('coverFile')
+  coverFile: FileUploaderComponent;
+
+  @ViewChild('screenFile')
+  screenFile: FileUploaderComponent;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -53,7 +62,13 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.torrentUploader.fileList);
+
+    this.topic.torrent = this.torrenFile.fileList[0];
+    this.topic.nfo = this.nfoFile.fileList[0];
+    this.topic.cover = this.coverFile.fileList[0];
+    this.topic.screen = this.screenFile.fileList;
+
+    console.log(this.topic);
   }
 
 }
