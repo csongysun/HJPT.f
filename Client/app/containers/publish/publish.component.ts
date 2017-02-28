@@ -1,17 +1,18 @@
 import 'app-rxjs';
 
 import * as fromRoot from 'app-reducers';
+import * as urls from '../../services/api/urls';
 
 import { Category, TopicPublishReq } from 'app-models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { AppClientService } from 'app-services';
+import { AppClientService, PublishService } from 'app-services';
 import { FileUploaderComponent } from 'app-components';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
-import { yardAction } from 'app-actions';
+import { yardAction, appAction } from 'app-actions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -44,7 +45,8 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private app: AppClientService
+    private app: AppClientService,
+    private publisher: PublishService
   ) {
   }
   private cates$$: Subscription;
@@ -56,17 +58,18 @@ export class PublishComponent implements OnInit, OnDestroy {
         this.ccates = v.filter(x => x.id % 100 !== 0);
       }
     });
+    this.publisher._getTempTopic().subscribe(v => {
+      this.topic = Object.assign(this.topic, v);
+    }, err => {
+      console.log(err);
+      this.store.dispatch(new appAction.MassageAction('无法获得临时Topic'));
+    });
   }
   ngOnDestroy() {
     this.cates$$.unsubscribe();
   }
 
   onSubmit() {
-
-    this.topic.torrent = this.torrenFile.fileList[0];
-    this.topic.nfo = this.nfoFile.fileList[0];
-    this.topic.cover = this.coverFile.fileList[0];
-    this.topic.screen = this.screenFile.fileList;
 
     console.log(this.topic);
   }

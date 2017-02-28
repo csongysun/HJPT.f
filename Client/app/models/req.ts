@@ -18,17 +18,16 @@ export class TopicsRep {
 }
 
 export class TopicPublishReq {
-
+    anonymous: boolean;
+    iMDbUrl: string;
     title: string;
     subTitle: string;
-
-    category: number;
-
+    categoryId: number;
     description: string;
-
-    torrent: Annex;
-    nfo: Annex;
-    cover: Annex;
-    screen: Array<Annex>;
+    torrent: string;
+    nfo: string;
+    cover: string;
+    screenShot: string;
+    lastUpdate: Date;
 }
 

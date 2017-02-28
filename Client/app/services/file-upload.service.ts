@@ -11,8 +11,8 @@ export class FileUploadService {
     private api: ApiGatewayService
   ) { }
 
-  upload<T>(name: string, file: any) {
-    return this.api.upload<T>(urls.content.upload, name, file);
+  upload<T>(name: string, file: any, url: string = urls.content.tempAnnex) {
+    return this.api.upload<T>(url, name, file);
   }
 
 }

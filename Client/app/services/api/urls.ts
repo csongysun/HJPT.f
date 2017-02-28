@@ -13,10 +13,14 @@ export const content = {
     category: baseUrl + 'category',
     promotion: baseUrl + 'promotion',
 
+    tempAnnex: baseUrl + 'annex/temp',
+
     topic: baseUrl + 'topic',
     recentTopic: baseUrl + 'topic/recent',
 
-    upload: baseUrl + 'annex/upload',
+    // get-> GetMyTempTopic
+    publishTopic: baseUrl + 'topic/publish',
+    tempTopic: baseUrl + 'topic' + '/publish'
 }
 
 export const user = {

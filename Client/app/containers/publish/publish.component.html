@@ -42,7 +42,7 @@
     <textarea md-input placeholder="种子介绍" [(ngModel)]="topic.description" name="description"></textarea>
   </md-input-container>
   <section>
-    <app-file-uploader label="选择插图" #screenFile></app-file-uploader>
+    <app-file-uploader label="选择插图" [multi]="true" #screenFile></app-file-uploader>
   </section>
   <section fxLayoutAlign="center">
     <button md-raised-button type="submit" color="primary">发布</button>

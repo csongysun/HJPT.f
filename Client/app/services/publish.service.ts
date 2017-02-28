@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import * as urls from './api/urls';
 import { ApiGatewayService } from './http-gateway.service';
 
 
@@ -11,5 +11,9 @@ export class PublishService {
     private api: ApiGatewayService,
   ) {
 
+  }
+
+  _getTempTopic(): Observable<any> {
+    return this.api.get<any>(urls.content.publishTopic);
   }
 }
