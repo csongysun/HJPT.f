@@ -25,10 +25,10 @@
     </div>
   </section>
   <section>
-    <app-file-uploader label="选择种子文件" #torrentFile></app-file-uploader>
+    <app-file-uploader label="选择种子文件" [(files)]="torrentFiles" [url]="urls.content.tempTorrent" #torrentFile></app-file-uploader>
   </section>
   <section>
-    <app-file-uploader label="选择NFO文件" #nfoFile></app-file-uploader>
+    <app-file-uploader label="选择NFO文件" [(files)]="nfoFiles" [url]="urls.content.nfoUpload"  #nfoFile></app-file-uploader>
   </section>
 
   <section></section>
@@ -36,13 +36,13 @@
     简介
   </legend>
   <section>
-    <app-file-uploader label="选择封面" #coverFile></app-file-uploader>
+    <app-file-uploader label="选择封面" [(files)]="coverFiles" [url]="urls.content.imageUpload" #coverFile></app-file-uploader>
   </section>
   <md-input-container>
     <textarea md-input placeholder="种子介绍" [(ngModel)]="topic.description" name="description"></textarea>
   </md-input-container>
   <section>
-    <app-file-uploader label="选择插图" [multi]="true" #screenFile></app-file-uploader>
+    <app-file-uploader label="选择插图" [(files)]="screenShotFiles" [url]="urls.content.imageUpload" [multi]="true" #screenFile></app-file-uploader>
   </section>
   <section fxLayoutAlign="center">
     <button md-raised-button type="submit" color="primary">发布</button>

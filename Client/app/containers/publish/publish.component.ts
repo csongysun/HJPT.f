@@ -3,16 +3,17 @@ import 'app-rxjs';
 import * as fromRoot from 'app-reducers';
 import * as urls from '../../services/api/urls';
 
+import { AppClientService, PublishService } from 'app-services';
 import { Category, TopicPublishReq } from 'app-models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { appAction, yardAction } from 'app-actions';
 
-import { AppClientService, PublishService } from 'app-services';
+import { Annex } from 'app-models';
 import { FileUploaderComponent } from 'app-components';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
-import { yardAction, appAction } from 'app-actions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -30,6 +31,12 @@ export class PublishComponent implements OnInit, OnDestroy {
   get selectedCates(): Array<Category> {
     return this.ccates.filter(v => Math.floor(v.id / 100) === this.selectedP.id)
   }
+
+  torrentFiles: Array<Annex> = new Array<Annex>();
+  nfoFiles: Array<Annex> = new Array<Annex>();
+  coverFiles: Array<Annex> = new Array<Annex>();
+  screenShotFiles: Array<Annex> = new Array<Annex>();
+
 
   @ViewChild('torrentFile')
   torrenFile: FileUploaderComponent;
@@ -60,6 +67,7 @@ export class PublishComponent implements OnInit, OnDestroy {
     });
     this.publisher._getTempTopic().subscribe(v => {
       this.topic = Object.assign(this.topic, v);
+
     }, err => {
       console.log(err);
       this.store.dispatch(new appAction.MassageAction('无法获得临时Topic'));
