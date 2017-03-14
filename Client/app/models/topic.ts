@@ -1,4 +1,3 @@
-
 import { User } from './user';
 
 export class Topic {
@@ -13,6 +12,19 @@ export class Topic {
     addDate: Date;
     editDate: Date;
     tags: Array<Tag>;
+}
+
+export class TempTopic {
+    title: string;
+    subTitle: string;
+    categoryId: number;
+    description: string;
+    torrent: string;
+    NFO: string;
+    cover: string;
+    screenShot: string;
+    anonymous: boolean;
+    IMDbUrl: string;
 }
 
 export class Torrent {

@@ -20,7 +20,7 @@ export const content = {
 
     // get-> GetMyTempTopic
     publishTopic: baseUrl + 'topic/publish',
-    tempTopic: baseUrl + 'topic' + '/publish',
+    tempTopic: baseUrl + 'topic/draft',
 
     // torrent
     tempTorrent: baseUrl + 'torrent/temp',

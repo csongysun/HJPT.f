@@ -3,12 +3,12 @@ import 'app-rxjs';
 import * as fromRoot from 'app-reducers';
 import * as urls from '../../services/api/urls';
 
+import { Annex, TempTopic } from 'app-models';
 import { AppClientService, PublishService } from 'app-services';
 import { Category, TopicPublishReq } from 'app-models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { appAction, yardAction } from 'app-actions';
 
-import { Annex } from 'app-models';
 import { FileUploaderComponent } from 'app-components';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +23,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class PublishComponent implements OnInit, OnDestroy {
 
-  topic: TopicPublishReq = new TopicPublishReq();
+  topic: TempTopic = new TempTopic();
 
   pcates = new Array<Category>();
   ccates = new Array<Category>();
@@ -32,23 +32,45 @@ export class PublishComponent implements OnInit, OnDestroy {
     return this.ccates.filter(v => Math.floor(v.id / 100) === this.selectedP.id)
   }
 
-  torrentFiles: Array<Annex> = new Array<Annex>();
-  nfoFiles: Array<Annex> = new Array<Annex>();
-  coverFiles: Array<Annex> = new Array<Annex>();
-  screenShotFiles: Array<Annex> = new Array<Annex>();
+  url = urls;
 
+  // #region files
+  private _torrentFiles: Array<Annex>;
+  public get torrentFiles(): Array<Annex> {
+    return this._torrentFiles;
+  }
+  public set torrentFiles(v: Array<Annex>) {
+    this._torrentFiles = v;
+    this.topic.torrent = v.length < 1 ? null : JSON.stringify(v[0]);
+  }
 
-  @ViewChild('torrentFile')
-  torrenFile: FileUploaderComponent;
+  private _nfoFiles: Array<Annex>;
+  public get nfoFiles(): Array<Annex> {
+    return this._nfoFiles;
+  }
+  public set nfoFiles(v: Array<Annex>) {
+    this._nfoFiles = v;
+    this.topic.NFO = v.length < 1 ? null : JSON.stringify(v[0]);
+  }
 
-  @ViewChild('nfoFile')
-  nfoFile: FileUploaderComponent;
+  private _coverFiles: Array<Annex>;
+  public get coverFiles(): Array<Annex> {
+    return this._coverFiles;
+  }
+  public set coverFiles(v: Array<Annex>) {
+    this._coverFiles = v;
+    this.topic.cover = v.length < 1 ? null : JSON.stringify(v[0]);
+  }
 
-  @ViewChild('coverFile')
-  coverFile: FileUploaderComponent;
-
-  @ViewChild('screenFile')
-  screenFile: FileUploaderComponent;
+  private _screenShotFiles: Array<Annex>;
+  public get screenShotFiles(): Array<Annex> {
+    return this._screenShotFiles;
+  }
+  public set screenShotFiles(v: Array<Annex>) {
+    this._screenShotFiles = v;
+    this.topic.screenShot = v.length < 1 ? null : JSON.stringify(v);
+  }
+  // #endregion
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -56,10 +78,10 @@ export class PublishComponent implements OnInit, OnDestroy {
     private publisher: PublishService
   ) {
   }
-  private cates$$: Subscription;
+
   ngOnInit() {
     this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
-    this.cates$$ = this.app.categories$.subscribe(v => {
+    this.app.categories$.subscribe(v => {
       if (v) {
         this.pcates = v.filter(x => x.id % 100 === 0);
         this.ccates = v.filter(x => x.id % 100 !== 0);
@@ -67,19 +89,26 @@ export class PublishComponent implements OnInit, OnDestroy {
     });
     this.publisher._getTempTopic().subscribe(v => {
       this.topic = Object.assign(this.topic, v);
-
     }, err => {
-      console.log(err);
       this.store.dispatch(new appAction.MassageAction('无法获得临时Topic'));
     });
+
+    Observable.of(this.torrentFiles, this.nfoFiles, this.coverFiles, this.screenShotFiles)
+      .map(v)
   }
+
   ngOnDestroy() {
-    this.cates$$.unsubscribe();
   }
 
   onSubmit() {
+  }
 
-    console.log(this.topic);
+  saveDraft() {
+    this.publisher._saveTempTopic(this.topic).subscribe(() => {
+      this.store.dispatch(new appAction.MassageAction('保存成功'));
+    }, err => {
+      this.store.dispatch(new appAction.MassageAction('保存失败'));
+    });
   }
 
 }

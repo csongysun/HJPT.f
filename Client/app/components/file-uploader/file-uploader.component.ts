@@ -13,8 +13,11 @@ export class FileUploaderComponent implements OnInit {
   multi: boolean = false;
   @Input()
   url: string = 'file';
+  @Input()
+  fileName: string = 'file';
 
   fileList: Array<Annex> = new Array<Annex>();
+
   @Input()
   get files(): Array<Annex> {
     return this.fileList;
@@ -29,17 +32,22 @@ export class FileUploaderComponent implements OnInit {
 
   ngOnInit() { }
 
-  fileChange(event) {
+  fileChange(files) {
     this.isBusy = true;
 
-    const list = this.multi ? event.target.files : event.target.files.slice(0, 1);
+    let list = [];
+    if (this.multi) {
+      list = files;
+    } else {
+      list.push(files[0]);
+    }
     if (list.length < 1) {
       return;
     }
 
     const $$ =
       Observable.from(list)
-        .mergeMap(file => this.fus.upload<Annex>(this.url, file))
+        .concatMap(file => this.fus.upload<Annex>(this.fileName, file, this.url))
         .subscribe(value => {
           if (!value) {
             this.info = '上传失败：返回数据不合法';

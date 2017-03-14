@@ -1,7 +1,7 @@
 <div>
   <label>
     <span>{{label}}</span>
-    <input type="file" (change)="fileChange($event)" [disabled]="!multi && fileList.length > 0" [multiple]="multi">
+    <input type="file" (change)="fileChange(fi.files)" [disabled]="!multi && fileList.length > 0" [multiple]="multi" #fi>
   </label>
   <span class="info">{{info}}</span>
 </div>
