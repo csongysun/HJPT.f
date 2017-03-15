@@ -26,7 +26,7 @@ export class AuthService implements CanActivate {
     return this.api.get<void>(urls.auth.logout);
   }
   _refresh(rtoken: string): Observable<User> {
-    return this.api.get<User>(urls.auth.refresh, { token: rtoken });
+    return this.api.get<User>(urls.auth.refresh);
   }
   _register(req: SignUpReq): Observable<User> {
     // 加密 password

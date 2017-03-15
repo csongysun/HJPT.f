@@ -1,12 +1,9 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import { AuthService } from '@app/services';
 import { LoginReq } from '@app/models';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { authAction } from '@app/redux/actions';
 
 @Component({
   selector: 'login-form',
@@ -15,20 +12,20 @@ import { authAction } from '@app/redux/actions';
 })
 export class LoginFormComponent implements OnInit {
 
-  form: LoginReq = new LoginReq();
-  isBusy$: Observable<boolean>;
+  form = new LoginReq();
+  isBusy = false;
 
   constructor(
-    private store: Store<fromRoot.State>,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
-    this.isBusy$ = store.let(fromRoot.getIsLogging);
   }
 
   ngOnInit() {
   }
 
   onSubmit() {
+    this.auth._login(this.form).subscribe()
     this.store.dispatch(new authAction.LoginAction(this.form));
   }
 
