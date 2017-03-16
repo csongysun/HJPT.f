@@ -1,12 +1,10 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import { AuthService } from '@app/services';
+import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { SignUpReq } from '@app/models';
-import { Store } from '@ngrx/store';
-import { authAction } from '@app/redux/actions';
 
 @Component({
   selector: 'reg-form',
@@ -16,19 +14,27 @@ import { authAction } from '@app/redux/actions';
 export class RegFormComponent implements OnInit {
 
   form: SignUpReq = new SignUpReq();
-  isBusy$: Observable<boolean>;
+  isBusy = false;
 
   constructor(
-    private store: Store<fromRoot.State>,
-    private router: Router
-  ) {
-    this.isBusy$ = store.let(fromRoot.getIsLogging);
-  }
+    private router: Router,
+    private auth: AuthService,
+    private snackBar: MdSnackBar
+  ) { }
+
   ngOnInit() {
   }
 
   onSubmit() {
-    this.store.dispatch(new authAction.RegisterAction(this.form));
+    this.isBusy = true;
+    this.auth._login(this.form).subscribe(() => {
+      this.snackBar.open("登陆成功");
+    }, err => {
+      this.snackBar.open("注册失败");
+      console.log(err);
+    }, () => {
+      this.isBusy = false;
+    });
   }
 
 }

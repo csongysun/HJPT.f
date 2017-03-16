@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { AuthService } from '@app/services';
 import { LoginReq } from '@app/models';
+import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
@@ -17,7 +18,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private snackBar: MdSnackBar
   ) {
   }
 
@@ -25,8 +27,14 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.auth._login(this.form).subscribe()
-    this.store.dispatch(new authAction.LoginAction(this.form));
+    this.isBusy = true;
+    this.auth._login(this.form).subscribe(() => {
+      this.snackBar.open("登陆成功");
+    }, err => {
+      this.snackBar.open("登陆失败");
+      console.log(err);
+    }, ()=>{
+      this.isBusy = false;
+    });
   }
-
 }

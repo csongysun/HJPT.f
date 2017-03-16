@@ -15,8 +15,7 @@ export class TopicScrollerComponent implements OnInit {
   @Input() topics: Array<Topic>
 
   constructor(
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
   }

@@ -10,7 +10,7 @@
     <md-checkbox>Rule2</md-checkbox>
   </section>
   <section>
-    <button md-raised-button [disabled]="isBusy$ | async" type="submit">注册</button>
+    <button md-raised-button [disabled]="isBusy" type="submit">注册</button>
     <a [routerLink]="['/auth/login']">已有账号</a>
   </section>
 </form>

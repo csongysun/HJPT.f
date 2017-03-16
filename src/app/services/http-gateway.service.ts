@@ -106,7 +106,6 @@ export class ApiGatewayService {
             });
     }
 
-
     private getXsrfCookie(): string {
         let matches = document.cookie.match(/\bXSRF-TOKEN=([^\s;]+)/);
         try {
