@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 export class AuthService implements CanActivate {
 
   private currentUserSource = new Subject<User>();
-  currentUser$ = this.currentUserSource.asObservable();
+  get currentUser$() { return this.currentUserSource.asObservable() };
   setCurrentUser(user: User) {
     this.currentUserSource.next(user);
   }

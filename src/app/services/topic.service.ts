@@ -1,24 +1,34 @@
+import * as urls from './api/urls';
+
+import { Topic, TopicFilter } from '@app/models';
+
+import { ApiGatewayService } from '@app/services';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { TopicFilter } from '@app/models';
 
 @Injectable()
 export class TopicService {
 
-  private recentSource = new Subject<TopicFilter>();
-  recent$ = this.recentSource.asObservable();
-  setRecent(recent: TopicFilter) {
-    this.recentSource.next(recent);
+  get recent$() {
+    return Observable.interval(10000)
+      .concatMap(v => this._getRecent());
   }
-  // getRecent(recent: )
-
-  private recentSource = new Subject<TopicFilter>();
-  recent$ = this.recentSource.asObservable().share().last();
-  setFilter(recent: TopicFilter) {
-    this.recentSource.next(recent);
+  _getRecent(): Observable<Array<Topic>> {
+    return this.api.get(urls.content.recentTopic);
   }
 
-  constructor() { }
+  private filterSource = new Subject<TopicFilter>();
+  get filter$(): Observable<TopicFilter> {
+    return this.filterSource.asObservable().distinctUntilChanged();
+  }
+  setFilter(filter: TopicFilter) {
+    this.filterSource.next(filter);
+  }
+
+
+  constructor(
+    private api: ApiGatewayService
+  ) { }
 
 }

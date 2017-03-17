@@ -1,12 +1,9 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit, animate, state, style, transition, trigger } from '@angular/core';
 import { LoginReq, SignUpReq, Toast } from '@app/models';
-import { appAction, authAction } from '@app/redux/actions';
 
+import { AuthService } from '@app/services';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'auth',
@@ -34,16 +31,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   public bstate: string;
   private isLog: boolean;
 
-  public loginReq = new LoginReq();
-  public signUpReq = new SignUpReq();
-
-  get isLogging(): Observable<boolean> {
-    return this.store.let(fromRoot.getIsLogging);
-  }
 
   constructor(
-    private store: Store<fromRoot.State>,
     private route: ActivatedRoute,
+    private auth: AuthService
   ) {
     this.isLog = true;
     this.astate = 'in';
@@ -59,15 +50,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     this.isLog = !this.isLog;
   }
-
-  login() {
-    this.store.dispatch(new authAction.LoginAction(this.loginReq));
-  }
-
-  register() {
-    this.store.dispatch(new authAction.RegisterAction(this.signUpReq));
-  }
-
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       if ((params['key'] === 'login') !== this.isLog) this.toggle();

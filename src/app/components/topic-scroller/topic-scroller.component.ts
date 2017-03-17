@@ -1,9 +1,7 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Store } from '@ngrx/store';
 import { Topic } from '@app/models';
+import { TopicService } from '@app/services';
 
 @Component({
   selector: 'topic-scroller',
@@ -12,7 +10,7 @@ import { Topic } from '@app/models';
 })
 export class TopicScrollerComponent implements OnInit {
 
-  @Input() topics: Array<Topic>
+  @Input() topics: Array<Topic>;
 
   constructor(
   ) {}

@@ -1,9 +1,8 @@
-import * as fromRoot from '@app/redux/reducers';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { Component, Input, OnInit } from '@angular/core';
-
+import { AuthService } from '@app/services';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
 import { User } from '@app/models';
 
 @Component({
@@ -11,14 +10,24 @@ import { User } from '@app/models';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, OnDestroy {
 
-  @Input() user: User;
+  user: User;
 
-  constructor(private store: Store<fromRoot.State>
+  constructor(
+    private auth: AuthService
   ) { }
 
+  private user$$: Subscription;
   ngOnInit() {
+    this.user$$ = this.auth.currentUser$.subscribe(v => {
+      this.user = v;
+    });
   }
+  ngOnDestroy() {
+    this.user$$.unsubscribe();
+  }
+
+
 
 }

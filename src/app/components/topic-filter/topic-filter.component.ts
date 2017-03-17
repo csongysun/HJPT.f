@@ -29,16 +29,15 @@ export class TopicFilterComponent implements OnInit {
   }
 
   isIn(id: number) {
-    return this.filter.categoryIds.indexOf(id) != -1
+    return this.filter.categoryIds.indexOf(id) !== -1;
   }
 
   cateChange(id: number, v: boolean) {
     if (v) {
       if (!this.isIn(id))
         this.filter.categoryIds.push(id);
-    }
-    else {
-      this.filter.categoryIds = this.filter.categoryIds.filter(v => v != id);
+    } else {
+      this.filter.categoryIds = this.filter.categoryIds.filter(x => x !== id);
     }
     this.saveFilter();
   }
@@ -49,19 +48,19 @@ export class TopicFilterComponent implements OnInit {
 
 }
 
-function defaultFilter(): TopicFilter {
-  let pts = localStorage.getItem('setting_pageTake');
-  let filter = new TopicFilter();
+function defaultFilter() {
+  const pts = localStorage.getItem('setting_pageTake');
+  const filter = new TopicFilter();
   filter.pageIndex = 1;
-  filter.pageTake = pts ? parseInt(pts) : 50;
+  filter.pageTake = pts ? +pts : 50;
   filter.categoryIds = defaultCateIds();
   return filter;
 }
 
-function defaultCateIds(): Array<number> {
-  let cid = localStorage.getItem('setting_categoryIds');
+function defaultCateIds() {
+  const cid = localStorage.getItem('setting_categoryIds');
   if (!cid) return null;
-  let cids = cid.split(',');
+  const cids = cid.split(',');
   if (cids.length < 1) return null;
-  return cids.map((item) => parseInt(item));
+  return cids.map((item) => +item);
 }
