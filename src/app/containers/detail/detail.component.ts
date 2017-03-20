@@ -1,11 +1,8 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 
+import { AppClientService } from '@app/services';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
-import { yardAction } from '@app/redux/actions';
 
 @Component({
   selector: 'detail',
@@ -16,17 +13,17 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   constructor(
     private elementRef: ElementRef,
-    private store: Store<fromRoot.State>
+    private app: AppClientService
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new yardAction.SetTitleAction('种子'));
+    this.app.setTitle('种子');
   }
 
   ngAfterViewInit() {
-    let s = document.createElement('script');
+    const s = document.createElement('script');
     s.type = 'text/javascript';
-    s.textContent = "$(document).ready(function(){$('.collapsible').collapsible();});";
+    s.textContent = '$(document).ready(function(){$(".collapsible").collapsible();});';
     this.elementRef.nativeElement.appendChild(s);
   }
 }

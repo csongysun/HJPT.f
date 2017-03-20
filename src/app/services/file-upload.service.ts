@@ -11,7 +11,7 @@ export class FileUploadService {
   ) { }
 
   upload<T>(name: string, file: any, url: string) {
-    return this.api.upload<T>(url, name, file);
+    return this.api.upload(url, name, file);
   }
 
 }

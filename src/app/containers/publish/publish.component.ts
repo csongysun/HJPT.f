@@ -1,18 +1,16 @@
 import '@app/utils';
 
-import * as fromRoot from '@app/redux/reducers';
 import * as urls from '../../services/api/urls';
 
 import { Annex, TempTopic } from '@app/models';
 import { AppClientService, PublishService } from '@app/services';
 import { Category, TopicPublishReq } from '@app/models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { appAction, yardAction } from '@app/redux/actions';
 
 import { FileUploaderComponent } from '@app/components';
 import { FormGroup } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -73,28 +71,26 @@ export class PublishComponent implements OnInit, OnDestroy {
   // #endregion
 
   constructor(
-    private store: Store<fromRoot.State>,
     private app: AppClientService,
-    private publisher: PublishService
+    private publisher: PublishService,
+    private snackBar: MdSnackBar
   ) {
   }
 
   ngOnInit() {
-    this.store.dispatch(new yardAction.SetTitleAction('发布种子'));
+    this.app.setTitle('发布种子');
     this.app.categories$.subscribe(v => {
       if (v) {
         this.pcates = v.filter(x => x.id % 100 === 0);
         this.ccates = v.filter(x => x.id % 100 !== 0);
       }
     });
-    this.publisher._getTempTopic().subscribe(v => {
+    this.publisher.tempTopic$.subscribe(v => {
       this.topic = Object.assign(this.topic, v);
     }, err => {
-      this.store.dispatch(new appAction.MassageAction('无法获得临时Topic'));
+      this.snackBar.open('无法获得临时Topic');
     });
 
-    // Observable.of(this.torrentFiles, this.nfoFiles, this.coverFiles, this.screenShotFiles)
-    //   .map(v)
   }
 
   ngOnDestroy() {
@@ -104,10 +100,10 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
 
   saveDraft() {
-    this.publisher._saveTempTopic(this.topic).subscribe(() => {
-      this.store.dispatch(new appAction.MassageAction('保存成功'));
+    this.publisher.saveTempTopic(this.topic).subscribe(() => {
+      this.snackBar.open('保存成功');
     }, err => {
-      this.store.dispatch(new appAction.MassageAction('保存失败'));
+      this.snackBar.open('保存失败');
     });
   }
 

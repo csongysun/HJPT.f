@@ -1,4 +1,3 @@
-import * as fromRoot from '@app/redux/reducers';
 import * as urls from './api/urls';
 
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
@@ -52,7 +51,7 @@ export class AuthService implements CanActivate {
       if (v) {
         return Observable.of(true);
       }
-      let rtoken = localStorage.getItem('refreshToken');
+      const rtoken = localStorage.getItem('refreshToken');
       if (rtoken) {
         return this._refresh(rtoken).map(() => true)
           .catch(err => {

@@ -1,12 +1,8 @@
-import * as fromRoot from '@app/redux/reducers';
-
-import { AppClientService, Layout, LayoutService } from '@app/services';
+import { AppClientService, AuthService, Layout, LayoutService } from '@app/services';
 import { Category, User } from '@app/models';
 import { Component, NgZone, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-import { apiAction } from '@app/redux/actions';
 
 @Component({
   selector: 'app-yard',
@@ -16,20 +12,20 @@ import { apiAction } from '@app/redux/actions';
 export class YardComponent implements OnInit {
 
   get isWide(): boolean {
-    return this.layout.currentLayout == Layout.Wide;
+    return this.layout.currentLayout === Layout.Wide;
   };
 
   get title$(): Observable<string> {
-    return this.store.let(fromRoot.getToolbarTitle);
+    return this.app.title$;
   }
   get user$(): Observable<User> {
-    return this.store.let(fromRoot.getCurrentUser)
+    return this.auth.currentUser$;
   }
 
   constructor(
     private layout: LayoutService,
-    private store: Store<fromRoot.State>,
-    private app: AppClientService
+    private app: AppClientService,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {

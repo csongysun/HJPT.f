@@ -1,12 +1,8 @@
 import * as urls from './api/urls';
 
-import {
-  Category,
-  Promotion,
-  Role,
-} from '@app/models';
+import { Category, Promotion, Role } from '@app/models';
 
-import { ApiGatewayService } from '@app/services';
+import { ApiFactoryService } from '@app/services';
 import { Injectable } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -16,67 +12,64 @@ import { Subject } from 'rxjs/Subject';
 export class AppClientService {
 
   private titleSource = new Subject<string>();
-  title$ = this.titleSource.asObservable().share().last();;
+  get title$() { return this.titleSource.asObservable().share().last(); }
   setTitle(title: string) {
     this.titleSource.next(title);
   }
 
-  private categoriesSource = new Subject<Array<Category>>();
-  categories$ = this.categoriesSource.asObservable()
-    .do(v => {
-      if (!v)
-        this._getCategories();
-    }).share().last();
-  setCategories(categories: Array<Category>) {
+  private categoriesSource = new Subject<Category[]>();
+  get categories$() {
+    return this.categoriesSource.asObservable()
+      .do(v => {
+        if (!v) {
+          this.api._getCategories().subscribe(res => {
+            this.setCategories(res);
+          }, err => {
+            this.snackBar.open('获取分类失败');
+          });
+        }
+      }).share().last();
+  }
+  setCategories(categories: Category[]) {
     this.categoriesSource.next(categories);
   }
-  _getCategories() {
-    this.api.get(urls.content.category).subscribe(v => {
-      this.setCategories(v);
-    }, err => {
-      this.snackBar.open('获取分类失败');
-      console.log(err);
-    })
-  }
 
-  private promotionsSource = new Subject<Array<Category>>();
-  promotions$ = this.promotionsSource.asObservable()
-    .do(v => {
-      if (!v)
-        this._getPromotions();
-    }).share().last();
-  setPromotions(promotions: Array<Category>) {
+  private promotionsSource = new Subject<Promotion[]>();
+  get promotions$() {
+    return this.promotionsSource.asObservable()
+      .do(v => {
+        if (!v) {
+          this.api._getPromotions().subscribe(res => {
+            this.setPromotions(res);
+          }, err => {
+            this.snackBar.open('获取促销失败');
+          })
+        }
+      }).share().last();
+  }
+  setPromotions(promotions: Promotion[]) {
     this.promotionsSource.next(promotions);
   }
-  _getPromotions() {
-    this.api.get(urls.content.promotion).subscribe(v => {
-      this.setPromotions(v);
-    }, err => {
-      this.snackBar.open('获取促销失败');
-      console.log(err);
-    })
-  }
 
-  private rolesSource = new Subject<Array<Category>>();
-  roles$ = this.rolesSource.asObservable()
-    .do(v => {
-      if (!v)
-        this._getRoles();
-    }).share().last();
-  setRoles(roles: Array<Category>) {
-    this.rolesSource.next(roles);
+  private rolesSource = new Subject<Role[]>();
+  get roles$() {
+    return this.rolesSource.asObservable()
+      .do(v => {
+        if (!v) {
+          this.api._getRoles().subscribe(res => {
+            this.setRoles(res);
+          }, err => {
+            this.snackBar.open('获取用户组失败');
+          });
+        }
+      }).share().last();
   }
-  _getRoles() {
-    this.api.get(urls.user.role).subscribe(v => {
-      this.setRoles(v);
-    }, err => {
-      this.snackBar.open('获取用户组失败');
-      console.log(err);
-    })
+  setRoles(roles: Role[]) {
+    this.rolesSource.next(roles);
   }
 
   constructor(
-    private api: ApiGatewayService,
+    private api: ApiFactoryService,
     private snackBar: MdSnackBar
   ) { }
 

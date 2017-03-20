@@ -49,10 +49,7 @@ export class TopicFilterComponent implements OnInit {
 }
 
 function defaultFilter() {
-  const pts = localStorage.getItem('setting_pageTake');
   const filter = new TopicFilter();
-  filter.pageIndex = 1;
-  filter.pageTake = pts ? +pts : 50;
   filter.categoryIds = defaultCateIds();
   return filter;
 }

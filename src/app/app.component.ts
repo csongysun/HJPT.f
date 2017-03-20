@@ -1,8 +1,4 @@
-import * as fromRoot from '@app/redux/reducers';
-
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app',
@@ -14,7 +10,6 @@ import { Store } from '@ngrx/store';
 export class AppComponent implements OnInit {
 
   constructor(
-    private store: Store<fromRoot.State>
   ) {
   }
 
