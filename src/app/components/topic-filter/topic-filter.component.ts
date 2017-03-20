@@ -15,6 +15,9 @@ export class TopicFilterComponent implements OnInit {
 
   filter = defaultFilter();
 
+  @Input()
+  categoryList: Category[];
+
   constructor(
     private snackBar: MdSnackBar,
     private topic: TopicService,

@@ -6,25 +6,20 @@ import {
   YardComponent,
 } from '@app/containers';
 import {
-
-PagingComponent,
-
-TopicFilterComponent,
-
-TopicScrollerComponent,
-
-TorrentCardComponent,
-
-TorrentListComponent,
-
-UserInfoComponent,
+  PagingComponent,
+  TopicFilterComponent,
+  TopicScrollerComponent,
+  TorrentCardComponent,
+  TorrentListComponent,
+  UserInfoComponent,
 } from '@app/components';
+import {
+  PublishService,
+  TopicService,
+} from '@app/services';
 
 import { BaseSharedModule } from 'app';
 import { NgModule } from '@angular/core';
-import {
-  PublishService,
-} from '@app/services';
 import { ROUTES } from './yard-routes';
 import { RouterModule } from '@angular/router';
 
@@ -49,7 +44,8 @@ const COMPONENTS = [
 COMPONENTS.forEach((value, index) => { if (!value) console.log(index); });
 
 const SERVICES = [
-  PublishService
+  PublishService,
+  TopicService
 ];
 
 @NgModule({

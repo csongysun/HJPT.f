@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { LoginReq, SignUpReq, User } from '@app/models';
 
 import { ApiGatewayService } from './http-gateway.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -11,16 +12,21 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class AuthService implements CanActivate {
 
-  private currentUserSource = new Subject<User>();
-  get currentUser$() { return this.currentUserSource.asObservable() };
+  private currentUserSource = new BehaviorSubject<User>(null);
+  get currentUser$() { return this.currentUserSource.asObservable(); };
   setCurrentUser(user: User) {
+    if (user) {
+      sessionStorage.setItem('accessToken', user.token);
+    }
     this.currentUserSource.next(user);
   }
 
   constructor(
     private api: ApiGatewayService,
     private router: Router
-  ) { }
+  ) {
+    this.api.setCurrentUser = this.setCurrentUser;
+  }
 
   _login(req: LoginReq): Observable<void> {
     return this.api.post(urls.auth.login, req)
@@ -34,8 +40,9 @@ export class AuthService implements CanActivate {
         this.setCurrentUser(null);
       });
   }
-  _refresh(rtoken: string): Observable<void> {
-    return this.api.get(urls.auth.refresh)
+  _refresh(): Observable<void> {
+    const rtoken = localStorage.getItem('refreshToken');
+    return this.api.get(urls.auth.refresh + `?token=${rtoken}`)
       .map(v => {
         this.setCurrentUser(v);
       });
@@ -51,9 +58,8 @@ export class AuthService implements CanActivate {
       if (v) {
         return Observable.of(true);
       }
-      const rtoken = localStorage.getItem('refreshToken');
-      if (rtoken) {
-        return this._refresh(rtoken).map(() => true)
+      if (localStorage.getItem('refreshToken')) {
+        return this._refresh().map(() => true)
           .catch(err => {
             this.router.navigate(['/auth']);
             return Observable.of(false);

@@ -1,6 +1,6 @@
-<md-sidenav-layout class="yard-root">
+<md-sidenav-container class="yard-root">
   <md-sidenav #sidenav class="sidenav .z-depth-2" mode="{{isWide ? 'side' : 'over'}}" opened="{{ isWide }}">
-    <user-info [user]="user$ | async">
+    <user-info>
     </user-info>
     <md-nav-list>
       <a md-list-item RouterLinkActive="active" [routerLink]="['/index']">主页</a>
@@ -17,4 +17,4 @@
   <div class="container">
     <router-outlet></router-outlet>
   </div>
-</md-sidenav-layout>
+</md-sidenav-container>

@@ -9,8 +9,12 @@ import { TopicService } from '@app/services';
 })
 export class IndexComponent implements OnInit, OnDestroy {
 
+  get recent$() {
+    return this.topic.recent$;
+  }
+
   constructor(
-    topic: TopicService
+    private topic: TopicService
   ) {
   }
 

@@ -1,8 +1,8 @@
-<topic-filter [categories]="categories$ | async" (onChange)="refreshCollection($event)">
+<topic-filter [categoryList]="categories$ | async" (onChange)="refreshCollection($event)">
 </topic-filter>
-<topics-paging [pageIndex]="pageIndex$ | async" [pageCount]="pageCount$ | async" (onChange)="refreshCollection($event)">
+<topics-paging [pages]="pages$ | async" [paging]="paging$ | async" (onChange)="goPage($event)">
 </topics-paging>
 
 <div class="torrents-container">
-    <torrent-list [topics]="topics"></torrent-list>
+    <torrent-list [topics]="topicList$ | async"></torrent-list>
 </div>

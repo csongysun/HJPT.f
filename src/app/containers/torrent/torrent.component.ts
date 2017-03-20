@@ -11,12 +11,16 @@ import { Observable } from 'rxjs/Observable';
 })
 export class TorrentComponent implements OnInit {
 
-  get topics$(): Observable<Array<Topic>>{
+  get topicList$(){
     return this.topicService.topicList$;
   }
 
-  pageIndex$: Observable<number>;
-  pageCount$: Observable<number>;
+  get pages$(){
+    return this.topicService.pages$;
+  }
+  get paging$(){
+    return this.topicService.paging$;
+  }
 
   constructor(
     private app: AppClientService,
