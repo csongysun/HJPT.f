@@ -3,6 +3,8 @@ import * as urls from './api/urls';
 import { Category, Promotion, Role } from '@app/models';
 
 import { ApiFactoryService } from '@app/services';
+import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -17,19 +19,38 @@ export class AppClientService {
     this.titleSource.next(title);
   }
 
-  private categoriesSource = new Subject<Category[]>();
+  private categoriesSource = new BehaviorSubject<Category[]>(null);
   get categories$() {
-    return this.categoriesSource.asObservable()
-      .do(v => {
-        if (!v) {
-          this.api._getCategories().subscribe(res => {
-            this.setCategories(res);
-          }, err => {
-            this.snackBar.open('获取分类失败');
-          });
-        }
-      }).share().last();
+    if (!this.categoriesSource.getValue()) {
+      this.api._getCategories().subscribe(res => {
+        this.categoriesSource.next(res);
+      }, err => {
+        this.snackBar.open('获取分类失败');
+      });
+    }
+    return this.categoriesSource.flatMap(v => {
+      if (v) {
+        return Observable.of(v);
+      } else {
+        return this.api._getCategories().do(res => {
+          this.categoriesSource.next(res);
+        }, err => {
+          this.snackBar.open('获取分类失败');
+        });
+      }
+    });
   }
+  // categories$ = this.categoriesSource.flatMap(v => {
+  //   if (v) {
+  //     return Observable.of(v);
+  //   } else {
+  //     return this.api._getCategories().do(res => {
+  //       this.categoriesSource.next(res);
+  //     }, err => {
+  //       this.snackBar.open('获取分类失败');
+  //     });
+  //   }
+  // });
   setCategories(categories: Category[]) {
     this.categoriesSource.next(categories);
   }

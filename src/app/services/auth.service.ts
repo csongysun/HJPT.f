@@ -17,6 +17,7 @@ export class AuthService implements CanActivate {
   setCurrentUser(user: User) {
     if (user) {
       sessionStorage.setItem('accessToken', user.token);
+      localStorage.setItem('refreshToken', user.refreshToken);
     }
     this.currentUserSource.next(user);
   }

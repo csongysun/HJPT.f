@@ -8,25 +8,28 @@ import { Observable } from 'rxjs';
 export class FileUploaderComponent implements OnInit {
 
   @Input()
-  label: string = '选择文件';
+  label = '选择文件';
   @Input()
-  multi: boolean = false;
+  multi = false;
   @Input()
-  url: string = 'file';
+  url = 'file';
   @Input()
-  fileName: string = 'file';
+  fileName = 'file';
 
-  fileList: Array<Annex> = new Array<Annex>();
+  fileList = new Array<Annex>();
 
   @Input()
   get files(): Array<Annex> {
     return this.fileList;
   }
-  @Output()
-  filesChange: EventEmitter<Array<Annex>> = new EventEmitter<Array<Annex>>();
+  set files(v) {
+    if (v)
+      this.fileList = v;
+    else this.fileList = [];
+  }
 
-  info: string = 'info';
-  isBusy: boolean = false;
+  info = 'info';
+  isBusy = false;
 
   constructor(private fus: FileUploadService) { }
 
@@ -48,14 +51,13 @@ export class FileUploaderComponent implements OnInit {
     const $$ =
       Observable.from(list)
         .concatMap(file => this.fus.upload<Annex>(this.fileName, file, this.url))
-        .subscribe(value => {
+        .subscribe((value: Annex) => {
           if (!value) {
             this.info = '上传失败：返回数据不合法';
             $$.unsubscribe();
           }
           this.info = null;
-          this.fileList.push(value);
-          this.filesChange.emit(this.files);
+          this.files = this.fileList.concat(value);
         }, err => {
           this.info = JSON.stringify(err);
           $$.unsubscribe();

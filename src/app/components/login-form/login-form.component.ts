@@ -29,11 +29,12 @@ export class LoginFormComponent implements OnInit {
   onSubmit() {
     this.isBusy = true;
     this.auth._login(this.form).subscribe(() => {
-      this.snackBar.open("登陆成功");
+      this.snackBar.open('登陆成功');
+      this.router.navigate(['/']);
     }, err => {
-      this.snackBar.open("登陆失败");
+      this.snackBar.open('登陆失败');
       console.log(err);
-    }, ()=>{
+    }, () => {
       this.isBusy = false;
     });
   }

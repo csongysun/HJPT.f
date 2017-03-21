@@ -39,6 +39,7 @@ export class ApiGatewayService {
         headers.append('Authorization', 'Bearer ' + sessionStorage.getItem('accessToken'));
         const options = new RequestOptions({ headers: headers });
         return this.http.post(url, formData, options)
+            .map(res => res.json())
             .catch((err, cau) => {
                 if (err.status === 401) {
                     if (!localStorage.getItem('refreshToken')) {
@@ -60,7 +61,7 @@ export class ApiGatewayService {
                     return Observable.throw(err.json() as XError);
                 }
                 return Observable.throw({});
-            });;
+            });
     }
 
     private request(url: string, options: RequestOptionsArgs, data?: Object): Observable<Response> {

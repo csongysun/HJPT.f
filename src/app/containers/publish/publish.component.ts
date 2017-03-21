@@ -25,9 +25,15 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   pcates = new Array<Category>();
   ccates = new Array<Category>();
-  selectedP = new Category();
-  get selectedCates(): Array<Category> {
-    return this.ccates.filter(v => Math.floor(v.id / 100) === this.selectedP.id)
+  selectedCates = new Array<Category>();
+
+  private _spid: number;
+  public get spid() {
+    return this._spid;
+  }
+  public set spid(v) {
+    this.selectedCates = this.ccates.filter(p => Math.floor(p.id / 100) === v / 100);
+    this._spid = v;
   }
 
   url = urls;
