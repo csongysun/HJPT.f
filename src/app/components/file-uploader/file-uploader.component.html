@@ -10,7 +10,8 @@
   <li class="collection-item" *ngFor="let file of files">
     <div>
       {{file.fileName}}
-      <a href="#" class="secondary-content"><i class="material-icons">delete</i></a>
+      <a href="javascript:void(0)" (click)="removeFile(file)" class="secondary-content"><i class="material-icons">delete</i></a>
+      <!--<i class="material-icons" (click)="removeFile(file)">delete</i>-->
     </div>
   </li>
 </ul>

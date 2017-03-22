@@ -61,4 +61,9 @@ export class FileUploaderComponent implements OnInit {
         });
   }
 
+  removeFile(a: Annex) {
+    this.files = this.files.filter(v => v.url !== a.url);
+    this.onChange.emit(this.files);
+  }
+
 }

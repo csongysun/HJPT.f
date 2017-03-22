@@ -33,6 +33,7 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
   public set spid(v) {
     this.selectedCates = this.ccates.filter(p => Math.floor(p.id / 100) === v / 100);
+    this.topic.categoryId = this.selectedCates.length > 0 ? this.selectedCates[0].id : 0;
     this._spid = v;
   }
 
