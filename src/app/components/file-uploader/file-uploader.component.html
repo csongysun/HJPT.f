@@ -1,13 +1,13 @@
 <div>
   <label>
     <span>{{label}}</span>
-    <input type="file" (change)="fileChange(fi.files)" [disabled]="!multi && fileList.length > 0" [multiple]="multi" #fi>
+    <input type="file" (change)="fileChange(fi.files)" [disabled]="!multi && files?.length > 0" [multiple]="multi" #fi>
   </label>
   <span class="info">{{info}}</span>
 </div>
 
 <ul class="collection">
-  <li class="collection-item" *ngFor="let file of fileList">
+  <li class="collection-item" *ngFor="let file of files">
     <div>
       {{file.fileName}}
       <a href="#" class="secondary-content"><i class="material-icons">delete</i></a>

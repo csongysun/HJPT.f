@@ -39,39 +39,20 @@ export class PublishComponent implements OnInit, OnDestroy {
   url = urls;
 
   // #region files
-  private _torrentFiles: Array<Annex>;
-  public get torrentFiles(): Array<Annex> {
-    return this._torrentFiles;
-  }
-  public set torrentFiles(v: Array<Annex>) {
-    this._torrentFiles = v;
+  torrentFiles: Array<Annex>;
+  setTorrentFiles(v: Array<Annex>) {
     this.topic.torrent = v.length < 1 ? null : JSON.stringify(v[0]);
   }
-
-  private _nfoFiles: Array<Annex>;
-  public get nfoFiles(): Array<Annex> {
-    return this._nfoFiles;
+  nfoFiles: Array<Annex>;
+  setNfoFiles(v: Array<Annex>) {
+    this.topic.nfo = v.length < 1 ? null : JSON.stringify(v[0]);
   }
-  public set nfoFiles(v: Array<Annex>) {
-    this._nfoFiles = v;
-    this.topic.NFO = v.length < 1 ? null : JSON.stringify(v[0]);
-  }
-
-  private _coverFiles: Array<Annex>;
-  public get coverFiles(): Array<Annex> {
-    return this._coverFiles;
-  }
-  public set coverFiles(v: Array<Annex>) {
-    this._coverFiles = v;
+  coverFiles: Array<Annex>;
+  setCoverFiles(v: Array<Annex>) {
     this.topic.cover = v.length < 1 ? null : JSON.stringify(v[0]);
   }
-
-  private _screenShotFiles: Array<Annex>;
-  public get screenShotFiles(): Array<Annex> {
-    return this._screenShotFiles;
-  }
-  public set screenShotFiles(v: Array<Annex>) {
-    this._screenShotFiles = v;
+  screenShotFiles: Array<Annex>;
+  setScreenShotFiles(v: Array<Annex>) {
     this.topic.screenShot = v.length < 1 ? null : JSON.stringify(v);
   }
   // #endregion
@@ -90,11 +71,19 @@ export class PublishComponent implements OnInit, OnDestroy {
         this.pcates = v.filter(x => x.id % 100 === 0);
         this.ccates = v.filter(x => x.id % 100 !== 0);
       }
+    }, err => {
+      this.snackBar.open('获取分类失败');
     });
+
     this.publisher.tempTopic$.subscribe(v => {
       this.topic = Object.assign(this.topic, v);
+      this.torrentFiles = this.topic.torrent ? Array.of(JSON.parse(this.topic.torrent)) : [];
+      this.nfoFiles = this.topic.nfo ? Array.of(JSON.parse(this.topic.nfo)) : [];
+      this.coverFiles = this.topic.cover ? Array.of(JSON.parse(this.topic.cover)) : [];
+      this.screenShotFiles = this.topic.screenShot ? JSON.parse(this.topic.screenShot) : [];
+      this.spid = this.topic.categoryId - this.topic.categoryId % 100;
     }, err => {
-      this.snackBar.open('无法获得临时Topic');
+      this.snackBar.open('无法获得草稿');
     });
 
   }

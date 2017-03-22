@@ -4,7 +4,7 @@
   <legend>基本信息</legend>
   <section>
     <md-input-container [dividerColor]="title.valid ? 'primary' : 'warn'">
-      <input mdInput placeholder="标题" type="text" [(ngModel)]="topic.title" name="title" #title="ngModel" minlength="10" required>
+      <input mdInput placeholder="标题" type="text" [(ngModel)]="topic.title" name="title" #title="ngModel" minlength="5" required>
     </md-input-container>
     <md-input-container>
       <input mdInput placeholder="副标题" type="text" [(ngModel)]="topic.subtitle" name="subtitle" #subTitle="ngModel" required>
@@ -17,7 +17,7 @@
           <md-option [value]="category.id" *ngFor="let category of pcates">{{category.name}}
           </md-option>
         </md-select>
-        <md-select placeholder="子分类" [(ngModel)]="topic.category" name="category">
+        <md-select placeholder="子分类" [(ngModel)]="topic.categoryId" name="category">
           <md-option [value]="category.id" *ngFor="let category of selectedCates">{{category.name}}
           </md-option>
         </md-select>
@@ -25,10 +25,10 @@
     </div>
   </section>
   <section>
-    <app-file-uploader label="选择种子文件" [(files)]="torrentFiles" [url]="url.content.tempTorrent" #torrentFile></app-file-uploader>
+    <app-file-uploader label="选择种子文件" [files]="torrentFiles" (onChange)="setTorrentFiles($event)" [url]="url.content.tempTorrent"></app-file-uploader>
   </section>
   <section>
-    <app-file-uploader label="选择NFO文件" [(files)]="nfoFiles" [url]="url.content.nfoUpload"  #nfoFile></app-file-uploader>
+    <app-file-uploader label="选择NFO文件" [files]="nfoFiles" (onChange)="setNfoFiles($event)" [url]="url.content.nfoUpload"></app-file-uploader>
   </section>
 
   <section></section>
@@ -36,13 +36,14 @@
     简介
   </legend>
   <section>
-    <app-file-uploader label="选择封面" [(files)]="coverFiles" [url]="url.content.imageUpload" #coverFile></app-file-uploader>
+    <app-file-uploader label="选择封面" [files]="coverFiles" (onChange)="setCoverFiles($event)" [url]="url.content.imageUpload"></app-file-uploader>
   </section>
   <md-input-container>
     <textarea mdInput placeholder="种子介绍" [(ngModel)]="topic.description" name="description"></textarea>
   </md-input-container>
   <section>
-    <app-file-uploader label="选择插图" [(files)]="screenShotFiles" [url]="url.content.imageUpload" [multi]="true" #screenFile></app-file-uploader>
+    <app-file-uploader label="选择插图" [files]="screenShotFiles" (onChange)="setScreenShotFiles($event)" [url]="url.content.imageUpload"
+      [multi]="true"></app-file-uploader>
   </section>
   <section fxLayoutAlign="center">
     <button md-raised-button color="primary" (click)="saveDraft()">保存</button>

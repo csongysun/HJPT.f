@@ -16,19 +16,13 @@ export class FileUploaderComponent implements OnInit {
   @Input()
   fileName = 'file';
 
-  fileList = new Array<Annex>();
-
   @Input()
-  get files(): Array<Annex> {
-    return this.fileList;
-  }
-  set files(v) {
-    if (v)
-      this.fileList = v;
-    else this.fileList = [];
-  }
+  files: Annex[];
 
-  info = 'info';
+  @Output()
+  onChange = new EventEmitter<Annex[]>();
+
+  info;
   isBusy = false;
 
   constructor(private fus: FileUploadService) { }
@@ -56,8 +50,9 @@ export class FileUploaderComponent implements OnInit {
             this.info = '上传失败：返回数据不合法';
             $$.unsubscribe();
           }
-          this.info = null;
-          this.files = this.fileList.concat(value);
+          this.info = '上传成功';
+          this.files = this.files.concat(value);
+          this.onChange.emit(this.files);
         }, err => {
           this.info = JSON.stringify(err);
           $$.unsubscribe();

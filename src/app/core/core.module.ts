@@ -6,6 +6,7 @@ import {
     CacheService,
     FileUploadService,
     LayoutService,
+    ToastService,
 } from '@app/services';
 import {
     LoginFormComponent,
@@ -47,6 +48,7 @@ const COMPONENTS = [
 ];
 const SERVICES = [
     CacheService,
+    ToastService,
     LayoutService,
     ApiGatewayService,
     AuthService,

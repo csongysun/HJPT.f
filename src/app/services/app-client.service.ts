@@ -19,41 +19,7 @@ export class AppClientService {
     this.titleSource.next(title);
   }
 
-  private categoriesSource = new BehaviorSubject<Category[]>(null);
-  get categories$() {
-    if (!this.categoriesSource.getValue()) {
-      this.api._getCategories().subscribe(res => {
-        this.categoriesSource.next(res);
-      }, err => {
-        this.snackBar.open('获取分类失败');
-      });
-    }
-    return this.categoriesSource.flatMap(v => {
-      if (v) {
-        return Observable.of(v);
-      } else {
-        return this.api._getCategories().do(res => {
-          this.categoriesSource.next(res);
-        }, err => {
-          this.snackBar.open('获取分类失败');
-        });
-      }
-    });
-  }
-  // categories$ = this.categoriesSource.flatMap(v => {
-  //   if (v) {
-  //     return Observable.of(v);
-  //   } else {
-  //     return this.api._getCategories().do(res => {
-  //       this.categoriesSource.next(res);
-  //     }, err => {
-  //       this.snackBar.open('获取分类失败');
-  //     });
-  //   }
-  // });
-  setCategories(categories: Category[]) {
-    this.categoriesSource.next(categories);
-  }
+  categories$ = this.api._getCategories().publishReplay(1).refCount();
 
   private promotionsSource = new Subject<Promotion[]>();
   get promotions$() {

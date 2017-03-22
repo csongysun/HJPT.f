@@ -53,7 +53,7 @@ export class ApiFactoryService {
         return this.api.get(urls.content.tempTopic);
     }
     _saveTempTopic(topic: TempTopic): Observable<void> {
-        return this.api.post(urls.content.tempTopic, topic);
+        return this.api.put(urls.content.tempTopic, topic);
     }
 
 }

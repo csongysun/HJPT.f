@@ -16,11 +16,11 @@ export class Topic {
 
 export class TempTopic {
     title: string;
-    subTitle: string;
+    subtitle: string;
     categoryId: number;
     description: string;
     torrent: string;
-    NFO: string;
+    nfo: string;
     cover: string;
     screenShot: string;
     anonymous: boolean;

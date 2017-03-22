@@ -1,4 +1,4 @@
-
+export * from './toast.service';
 export * from './http-gateway.service';
 export * from './universal-cache';
 export * from './auth.service';
