@@ -1,7 +1,10 @@
+import {
+  AppClientService,
+  TopicService,
+} from '@app/services';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { TopicService } from '@app/services';
 
 @Component({
   templateUrl: './index.component.html',
@@ -14,11 +17,13 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private topic: TopicService
+    private topic: TopicService,
+    private app: AppClientService
   ) {
   }
 
   ngOnInit() {
+    this.app.setTitle('主页');
   }
   ngOnDestroy() {
   }

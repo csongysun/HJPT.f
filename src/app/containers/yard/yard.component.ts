@@ -1,19 +1,32 @@
-import { AppClientService, AuthService, Layout, LayoutService } from '@app/services';
+import {
+  AppClientService,
+  AuthService,
+  Layout,
+  LayoutService,
+} from '@app/services';
 import { Category, User } from '@app/models';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit } from '@angular/core';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-yard',
   templateUrl: './yard.component.html',
-  styleUrls: ['./yard.component.scss', './_yard-theme.scss']
+  styleUrls: ['./yard.component.scss']
 })
 export class YardComponent implements OnInit {
 
-  get isWide(): boolean {
-    return this.layout.currentLayout === Layout.Wide;
-  };
+  @HostListener('window:resize', ['$event.target.innerWidth'])
+  onResize(width: number) {
+    this.resizeSubject.next(width > 900);
+  }
+
+  private resizeSubject = new BehaviorSubject<boolean>(window.innerWidth > 900);
+  isWide$ = this.resizeSubject.asObservable().throttleTime(200);
+
+
+  get isAdmin$() { return this.auth.isAdmin$ };
 
   get title$(): Observable<string> {
     return this.app.title$;
@@ -26,8 +39,11 @@ export class YardComponent implements OnInit {
     private layout: LayoutService,
     private app: AppClientService,
     private auth: AuthService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
+
   }
 }

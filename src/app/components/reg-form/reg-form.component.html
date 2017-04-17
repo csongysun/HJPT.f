@@ -1,16 +1,15 @@
+    <a [routerLink]="['/auth/login']">已有账号</a>
+
 <form (ngSubmit)="onSubmit()" #regForm="ngForm">
   <section>
-    <input [(ngModel)]="form.email" name="Email" type="email" placeholder="邮箱" >
-    <input [(ngModel)]="form.password" name="Password" type="password" placeholder="密码">
-    <input [(ngModel)]="form.nickname" name="UserKey" placeholder="昵称" >
+    <input class="inputBox" [(ngModel)]="form.email" name="Email" type="email" placeholder="邮箱" >
+    <input class="inputBox" [(ngModel)]="form.password" name="Password" type="password" placeholder="密码">
+    <input class="inputBox" [(ngModel)]="form.nickname" name="UserKey" placeholder="昵称" >
   </section>
   <section>
-    <md-checkbox>Rule1</md-checkbox>
     <br>
-    <md-checkbox>Rule2</md-checkbox>
   </section>
   <section>
     <button md-raised-button [disabled]="isBusy" type="submit">注册</button>
-    <a [routerLink]="['/auth/login']">已有账号</a>
   </section>
 </form>

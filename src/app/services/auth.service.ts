@@ -9,17 +9,28 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
+const roleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+
 @Injectable()
 export class AuthService implements CanActivate {
 
-  private currentUserSource = new BehaviorSubject<User>(null);
+ private currentUserSource = new BehaviorSubject<User>(null);
   get currentUser$() { return this.currentUserSource.asObservable(); };
   setCurrentUser(user: User) {
     if (user) {
-      sessionStorage.setItem('accessToken', user.token);
+      localStorage.setItem('accessToken', user.token);
       localStorage.setItem('refreshToken', user.refreshToken);
+
+      let tokenPayload = user.token.split('.')[1];
+      let roles = JSON.parse(atob(tokenPayload))[roleClaimType];
+      user.role = roles || [];
+      console.log(user);
+      this.currentUserSource.next(user);
     }
-    this.currentUserSource.next(user);
+  }
+
+  get isAdmin$() {
+    return this.currentUser$.map(v => v != null ? v.role.includes('admin') : false);
   }
 
   constructor(
@@ -38,6 +49,8 @@ export class AuthService implements CanActivate {
   _logout(): Observable<void> {
     return this.api.get(urls.auth.logout)
       .map(() => {
+        localStorage.clear();
+        this.router.navigate(['/auth']);
         this.setCurrentUser(null);
       });
   }
@@ -54,7 +67,25 @@ export class AuthService implements CanActivate {
       .concatMap(v => this._login({ email: req.email, password: req.password }));
   }
 
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.currentUser$.concatMap(v => {
+      if (v) {
+        return Observable.of(true);
+      }
+      if (localStorage.getItem('refreshToken')) {
+        return this._refresh().map(() => true)
+          .catch(err => {
+            this.router.navigate(['/auth']);
+            return Observable.of(false);
+          });
+      }
+      this.router.navigate(['/auth']);
+      return Observable.of(false);
+    });
+  }
+
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.currentUser$.concatMap(v => {
       if (v) {
         return Observable.of(true);

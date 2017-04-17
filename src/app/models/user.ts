@@ -9,4 +9,7 @@ export class User {
     tokenExpires: Date;
     refreshToken: string;
     refreshTokenExpires: Date;
+
+    role: string[] = [];
+
 }

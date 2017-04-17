@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 * {
   margin: 0;
   padding: 0;
@@ -11,26 +11,22 @@
 
 html {
   height: 100%;
+  margin: 0;
   font-family: "Roboto Regular", "Noto Sans CJK SC", "Source Han Sans CN", "Microsoft YaHei", STXiHei;
   font-weight: normal;
-  //font-family: "Roboto Regular";
 }
 
 body {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: url(assets/spotlight/172518090150bb254ec3jw1fbrd73k596j21hc0u0dsj.jpg);
+  height: 100%;
+  margin: 0;
+  background-image: url(/assets/spotlight/0f96cc9b3c8c72fa4cc616fe7ff8a5b0713141e7c3fa3dc09687085a531fa0a3.jpg);
   background-attachment: fixed;
   display: block;
-  position: absolute;
 }
 
-// md-sidenav fix
-.md-sidenav-content {
+/*.md-sidenav-content {
   transform: none !important;
-}
+}*/
 
 .section h5 {
   font-size: 1.6rem;
@@ -44,6 +40,15 @@ body {
 .section {
   padding: 0.8rem 0;
 }
+
+a {
+  text-decoration: none;
+}
+
+input, md-input-container{
+  width: 100%;
+}
+
 
 // @import "styles/mixins";
 @import "styles/color";

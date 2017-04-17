@@ -1,5 +1,5 @@
 <md-sidenav-container class="yard-root">
-  <md-sidenav #sidenav class="sidenav .z-depth-2" mode="{{isWide ? 'side' : 'over'}}" opened="{{ isWide }}">
+  <md-sidenav #sidenav class="sidenav .z-depth-2" [mode]="(isWide$ | async) ? 'side' : 'over'" [opened]="isWide$ | async">
     <user-info>
     </user-info>
     <md-nav-list>
@@ -11,7 +11,7 @@
     <br>
   </md-sidenav>
   <md-toolbar class="appbar z-depth-1" color="primary">
-    <md-icon [style.display]="isWide ? 'none' : 'block'" (click)="sidenav.toggle()">menu</md-icon> {{title$ | async}}
+    <md-icon [style.display]="(isWide$ | async) ? 'none' : 'block'" (click)="sidenav.toggle()">menu</md-icon> {{title$ | async}}
     <span class="app-toolbar-filler"></span>
   </md-toolbar>
   <div class="container">

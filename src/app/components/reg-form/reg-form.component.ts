@@ -1,7 +1,6 @@
+import { AuthService, ToastService } from '@app/services';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { AuthService } from '@app/services';
-import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { SignUpReq } from '@app/models';
@@ -19,7 +18,7 @@ export class RegFormComponent implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
-    private snackBar: MdSnackBar
+    private toast: ToastService
   ) { }
 
   ngOnInit() {
@@ -27,12 +26,12 @@ export class RegFormComponent implements OnInit {
 
   onSubmit() {
     this.isBusy = true;
-    this.auth._login(this.form).subscribe(() => {
-      this.snackBar.open("登陆成功");
+    this.auth._register(this.form).subscribe(() => {
+      this.toast.info("注册成功");
+      this.router.navigate(['/']);
+      this.isBusy = false;
     }, err => {
-      this.snackBar.open("注册失败");
-      console.log(err);
-    }, () => {
+      this.toast.warn("注册失败");
       this.isBusy = false;
     });
   }

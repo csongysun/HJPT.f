@@ -13,8 +13,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class AppClientService {
 
-  private titleSource = new Subject<string>();
-  get title$() { return this.titleSource.asObservable().share().last(); }
+  private titleSource = new BehaviorSubject<string>("");
+  get title$() { return this.titleSource.asObservable().share(); }
   setTitle(title: string) {
     this.titleSource.next(title);
   }

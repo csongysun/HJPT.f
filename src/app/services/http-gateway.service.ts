@@ -34,7 +34,7 @@ export class ApiGatewayService {
         formData.append(name, file, file.name);
         const headers = new Headers();
         headers.append('Accept', 'application/json');
-        headers.append('Authorization', 'Bearer ' + sessionStorage.getItem('accessToken'));
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
         const options = new RequestOptions({ headers: headers });
         return this.http.post(url, formData, options)
             .map(res => res.json())
@@ -42,7 +42,6 @@ export class ApiGatewayService {
                 if (err.status === 401) {
                     if (!localStorage.getItem('refreshToken')) {
                         localStorage.clear();
-                        sessionStorage.clear();
                         this.router.navigate(['/auth/login']);
                         return Observable.throw('认证失败');
                     }
@@ -50,7 +49,6 @@ export class ApiGatewayService {
                         .concatMap(v => this.upload(url, name, file))
                         .catch(e => {
                             localStorage.clear();
-                            sessionStorage.clear();
                             this.router.navigate(['/auth/login']);
                             return Observable.throw(e);
                         });
@@ -72,7 +70,7 @@ export class ApiGatewayService {
 
         options.headers = new Headers();
 
-        const accessToken = sessionStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             options.headers.append('Authorization', `Bearer ${accessToken}`);
         }
@@ -88,7 +86,6 @@ export class ApiGatewayService {
                 if (err.status === 401) {
                     if (!localStorage.getItem('refreshToken')) {
                         localStorage.clear();
-                        sessionStorage.clear();
                         this.router.navigate(['/auth/login']);
                         return Observable.throw('认证失败');
                     }
@@ -96,7 +93,6 @@ export class ApiGatewayService {
                         .flatMap(v => this.http.request(url, options)).map(v => v.json())
                         .catch(e => {
                             localStorage.clear();
-                            sessionStorage.clear();
                             this.router.navigate(['/auth/login']);
                             return Observable.throw(e);
                         });
