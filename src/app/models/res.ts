@@ -17,6 +17,7 @@ export class TopicListItemRes{
     tags: string;
     cover: string;
 
+    name: string;
     size: number;
     seeder: number;
     leecher: number;
@@ -25,7 +26,7 @@ export class TopicListItemRes{
 }
 
 export class TopicRes{
-    id: string;
+    id: number;
     title: string;
     subtitle: string;
     IMDbUrl: string;
@@ -41,6 +42,7 @@ export class TopicRes{
     files: string;
     lastAction: string;
 
+    name: string;
     size: number;
     seeder: number;
     leecher: number;

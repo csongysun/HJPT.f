@@ -1,6 +1,10 @@
 import * as urls from './urls';
 
 import {
+    ApiGatewayService,
+    ToastService,
+} from '@app/services';
+import {
     Category,
     Paging,
     Promotion,
@@ -13,7 +17,6 @@ import {
     TopicsRep,
 } from '@app/models';
 
-import { ApiGatewayService } from '../http-gateway.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TopicListQuery } from '@app/models';
@@ -24,6 +27,7 @@ export class ApiFactoryService {
 
     constructor(
         private api: ApiGatewayService,
+        private toast: ToastService
     ) { }
 
     _getCategories(): Observable<Array<Category>> {
@@ -36,16 +40,6 @@ export class ApiFactoryService {
     _getRecentTopics(): Observable<Topic[]> {
         return this.api.get(urls.content.recentTopic);
     }
-    // _getTopicList(search: string, filter: TopicFilter): Observable<TopicListRes> {
-    //     const up = new URLSearchParams();
-    //     if (filter.categoryIds.length > 0) {
-    //         up.set('cids', filter.categoryIds.join(','));
-    //     }
-    //     if (search) {
-    //         up.set('s', search);
-    //     }
-    //     return this.api.get(urls.content.topic, up);
-    // }
 
     _loadTopicList(search: string, filter: TopicFilter, cursor?: string): Observable<TopicListRes> {
         const up = new URLSearchParams();
@@ -58,7 +52,7 @@ export class ApiFactoryService {
         }
         return this.api.get(urls.content.topic, up);
     }
-    _getTopic(id: number):Observable<TopicRes>{
+    _getTopic(id: number): Observable<TopicRes> {
         return this.api.get(urls.content.topic + '/' + id);
     }
 
@@ -75,4 +69,44 @@ export class ApiFactoryService {
     _publishTopic(topic: TempTopic): Observable<void> {
         return this.api.post(urls.content.publishTopic, topic);
     }
+
+    _downloadTorrent(id: number, filename?:string) {
+        // this.api.request(urls.content.torrent + '/' + id, { method: 0 })
+        //     .subscribe(v => {
+        //         console.log(v);
+        //         this.downloadTorrent(v);
+        //     }, err => {
+        //         this.toast.warn('下载失败');
+        //     });
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', urls.content.torrent + '/' + id, true);
+        xhr.responseType = 'blob';
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+        xhr.onload = function (e) {
+            if (xhr.status == 200) {
+                var blob = xhr.response;
+                var a = document.createElement('a');
+                a.onload = function (e) {
+                    window.URL.revokeObjectURL(a.href); // Clean up after yourself.
+                };
+                a.download = filename || 'download.torrent';
+                a.href = window.URL.createObjectURL(blob);
+                a.click();
+            }
+        };
+        xhr.send();
+        // window.open(urls.content.torrent + '/' + id + '?token=' + localStorage.getItem('accessToken'));
+
+    }
+    // downloadTorrent(data: Response) {
+    //     var blob = new Blob([data], { type: 'application/x-bittorrent' });
+    //     var a = document.createElement('a');
+    //     a.onload = function (e) {
+    //         window.URL.revokeObjectURL(a.href); // Clean up after yourself.
+    //     };
+    //     a.download = "Report.tt";
+    //     a.href = window.URL.createObjectURL(blob);
+    //     a.click();
+    // }
 }

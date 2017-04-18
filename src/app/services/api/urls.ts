@@ -26,6 +26,7 @@ export const content = {
     tempTorrent: baseUrl + 'torrent/temp',
     imageUpload: baseUrl + 'annex/img',
     nfoUpload: baseUrl + 'annex/nfo',
+    torrent: baseUrl + 'topic/torrent',
 }
 
 export const user = {

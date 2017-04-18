@@ -17,16 +17,16 @@ export class ApiGatewayService {
     private hasRetried = false;
 
     get(url: string, search?: URLSearchParams) {
-        return this.request(url, { method: RequestMethod.Get, search });
+        return this.request(url, { method: RequestMethod.Get, search }).map(res => res.json());
     }
     post(url: string, data?: any) {
-        return this.request(url, { method: RequestMethod.Post }, data);
+        return this.request(url, { method: RequestMethod.Post }, data).map(res => res.json());
     }
     put(url: string, data?: any) {
-        return this.request(url, { method: RequestMethod.Put }, data);
+        return this.request(url, { method: RequestMethod.Put }, data).map(res => res.json());
     }
     delete(url: string) {
-        return this.request(url, { method: RequestMethod.Delete });
+        return this.request(url, { method: RequestMethod.Delete }).map(res => res.json());
     }
 
     upload(url: string, name: string, file: any): Observable<any> {
@@ -37,7 +37,7 @@ export class ApiGatewayService {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
         const options = new RequestOptions({ headers: headers });
         return this.http.post(url, formData, options)
-            .map(res => res.json())
+            .map(v => v.json())
             .catch((err, cau) => {
                 if (err.status === 401) {
                     if (!localStorage.getItem('refreshToken')) {
@@ -60,13 +60,7 @@ export class ApiGatewayService {
             });
     }
 
-    private request(url: string, options: RequestOptionsArgs, data?: Object) {
-
-        // this.interpolateUrl(options);
-        // this.addXsrfToken(options);
-        // this.addContentType(options);
-        // this.addBearerToken(options);
-        // this.addCors(options);
+    request(url: string, options: RequestOptionsArgs, data?: Object) {
 
         options.headers = new Headers();
 
@@ -81,7 +75,6 @@ export class ApiGatewayService {
             options.body = JSON.stringify(data);
         }
         return this.http.request(url, options)
-            .map(v => v.json())
             .catch((err, cau) => {
                 if (err.status === 401) {
                     if (!localStorage.getItem('refreshToken')) {

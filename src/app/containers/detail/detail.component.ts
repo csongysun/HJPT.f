@@ -21,14 +21,17 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   topic = new TopicRes();
 
+  download(){
+    this.api._downloadTorrent(this.topic.id,this.topic.name);
+  }
   size(length: number) {
     if (length > 1024 * 1024 * 1024) {
       return (length / (1024 * 1024 * 1024)).toFixed(2) + 'GB';
     }
-    if (length > 1024 * 1024){
+    if (length > 1024 * 1024) {
       return (length / (1024 * 1024)).toFixed(2) + 'MB';
     }
-    if (length > 1024){
+    if (length > 1024) {
       return (length / (1024 * 1024)).toFixed(2) + 'KB';
     }
   }
@@ -36,17 +39,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
   pcate: Category;
   ccate: Category;
   files;
-
-  get cover() {
-    if (!this.topic.cover) return null;
-    return JSON.parse(this.topic.cover).url.replace('wwwroot', prefix);
-  }
-
-  get screenShot() {
-    if (!this.topic.screenShot) return [];
-    return JSON.parse(this.topic.screenShot).map(v => v.url.replace('wwwroot', prefix));
-  }
-
+  cover: string;
+  screenShot: string[];
   lastAction: string;
 
   setLastAction() {
@@ -104,11 +98,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.pcate = v[1].find(x => x.id == (v[0].categoryId - v[0].categoryId % 100));
         this.ccate = v[1].find(x => x.id == v[0].categoryId);
 
+        this.cover = JSON.parse(this.topic.cover).url.replace('wwwroot', prefix);
         this.files = JSON.parse(v[0].files);
-
+        this.screenShot = JSON.parse(this.topic.screenShot).map(v => v.url.replace('wwwroot', prefix));
       }, err => {
         this.toast.warn("获取详情失败");
-
       });
   }
 
