@@ -1,3 +1,7 @@
+.root {
+  background: #fff;
+  padding: 40px 60px;
+}
 
 .small {
   font-size: 1rem;
@@ -9,9 +13,19 @@
   /*min-height: 400px;*/
 }
 
+.sc-box img {
+  object-fit: cover;
+  object-position: center;
+}
+
 .fixed-action-btn {
-  bottom: 56px;
-  right: 17%;
+  top: 128px;
+  right: 10%;
+  position: fixed;
+}
+
+.files li{
+  height: 36px;
 }
 
 .collapsible {

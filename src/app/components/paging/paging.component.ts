@@ -11,9 +11,6 @@ import { TopicService } from '@app/services';
 export class PagingComponent implements OnInit {
 
   @Input()
-  pages: number[];
-
-  @Input()
   paging: Paging;
 
   @Output()
@@ -24,7 +21,31 @@ export class PagingComponent implements OnInit {
   setPage(index: number) {
     this.onChange.emit(index);
   }
-
+  getPages(): number[] {
+    let ps: number[] = [];
+    if (this.paging.pageIndex < 4) {
+      for (let i = 1; i <= (this.paging.count < 7 ? this.paging.count : 7); i++) {
+        ps.push(i);
+      }
+    } else if (this.paging.pageIndex > this.paging.count - 4) {
+      ps = [this.paging.count - 6,
+      this.paging.count - 5,
+      this.paging.count - 4,
+      this.paging.count - 3,
+      this.paging.count - 2,
+      this.paging.count - 1,
+      this.paging.count];
+    } else {
+      ps = [this.paging.pageIndex - 3,
+      this.paging.pageIndex - 2,
+      this.paging.pageIndex - 1,
+      this.paging.pageIndex,
+      this.paging.pageIndex + 1,
+      this.paging.pageIndex + 2,
+      this.paging.pageIndex + 3];
+    }
+    return ps;
+  }
   ngOnInit() {
   }
 

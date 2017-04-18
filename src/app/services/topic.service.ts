@@ -16,7 +16,7 @@ export class TopicService {
       .concatMap(v => this.api._getRecentTopics());
   }
 
-  private filterSource = new Subject<TopicFilter>();
+  private filterSource = new BehaviorSubject<TopicFilter>(null);
   get filter$() {
     return this.filterSource.asObservable().distinctUntilChanged();
   }
@@ -24,7 +24,7 @@ export class TopicService {
     this.filterSource.next(filter);
   }
 
-  private searchSource = new Subject<string>();
+  private searchSource = new BehaviorSubject<string>(null);
   get search$() {
     return this.searchSource.asObservable().distinctUntilChanged();
   }
@@ -32,45 +32,20 @@ export class TopicService {
     this.searchSource.next(search);
   }
 
-  private pagingSource = new BehaviorSubject<Paging>({ pageIndex: 1, pageCount: 1, pageTake: 50 });
+  private pagingSource = new BehaviorSubject<Paging>({ pageIndex: 1, count: 1, pageSize: 50 });
   get paging$() {
     return this.pagingSource.asObservable().distinctUntilChanged().share();
   }
   setPaging(paging) {
     this.pagingSource.next(Object.assign(this.pagingSource.getValue(), paging));
   }
-  get pages$() {
-    return this.paging$.map(v => {
-      let ps: number[] = [];
-      if (v.pageIndex < 4) {
-        for (let i = 1; i <= (v.pageCount < 7 ? v.pageCount : 7); i++) {
-          ps.push(i);
-        }
-      } else if (v.pageIndex > v.pageCount - 4) {
-        ps = [v.pageCount - 6,
-        v.pageCount - 5,
-        v.pageCount - 4,
-        v.pageCount - 3,
-        v.pageCount - 2,
-        v.pageCount - 1,
-        v.pageCount];
-      } else {
-        ps = [v.pageIndex - 3,
-        v.pageIndex - 2,
-        v.pageIndex - 1,
-        v.pageIndex,
-        v.pageIndex + 1,
-        v.pageIndex + 2,
-        v.pageIndex + 3];
-      }
-      return ps;
-    })
-  }
 
-  get topicList$(): Observable<Array<Topic>> {
-    return this.search$.combineLatest(this.filter$, this.paging$).mergeMap(v =>
-      this.api._getTopicList(v[0], v[1], v[2])
-    );
+  topicList$ = this.search$.combineLatest(this.filter$).mergeMap(v =>
+    this.api._loadTopicList(v[0], v[1])
+  );
+
+  loadTopicList$(nextCursor?: string) {
+    return this.api._loadTopicList(this.searchSource.getValue(), this.filterSource.getValue(), nextCursor);
   }
 
   constructor(

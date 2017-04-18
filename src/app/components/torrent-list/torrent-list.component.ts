@@ -16,4 +16,14 @@ export class TorrentListComponent implements OnInit {
   ngOnInit() {
   }
 
+  visible(innerElement: HTMLElement,
+    adjustment?: any) {
+
+    let innerRect = innerElement.getBoundingClientRect();
+    let bottomAdjustment = (adjustment && adjustment.bottom || 0);
+    
+    return innerRect.bottom - bottomAdjustment > 0
+      && innerRect.bottom < window.innerHeight;
+  }
+
 }

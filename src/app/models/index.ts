@@ -7,4 +7,4 @@ export * from './app-meta';
 export * from './annex';
 export * from './error';
 export * from './req';
-
+export * from './res';

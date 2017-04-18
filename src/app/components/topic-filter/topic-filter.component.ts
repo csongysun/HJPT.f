@@ -59,8 +59,8 @@ function defaultFilter() {
 
 function defaultCateIds() {
   const cid = localStorage.getItem('setting_categoryIds');
-  if (!cid) return null;
+  if (!cid) return [];
   const cids = cid.split(',');
-  if (cids.length < 1) return null;
+  if (cids.length < 1) return [];
   return cids.map((item) => +item);
 }

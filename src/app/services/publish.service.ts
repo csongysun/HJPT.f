@@ -22,4 +22,9 @@ export class PublishService {
     return this.api._saveTempTopic(topic);
   }
 
+  publishTopic(topic: TempTopic) {
+    return this.api._publishTopic(topic);
+  }
+
+
 }

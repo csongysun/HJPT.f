@@ -1,8 +1,12 @@
-<topic-filter [categoryList]="categories$ | async" (onChange)="refreshCollection($event)">
+<!--<topic-filter [categoryList]="cates$ | async" (onChange)="refreshCollection($event)">
 </topic-filter>
-<topics-paging [pages]="pages$ | async" [paging]="paging$ | async" (onChange)="goPage($event)">
-</topics-paging>
+<topics-paging [paging]="paging$ | async" (onChange)="goPage($event)">
+</topics-paging>-->
 
 <div class="torrents-container">
-    <torrent-list [topics]="topicList$ | async"></torrent-list>
+  <!--<torrent-list [topics]="topicList$ | async"></torrent-list>-->
+
+    <torrent-card [topic]="topic" *ngFor="let topic of topicList$ | async"></torrent-card>
+
+
 </div>

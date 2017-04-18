@@ -4,15 +4,21 @@
     </user-info>
     <md-nav-list>
       <a md-list-item RouterLinkActive="active" [routerLink]="['/index']">主页</a>
-      <a md-list-item RouterLinkActive="active" [routerLink]="['/torrent']">种子</a>
+      <a md-list-item RouterLinkActive="active" [routerLink]="['/topic']">种子</a>
       <a md-list-item RouterLinkActive="active" [routerLink]="['/publish']">发布</a>
       <a md-list-item RouterLinkActive="active" [routerLink]="['/rules']">规则</a>
     </md-nav-list>
     <br>
   </md-sidenav>
-  <md-toolbar class="appbar z-depth-1" color="primary">
-    <md-icon [style.display]="(isWide$ | async) ? 'none' : 'block'" (click)="sidenav.toggle()">menu</md-icon> {{title$ | async}}
-    <span class="app-toolbar-filler"></span>
+  <md-toolbar class="appbar z-depth-1">
+    <div class="strentch" fxLayout="row" fxLayoutAlign="space-between">
+      <md-icon fxFlexAlign="start" [style.display]="(isWide$ | async) ? 'none' : 'block'" (click)="sidenav.toggle()">menu</md-icon>
+      <span class="title" fxFlexAlign="start">
+        {{title$ | async}}
+      </span>
+      <input fxFlexAlign="center" class="search" placeholder="搜索" type="text" name="searchKey">
+    </div>
+
   </md-toolbar>
   <div class="container">
     <router-outlet></router-outlet>

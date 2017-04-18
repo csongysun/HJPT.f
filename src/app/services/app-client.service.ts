@@ -21,6 +21,9 @@ export class AppClientService {
 
   categories$ = this.api._getCategories().publishReplay(1).refCount();
 
+  parentCates$ = this.categories$.map(v => v.filter(x => x.id % 100 === 0)).share();
+  childCates$ = this.categories$.map(v => v.filter(x => x.id % 100 !== 0)).share();
+
   private promotionsSource = new Subject<Promotion[]>();
   get promotions$() {
     return this.promotionsSource.asObservable()

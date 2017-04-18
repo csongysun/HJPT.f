@@ -1,25 +1,13 @@
-<a [routerLink]="'../detail' + topic.id">
-  <div class="topic-panel card-panel">
-    <img [src]="'assets/topic/art/'+topic.id+'.png'">
-    <div class="content">
-      <div class="topic">
+<div fxLayout="row" fxLayoutAlign="space-between stretch"  class="topic-item">
+    <div fxLayout="column" fxLayoutAlign="center start" >
+      <a [routerLink]="'../detail/' + topic.id">
         <div class="title">{{topic.title}}</div>
-        <div class="subtitle">{{topic.subTitle}}</div>
-        <div class="tag">
-          <div class="chip" *ngFor="let tag of topic.tags">{{tag.name}}</div>
-        </div>
-      </div>
-      <div class="bar">
-        <div class="torrent">
-          ↑{{topic.torrent.seeder}}↓{{topic.torrent.leecher}} Э{{topic.torrent.saver}}
-        </div>
-        <div class="action">
-          <span> A </span>
-          <span> B </span>
-          <span> C </span>
-          <span> D </span>
-        </div>
+      </a>
+      <div class="subtitle">{{topic.subtitle}}</div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="end end">
+      <div>
+        ↑{{topic.seeder}} ↓{{topic.leecher}}  √{{topic.completedCount}}   
       </div>
     </div>
-  </div>
-</a>
+</div>

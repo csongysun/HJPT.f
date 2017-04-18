@@ -2,12 +2,13 @@
 
 export class TopicFilter {
     categoryIds: Array<number>;
+    searchKey: string;
 }
 
 export class Paging {
     pageIndex: number;
-    pageTake: number;
-    pageCount: number;
+    pageSize: number;
+    count: number;
 }
 
 

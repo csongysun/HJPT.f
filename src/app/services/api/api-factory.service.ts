@@ -1,6 +1,17 @@
 import * as urls from './urls';
 
-import { Category, Paging, Promotion, Role, TempTopic, Topic, TopicFilter, TopicsRep } from '@app/models';
+import {
+    Category,
+    Paging,
+    Promotion,
+    Role,
+    TempTopic,
+    Topic,
+    TopicFilter,
+    TopicListRes,
+    TopicRes,
+    TopicsRep,
+} from '@app/models';
 
 import { ApiGatewayService } from '../http-gateway.service';
 import { Injectable } from '@angular/core';
@@ -25,25 +36,31 @@ export class ApiFactoryService {
     _getRecentTopics(): Observable<Topic[]> {
         return this.api.get(urls.content.recentTopic);
     }
-    _getTopicList(search: string, filter: TopicFilter, paging: Paging): Observable<Topic[]> {
+    // _getTopicList(search: string, filter: TopicFilter): Observable<TopicListRes> {
+    //     const up = new URLSearchParams();
+    //     if (filter.categoryIds.length > 0) {
+    //         up.set('cids', filter.categoryIds.join(','));
+    //     }
+    //     if (search) {
+    //         up.set('s', search);
+    //     }
+    //     return this.api.get(urls.content.topic, up);
+    // }
+
+    _loadTopicList(search: string, filter: TopicFilter, cursor?: string): Observable<TopicListRes> {
         const up = new URLSearchParams();
-        if (filter.categoryIds.length > 0) {
+        if (filter && filter.categoryIds.length > 0) {
             up.set('cids', filter.categoryIds.join(','));
         }
-        if (paging.pageIndex > 0) {
-            up.set('page', paging.pageIndex.toString());
-        }
-        if (paging.pageTake > 0) {
-            up.set('take', paging.pageTake.toString());
-        }
+        up.set('cursor', cursor);
         if (search) {
             up.set('s', search);
         }
         return this.api.get(urls.content.topic, up);
     }
-    // _getTopic(id: string): Observable<Topic> {
-    //     //return this.api.getCache<Topic>(urls.content.topic + '/' + id);
-    // }
+    _getTopic(id: number):Observable<TopicRes>{
+        return this.api.get(urls.content.topic + '/' + id);
+    }
 
     _getRoles(): Observable<Role[]> {
         return this.api.get(urls.user.role);
@@ -55,5 +72,7 @@ export class ApiFactoryService {
     _saveTempTopic(topic: TempTopic): Observable<void> {
         return this.api.put(urls.content.tempTopic, topic);
     }
-
+    _publishTopic(topic: TempTopic): Observable<void> {
+        return this.api.post(urls.content.publishTopic, topic);
+    }
 }

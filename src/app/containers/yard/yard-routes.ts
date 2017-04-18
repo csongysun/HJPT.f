@@ -19,7 +19,7 @@ export const ROUTES: Route[] = [
                 component: IndexComponent
             },
             {
-                path: 'torrents',
+                path: 'topic',
                 component: TorrentComponent
             },
             {

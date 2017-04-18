@@ -55,7 +55,8 @@ export class FileUploaderComponent implements OnInit {
           this.onChange.emit(this.files);
         }, err => {
           this.info = JSON.stringify(err);
-          $$.unsubscribe();
+          if($$)
+            $$.unsubscribe();
         }, () => {
           this.isBusy = false;
         });

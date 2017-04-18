@@ -10,7 +10,7 @@
         <i class="material-icons">&#xE5CB;</i>
       </a>
     </li>
-    <li class="waves-effect icon" *ngIf="paging.pageIndex > 4 && paging.pageCount > 7">
+    <li class="waves-effect icon" *ngIf="paging.pageIndex > 4 && paging.count > 7">
       <a (click)="setPage(paging.pageIndex-4)">
         <i class="material-icons">&#xE5D3;</i>
       </a>
@@ -18,18 +18,18 @@
     <li [class]="page == paging.pageIndex? 'active' : 'waves-effect' " *ngFor="let page of getPages()">
       <a (click)="setPage(page)">{{page}}</a>
     </li>
-    <li class="waves-effect icon" *ngIf="paging.pageCount - paging.pageIndex > 3 && paging.pageCount > 7">
+    <li class="waves-effect icon" *ngIf="paging.count - paging.pageIndex > 3 && paging.count > 7">
       <a (click)="setPage(paging.pageIndex+4)">
         <i class="material-icons">&#xE5D3;</i>
       </a>
     </li>
-    <li class="waves-effect icon" *ngIf="paging.pageIndex < paging.pageCount">
+    <li class="waves-effect icon" *ngIf="paging.pageIndex < paging.count">
       <a (click)="setPage(paging.pageIndex+1)">
         <i class="material-icons">&#xE5CC;</i>
       </a>
     </li>
-    <li [class]="paging.pageIndex < paging.pageCount ? 'waves-effect icon' : 'disabled icon'">
-      <a (click)="setPage(paging.pageCount)">
+    <li [class]="paging.pageIndex < paging.count ? 'waves-effect icon' : 'disabled icon'">
+      <a (click)="setPage(paging.count)">
         <i class="material-icons">&#xE5DD;</i>
       </a>
     </li>

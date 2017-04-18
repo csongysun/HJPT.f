@@ -3,7 +3,11 @@ import '@app/utils';
 import * as urls from '../../services/api/urls';
 
 import { Annex, TempTopic } from '@app/models';
-import { AppClientService, PublishService } from '@app/services';
+import {
+  AppClientService,
+  PublishService,
+  ToastService,
+} from '@app/services';
 import { Category, TopicPublishReq } from '@app/models';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
@@ -61,7 +65,7 @@ export class PublishComponent implements OnInit, OnDestroy {
   constructor(
     private app: AppClientService,
     private publisher: PublishService,
-    private snackBar: MdSnackBar
+    private toast: ToastService
   ) {
   }
 
@@ -73,7 +77,7 @@ export class PublishComponent implements OnInit, OnDestroy {
         this.ccates = v.filter(x => x.id % 100 !== 0);
       }
     }, err => {
-      this.snackBar.open('获取分类失败');
+      this.toast.warn('获取分类失败');
     });
 
     this.publisher.tempTopic$.subscribe(v => {
@@ -84,7 +88,7 @@ export class PublishComponent implements OnInit, OnDestroy {
       this.screenShotFiles = this.topic.screenShot ? JSON.parse(this.topic.screenShot) : [];
       this.spid = this.topic.categoryId - this.topic.categoryId % 100;
     }, err => {
-      this.snackBar.open('无法获得草稿');
+      this.toast.warn('无法获得草稿');
     });
 
   }
@@ -93,13 +97,18 @@ export class PublishComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.publisher.publishTopic(this.topic).subscribe(() => {
+      this.toast.info('发布成功');
+    }, err => {
+      this.toast.warn('发布失败');
+    });
   }
 
   saveDraft() {
     this.publisher.saveTempTopic(this.topic).subscribe(() => {
-      this.snackBar.open('保存成功');
+      this.toast.info('保存成功');
     }, err => {
-      this.snackBar.open('保存失败');
+      this.toast.warn('保存失败');
     });
   }
 

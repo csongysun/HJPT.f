@@ -24,6 +24,27 @@ body {
   display: block;
 }
 
+.mat-sidenav-content{
+  transform: none !important;
+}
+
+.strentch {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #444;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+
 /*.md-sidenav-content {
   transform: none !important;
 }*/
@@ -45,10 +66,10 @@ a {
   text-decoration: none;
 }
 
-input, md-input-container{
+input,
+md-input-container {
   width: 100%;
 }
-
 
 // @import "styles/mixins";
 @import "styles/color";
@@ -57,4 +78,3 @@ input, md-input-container{
 @import "styles/sidenav";
 @import "styles/grid";
 @import "styles/form";
-
