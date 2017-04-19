@@ -15,6 +15,7 @@ import { FileUploaderComponent } from '@app/components';
 import { FormGroup } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -65,7 +66,8 @@ export class PublishComponent implements OnInit, OnDestroy {
   constructor(
     private app: AppClientService,
     private publisher: PublishService,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router
   ) {
   }
 
@@ -99,6 +101,7 @@ export class PublishComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.publisher.publishTopic(this.topic).subscribe(() => {
       this.toast.info('发布成功');
+      this.router.navigate['topic'];
     }, err => {
       this.toast.warn('发布失败');
     });

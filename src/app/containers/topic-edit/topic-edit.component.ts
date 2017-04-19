@@ -27,6 +27,7 @@ import { FileUploaderComponent } from '@app/components';
 import { FormGroup } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -75,6 +76,7 @@ export class TopicEditComponent implements OnInit {
     private toast: ToastService,
     private topicService: TopicService,
     private api: ApiFactoryService,
+    private router: Router
   ) {
   }
 
@@ -100,6 +102,7 @@ export class TopicEditComponent implements OnInit {
   onSubmit() {
     this.api._putEditTopic(this.topic).subscribe(() => {
       this.toast.info('修改成功');
+      this.router.navigate['topic'];
     }, err => {
       this.toast.warn('修改失败');
     });
