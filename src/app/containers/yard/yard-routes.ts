@@ -1,4 +1,12 @@
-import { DetailComponent, IndexComponent, PublishComponent, TorrentComponent, YardComponent } from '@app/containers';
+import {
+    DetailComponent,
+    IndexComponent,
+    ManageComponent,
+    PublishComponent,
+    TopicEditComponent,
+    TorrentComponent,
+    YardComponent,
+} from '@app/containers';
 
 import { AuthService } from '@app/services';
 import { Route } from '@angular/router';
@@ -23,12 +31,20 @@ export const ROUTES: Route[] = [
                 component: TorrentComponent
             },
             {
+                path: 'topic/edit',
+                component: TopicEditComponent
+            },
+            {
                 path: 'detail/:id',
                 component: DetailComponent
             },
             {
                 path: 'publish',
                 component: PublishComponent
+            },
+            {
+                path: 'manage',
+                component: ManageComponent
             }
         ]
 

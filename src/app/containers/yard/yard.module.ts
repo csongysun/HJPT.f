@@ -1,7 +1,9 @@
 import {
   DetailComponent,
   IndexComponent,
+  ManageComponent,
   PublishComponent,
+  TopicEditComponent,
   TorrentComponent,
   YardComponent,
 } from '@app/containers';
@@ -38,7 +40,9 @@ const COMPONENTS = [
   PublishComponent,
   TorrentComponent,
   UserInfoComponent,
-  YardComponent
+  YardComponent,
+  TopicEditComponent,
+  ManageComponent
 ];
 
 COMPONENTS.forEach((value, index) => { if (!value) console.log(index); });

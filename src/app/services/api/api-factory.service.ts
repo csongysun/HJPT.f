@@ -70,6 +70,10 @@ export class ApiFactoryService {
         return this.api.post(urls.content.publishTopic, topic);
     }
 
+    _putEditTopic(topic: TempTopic): Observable<void> {
+        return this.api.put(urls.content.topic, topic);
+    }
+
     _downloadTorrent(id: number, filename?:string) {
         // this.api.request(urls.content.torrent + '/' + id, { method: 0 })
         //     .subscribe(v => {

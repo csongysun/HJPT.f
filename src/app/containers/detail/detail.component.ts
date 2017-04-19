@@ -1,11 +1,16 @@
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import {
   ApiFactoryService,
   AppClientService,
   ToastService,
+  TopicService,
 } from '@app/services';
-import { Category, TopicRes } from '@app/models';
+import {
+  Category,
+  TempTopic,
+  TopicRes,
+} from '@app/models';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -21,8 +26,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   topic = new TopicRes();
 
-  download(){
-    this.api._downloadTorrent(this.topic.id,this.topic.name);
+  download() {
+    this.api._downloadTorrent(this.topic.id, this.topic.name);
   }
   size(length: number) {
     if (length > 1024 * 1024 * 1024) {
@@ -75,11 +80,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private elementRef: ElementRef,
+    private topicService: TopicService,
     private app: AppClientService,
     private api: ApiFactoryService,
     private route: ActivatedRoute,
     private toast: ToastService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -107,5 +113,19 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+  }
+
+  toEdit() {
+    let topic = new TempTopic();
+    topic.IMDbUrl = this.topic.IMDbUrl;
+    topic.categoryId = this.topic.categoryId;
+    topic.cover = this.topic.cover;
+    topic.description = this.topic.description;
+    topic.screenShot = this.topic.screenShot;
+    topic.title = this.topic.title;
+    topic.subtitle = this.topic.subtitle;
+
+    this.topicService.tempTopic = topic;
+    this.router.navigate(['topic/edit'])
   }
 }

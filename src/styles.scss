@@ -28,6 +28,13 @@ body {
   transform: none !important;
 }
 
+legend,
+.mat-select-value-text,
+.mat-input-placeholder {
+  // border-bottom:10px solid #000000;
+  color: #fff;
+}
+
 .strentch {
   height: 100%;
   width: 100%;

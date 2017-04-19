@@ -21,9 +21,6 @@
       </p>
     </div>
   </section>
-  <section>
-    <app-file-uploader label="选择种子文件" [files]="torrentFiles" (onChange)="setTorrentFiles($event)" [url]="url.content.tempTorrent"></app-file-uploader>
-  </section>
 
   <section></section>
   <legend>
@@ -39,7 +36,6 @@
       [multi]="true"></app-file-uploader>
   </section>
   <section fxLayoutAlign="center">
-    <button md-raised-button color="primary" (click)="saveDraft()">保存</button>
     <button md-raised-button type="submit" color="primary">发布</button>
   </section>
 </form>

@@ -1,6 +1,6 @@
 import * as urls from './api/urls';
 
-import { Paging, Topic, TopicFilter } from '@app/models';
+import { Paging, TempTopic, Topic, TopicFilter } from '@app/models';
 
 import { ApiFactoryService } from '@app/services';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -10,6 +10,8 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class TopicService {
+
+  tempTopic = new TempTopic();
 
   get recent$() {
     return Observable.interval(10000)
