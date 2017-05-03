@@ -31,3 +31,8 @@ export class TopicPublishReq {
     lastUpdate: Date;
 }
 
+export class UserRoleReq{
+    email: string;
+    roleName: string;
+}
+

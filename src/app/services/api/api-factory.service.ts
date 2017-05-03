@@ -15,6 +15,7 @@ import {
     TopicListRes,
     TopicRes,
     TopicsRep,
+    UserRoleReq,
 } from '@app/models';
 
 import { Injectable } from '@angular/core';
@@ -75,14 +76,6 @@ export class ApiFactoryService {
     }
 
     _downloadTorrent(id: number, filename?:string) {
-        // this.api.request(urls.content.torrent + '/' + id, { method: 0 })
-        //     .subscribe(v => {
-        //         console.log(v);
-        //         this.downloadTorrent(v);
-        //     }, err => {
-        //         this.toast.warn('下载失败');
-        //     });
-
         var xhr = new XMLHttpRequest();
         xhr.open('GET', urls.content.torrent + '/' + id, true);
         xhr.responseType = 'blob';
@@ -100,17 +93,16 @@ export class ApiFactoryService {
             }
         };
         xhr.send();
-        // window.open(urls.content.torrent + '/' + id + '?token=' + localStorage.getItem('accessToken'));
-
     }
-    // downloadTorrent(data: Response) {
-    //     var blob = new Blob([data], { type: 'application/x-bittorrent' });
-    //     var a = document.createElement('a');
-    //     a.onload = function (e) {
-    //         window.URL.revokeObjectURL(a.href); // Clean up after yourself.
-    //     };
-    //     a.download = "Report.tt";
-    //     a.href = window.URL.createObjectURL(blob);
-    //     a.click();
-    // }
+
+    _postAddUserToRole(req: UserRoleReq){
+        return this.api.put(urls.user.addRole,  req);
+    }
+    _postRemoveUserFromRole(req: UserRoleReq){
+        return this.api.put(urls.user.removeRole,  req);
+    }
+
+    _getUserInfo(key: string){
+        return this.api.get(urls.user.info + '/' + key);
+    }
 }

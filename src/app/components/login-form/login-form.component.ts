@@ -36,7 +36,6 @@ export class LoginFormComponent implements OnInit {
     }, err => {
       this.toast.warn('登陆失败');
       this.isBusy = false;
-
     });
   }
 }

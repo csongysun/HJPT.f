@@ -19,12 +19,8 @@ export const ROUTES: Route[] = [
         children: [
             {
                 path: '',
-                redirectTo: 'index',
+                redirectTo: 'topic',
                 pathMatch: 'full'
-            },
-            {
-                path: 'index',
-                component: IndexComponent
             },
             {
                 path: 'topic',

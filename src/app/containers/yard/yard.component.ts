@@ -3,6 +3,7 @@ import {
   AuthService,
   Layout,
   LayoutService,
+  ToastService,
 } from '@app/services';
 import { Category, User } from '@app/models';
 import { Component, HostListener, NgZone, OnInit } from '@angular/core';
@@ -35,10 +36,19 @@ export class YardComponent implements OnInit {
     return this.auth.currentUser$;
   }
 
+  logout() {
+    this.auth._logout().subscribe(() => {
+      this.toast.info("退出登录");
+    }, err => {
+      this.toast.warn(err.message);
+    })
+  }
+
   constructor(
     private layout: LayoutService,
     private app: AppClientService,
     private auth: AuthService,
+    private toast: ToastService
   ) {
 
   }

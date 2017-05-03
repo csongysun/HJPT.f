@@ -3,13 +3,13 @@
     <user-info>
     </user-info>
     <md-nav-list>
-      <!--<a md-list-item RouterLinkActive="active" [routerLink]="['/index']">主页</a>-->
       <a md-list-item RouterLinkActive="active" [routerLink]="['/topic']">种子列表</a>
       <a md-list-item RouterLinkActive="active" [routerLink]="['/publish']">发布种子</a>
-      <a md-list-item RouterLinkActive="active" [routerLink]="['/manage']">管理用户</a>
       <!--<a md-list-item RouterLinkActive="active" [routerLink]="['/rules']">规则</a>-->
     </md-nav-list>
-    <br>
+    <div fxLayout="row" class="bottom">
+      <button md-button (click)="logout()">登出</button>
+    </div>
   </md-sidenav>
   <md-toolbar class="appbar z-depth-1">
     <div class="strentch" fxLayout="row" fxLayoutAlign="space-between">

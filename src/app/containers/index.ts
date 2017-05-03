@@ -7,3 +7,4 @@ export * from './torrent/torrent.component';
 export * from './detail/detail.component';
 export * from './topic-edit/topic-edit.component';
 export * from './manage/manage.component';
+export * from './user-center/user-center.component';

@@ -12,4 +12,11 @@ export class User {
 
     role: string[] = [];
 
+    
+
+}
+
+export class UserMeta {
+    id: string;
+    email: string;
 }

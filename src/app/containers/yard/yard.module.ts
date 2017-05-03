@@ -5,6 +5,7 @@ import {
   PublishComponent,
   TopicEditComponent,
   TorrentComponent,
+  UserCenterComponent,
   YardComponent,
 } from '@app/containers';
 import {
@@ -42,7 +43,8 @@ const COMPONENTS = [
   UserInfoComponent,
   YardComponent,
   TopicEditComponent,
-  ManageComponent
+  ManageComponent,
+  UserCenterComponent
 ];
 
 COMPONENTS.forEach((value, index) => { if (!value) console.log(index); });

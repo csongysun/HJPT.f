@@ -89,7 +89,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.app.setTitle('种子');
+    this.app.setTitle('种子详情');
     this.route.params
       .switchMap((params: Params) => this.api._getTopic(+params['id']))
       .zip(this.app.categories$)

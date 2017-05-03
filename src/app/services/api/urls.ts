@@ -30,7 +30,10 @@ export const content = {
 }
 
 export const user = {
+    info: baseUrl+'user',
     role: baseUrl + 'role',
+    addRole: baseUrl + 'user/role',
+    removeRole: baseUrl + 'user/role/remove'
 }
 
 // admin

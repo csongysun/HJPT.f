@@ -57,7 +57,7 @@ export class TorrentComponent implements OnInit, OnDestroy {
 
   topicList$$: Subscription;
   ngOnInit() {
-    this.app.setTitle('种子');
+    this.app.setTitle('种子列表');
     this.topicList$$ = this.topicService.topicList$.subscribe(v => {
       this.topicListSource.next(v.list);
       this.nextCursor = v.nextCursor;

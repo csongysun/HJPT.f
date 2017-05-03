@@ -1,0 +1,64 @@
+<div class="fixed-action-btn">
+  <ul>
+    <button md-fab mdTooltip="下载" (click)="download()" mdTooltipPosition="left"><md-icon>file_download</md-icon></button>
+  </ul>
+</div>
+
+<div class="root" fxLayout="column" fxLayoutAlign="start stretch">
+  <h2 class="center-align" style="margin-top: 40px">{{topic.title}}</h2>
+  <!--<div class="center-align"><span>醉拳 *祝贺成龙获颁奥斯卡终身成就奖</span><div>-->
+  <h4 class="center-align">{{user.nickName}}</h4>
+  <md-divider></md-divider>
+  <div class="section">
+    <h5>基本信息：</h5>
+    <div class="section">
+      <div class="section">
+        <h6>用户组：</h6>
+        <div><span>{{ role }} </span></div>
+      </div>
+      <div class="section">
+        <h6>Tags：</h6>
+        <div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h5>简介：</h5>
+    <div class="discription section">
+      <div class="section">
+        <h6>封面:</h6>
+        <div>
+          <img width="100%" [src]="cover">
+        </div>
+      </div>
+      <div class="section">
+        <h6>简介:</h6>
+        <p>{{topic.description}}</p>
+      </div>
+      <div class="section">
+        <h6>截图:</h6>
+        <div class="sc-box">
+          <img width="100px" [src]="sc" *ngFor="let sc of screenShot">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h5>种子信息：</h5>
+    <div class="section">
+      <h6>热度:</h6>
+      <div>下载: {{topic.leecher}} 做种: {{topic.seeder}} 完成: {{topic.completedCount}} 最近活动：{{lastAction}}</div>
+    </div>
+    <div class="section">
+      <h6>种子文件:</h6>
+      <ul class="files">
+        <li fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let file of files">
+          <span>{{file.path}}</span>
+          <span fxFlex="60px">{{size(file.length)}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
