@@ -10,6 +10,7 @@ import { Component, HostListener, NgZone, OnInit } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-yard',
@@ -44,11 +45,17 @@ export class YardComponent implements OnInit {
     })
   }
 
+  onEnter(key: string){
+    if(key.length < 4) return;
+    this.router.navigate(['topic'], {queryParams: { 'search': key }})
+  }
+
   constructor(
     private layout: LayoutService,
     private app: AppClientService,
     private auth: AuthService,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router
   ) {
 
   }

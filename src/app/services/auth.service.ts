@@ -23,15 +23,13 @@ export class AuthService implements CanActivate {
 
       let tokenPayload = user.token.split('.')[1];
       let roles = JSON.parse(atob(tokenPayload))[roleClaimType];
-      user.role = roles || [];
+      user.roles = roles || [];
       console.log(user);
       this.currentUserSource.next(user);
     }
   }
 
-  get isAdmin$() {
-    return this.currentUser$.map(v => v != null ? v.role.includes('admin') : false);
-  }
+  isAdmin$ = this.currentUser$.map(v => v != null ? v.roles.includes('Administrator') : false);
 
   constructor(
     private api: ApiGatewayService,

@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import {
   ApiFactoryService,
   AppClientService,
+  AuthService,
   ToastService,
   TopicService,
 } from '@app/services';
@@ -23,6 +24,8 @@ const prefix = 'http://localhost:5000';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit, AfterViewInit {
+
+  isAdmin$ = this.auth.isAdmin$;
 
   topic = new TopicRes();
 
@@ -86,6 +89,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private toast: ToastService,
     private router: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -128,4 +132,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.topicService.tempTopic = topic;
     this.router.navigate(['topic/edit'])
   }
+
+
 }

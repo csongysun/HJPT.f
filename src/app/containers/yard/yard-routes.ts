@@ -1,10 +1,10 @@
 import {
     DetailComponent,
     IndexComponent,
-    ManageComponent,
     PublishComponent,
     TopicEditComponent,
     TorrentComponent,
+    UserCenterComponent,
     YardComponent,
 } from '@app/containers';
 
@@ -39,8 +39,8 @@ export const ROUTES: Route[] = [
                 component: PublishComponent
             },
             {
-                path: 'manage',
-                component: ManageComponent
+                path: 'user/:id',
+                component: UserCenterComponent
             }
         ]
 

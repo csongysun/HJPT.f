@@ -31,7 +31,8 @@ export class TopicRes{
     subtitle: string;
     IMDbUrl: string;
     promotionId: number;
-    owner: string;
+    ownerId: string;
+    ownerName: string;
     categoryId: number;
     addDate: Date;
     tags: string;

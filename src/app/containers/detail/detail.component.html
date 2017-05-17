@@ -17,7 +17,7 @@
         <div><span>大小：{{size(topic.size)}}    类型: {{pcate?.name}}  子类型: {{ccate?.name}}  </span></div>
       </div>
       <div class="section">
-        <h6>Tags：</h6>
+        <h6>发布者：<a [routerLink]="['/user/' + topic.ownerId]"> {{topic.ownerName}}</a></h6>
         <div></div>
       </div>
     </div>
@@ -60,7 +60,9 @@
       </ul>
     </div>
   </div>
-
+  <section fxLayoutAlign="center" *ngIf="isAdmin$ | async">
+    <button md-raised-button color="primary" (click)="toEdit()">编辑</button>
+  </section>
 </div>
 
 

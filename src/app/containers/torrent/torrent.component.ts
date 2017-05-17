@@ -11,6 +11,7 @@ import {
 } from '@app/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
+import { ActivatedRoute }     from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -52,12 +53,19 @@ export class TorrentComponent implements OnInit, OnDestroy {
   constructor(
     private app: AppClientService,
     private topicService: TopicService,
+    private route: ActivatedRoute,
   ) {
   }
 
   topicList$$: Subscription;
   ngOnInit() {
     this.app.setTitle('种子列表');
+    let key = this.route.queryParams.map(params => params['search']).subscribe(v=>{
+      if(v)
+        this.topicService.setSearch(v);
+      else
+        this.topicService.setSearch(null);
+    });
     this.topicList$$ = this.topicService.topicList$.subscribe(v => {
       this.topicListSource.next(v.list);
       this.nextCursor = v.nextCursor;

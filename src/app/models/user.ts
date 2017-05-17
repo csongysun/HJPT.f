@@ -10,9 +10,10 @@ export class User {
     refreshToken: string;
     refreshTokenExpires: Date;
 
-    role: string[] = [];
+    roles: string[] = [];
 
-    
+    uploaded: number;
+    downloaded: number;
 
 }
 

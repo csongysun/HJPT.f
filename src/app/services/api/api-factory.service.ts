@@ -49,7 +49,7 @@ export class ApiFactoryService {
         }
         up.set('cursor', cursor);
         if (search) {
-            up.set('s', search);
+            up.set('search', search);
         }
         return this.api.get(urls.content.topic, up);
     }
@@ -104,5 +104,9 @@ export class ApiFactoryService {
 
     _getUserInfo(key: string){
         return this.api.get(urls.user.info + '/' + key);
+    }
+
+    _addUserToAdmin(email: string){
+        return this.api.post(urls.user.addRole, {email: email, roleName: 'Administrator'} );
     }
 }

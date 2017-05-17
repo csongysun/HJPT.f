@@ -17,7 +17,7 @@
       <span class="title" fxFlexAlign="start">
         {{title$ | async}}
       </span>
-      <input fxFlexAlign="center" class="search" placeholder="搜索" type="text" name="searchKey">
+      <input fxFlexAlign="center" class="search" placeholder="搜索" type="text" (keyup.enter)="onEnter(search.value)" #search name="searchKey">
     </div>
 
   </md-toolbar>
